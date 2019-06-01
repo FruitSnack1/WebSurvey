@@ -1,0 +1,129 @@
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    meta(charset='utf-8')
+    //- link(rel='stylesheet', href='css/main.css')
+    link(rel='stylesheet', href='css/main2.css')
+    link(rel='stylesheet', href='css/createanketa.css')
+    //- link(rel='stylesheet', href='css/bootstrap.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+    title
+  body
+    div.content-container
+      div.statusBar
+      div.content
+        //- div.container
+        div.quizForm
+          form(ref='uploadForm',name="addanketa", enctype='multipart/form-data',method="post", action="/addanketa")
+            label Název ankety
+            input(type="text", name="name").main-input
+            label Obrázek ankety
+            div.img-container
+              label(for='img').input-img-label Vybrat obrázek
+              input.input-img(type="file", name="img", id='img', onchange='imgChange(this)')
+            label Popis ankety
+            textarea.form-control(name="desc").main-input
+            input(type="number", value='1', name="count", style='display:none')
+            div.advanced-settings-container(onclick='showAdvancedSettings();')
+              span.advanced-settings-btn Pokročilá nastavení
+              i.fas.fa-chevron-down#advanced-settings-icon
+            div.advanced-settings(style='display:none')
+              div.checkbox-container
+                div.check-container
+                  label.checkbox-label(for='random_order').advanced-settings-checkbox
+                    input(type='checkbox', name='random_order', id='random_order').input-checkbox
+                    span.checkmark
+                span Náhodné pořadí otázek
+              div.checkbox-container
+                div.check-container
+                  label.checkbox-label(for='weights').advanced-settings-checkbox
+                    input(type='checkbox', name='weights', id='weights', onchange='weightChange();').input-checkbox
+                    span.checkmark
+                span Váhování otázek
+              div.checkbox-container
+                div.check-container
+                  label.checkbox-label(for='sectors').advanced-settings-checkbox
+                    input(type='checkbox', name='sectors', id='sectors', onchange='sectorChange();').input-checkbox
+                    span.checkmark
+                span Sektory pro otázky
+              div#sector-count(style='display:none;')
+                span Počet sektorů
+                br
+                select(name='sector_count', onchange='sectorCountChange();', id='sector-count-select')
+                  option(value='2') 2
+                  option(value='3') 3
+                  option(value='4') 4
+                  option(value='5') 5
+            hr
+            div.questionInput
+              - for(var x =0; x< 50; x++)
+                if x == 0
+                  div(id='question' + x)
+                    label Otázka
+                    span.delete-icon-container
+                      i.fas.fa-times(onclick='deleteQuestion('+x+');').delete-icon
+                    input.input-text(type='text', name='question' + x)
+                    
+                    label Obrázek otázky
+                    div.img-container
+                      label.input-img-label(for='img'+x) Vybrat obrázek
+                      input.input-img(type='file', name='img'+x, id='img'+x, onchange='imgChange(this)')
+                      
+                    div.sector-container(style='display:none;')
+                      label Sektor otázky
+                      select(name='sector'+x, class='sector-select')
+                        option 1
+                        option 2
+                    div.weight-container(style='display:none;')
+                      label Váha otázky
+                      div.slider-axis
+                        span 0
+                        span 0.25
+                        span 0.5
+                        span 0.75
+                        span 1
+                      input(type='range', min='0', max='1', value='1', step='0.25', class='slider', name='weight'+x)
+                    hr
+                else
+                  div(id='question' + x, style='display:none;')
+                    label Otázka
+                    span.delete-icon-container
+                      i.fas.fa-times(onclick='deleteQuestion('+x+');').delete-icon
+                    input.input-text(type='text', name='question' + x)
+                    
+                    label Obrázek otázky
+                    div.img-container
+                      label.input-img-label(for='img'+x) Vybrat obrázek
+                      input.input-img(type='file', name='img'+x, id='img'+x, onchange='imgChange(this)')
+                    div.sector-container(style='display:none;')
+                      label Sektor otázky
+                      select(name='sector'+x, class='sector-select')
+                        option 1
+                        option 2
+                    div.weight-container(style='display:none;')
+                      label Váha otázky
+                      div.slider-axis
+                        span 0
+                        span 0.25
+                        span 0.5
+                        span 0.75
+                        span 1
+                      input(type='range', min='0', max='1', value='1', step='0.25', class='slider', name='weight'+x)
+                    hr
+                  
+                
+                
+            button.add-btn.btn.btn-block(onclick='addQuestion();', type='button') Přidat otázku
+              //- i.fas.fa-plus
+            br
+            button.submitBtn.btn.btn-block.btn-confirm(type="button", onclick='finish();') Vytvořit 
+            script.
+              count = 1;
+        
+      nav.navbar
+        a.navbar-item(href='/')
+          i.fas.fa-home.navbar-icon
+        a.navbar-item(href='settings')
+          i.fas.fa-cogs.navbar-icon
+      script(type='text/javascript', src='js/jquery-3.3.1.min.js')
+      script(type='text/javascript', src='js/createanketa.js')

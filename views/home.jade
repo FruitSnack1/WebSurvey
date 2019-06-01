@@ -1,0 +1,85 @@
+doctype html
+html(lang='cz', dir='ltr')
+  //- head
+  //-   meta(charset='utf-8')
+  //-   link(rel='stylesheet', href='css/main2.css')
+  //-   link(rel='stylesheet', href='css/settings.css')
+  //-   link(rel='stylesheet', href='css/home.css')
+  //-   link(rel='stylesheet', href='css/animation.css')
+  //-   link(rel='stylesheet', href='css/createanketa.css')
+  //-   link(rel='stylesheet', href='css/edit.css')
+  //-   link(rel='stylesheet', href='css/results.css')
+  //-   link(rel='manifest', href='manifest.json')
+  //-   link(rel='stylesheet', href='css/main.css')
+  //-   link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+  //- 
+  //-   title
+  body
+    div.content-container
+      div.main-container
+        div.navbar
+          div.navbar-item.navbar-item-active(onclick='getSite("home");')#home
+            i.navbar-item-icon.fas.fa-home
+          div.navbar-item(onclick='getSite("settings");')#settings
+            i.navbar-item-icon.fas.fa-bars
+          div.navbar-item.navbar-item-cluster(onclick='switchCluster();')
+            div.cluster-shape-out
+              div.cluster-shape-in
+                span.cluster-shape-text HMI
+        div.content
+                  
+          div.container
+
+            div.quiz-container
+              div.quiz-label-container
+                h3.quiz-label Ankety
+              div.quiz-select
+                each anketa, i in ankety
+                  div.quiz-tile
+                    div.quiz-tile-content
+                      a( onclick='playConfirm("'+anketa.name+'");').quiz-tile-link
+                        span.quiz-tile-name #{anketa.name} 
+                        img.quiz-tile-img(src=anketa.img)
+            div.quiz-container
+              div.quiz-label-container
+                h3.quiz-label Kvízy
+              div.quiz-select
+                each quiz, i in quizzes
+                  div.quiz-tile
+                    div.quiz-tile-content
+                      a(href='/playQ/#{cluster}/'+quiz.name).quiz-tile-link 
+                        span.quiz-tile-name #{quiz.name} 
+                        img.quiz-tile-img(src=quiz.img)
+        
+      div.content-loading(style='display:none;')
+        i.fas.fa-cog
+          
+      div.password.confirm-delete(style='display:none;')
+          input.password-input(type='password').password-input
+          div.password-button-container.confirm-btn-container
+            button.password-button.btn-confirm(onclick='confirmPassword();') OK
+            button.password-button.btn-confirm(onclick='cancelPassword();') Zrušit
+            
+      div.switch-cluster(style='display:none;')
+        h3.confirm-delete-label Opravdu chcete změnit cluster ?
+        div.confirm-btn-container
+          button(onclick='confirmSwitch();').btn Ano
+          button(onclick='declineSwitch();').btn Ne
+          
+      div.popup-window#playConfirm(style='display:none;')
+        h3.confirm-delete-label Chcete spustit ?
+        div.confirm-btn-container
+          button(onclick='confirmPlay();').btn.btn-confirm Spustit
+          button(onclick='declinePlay();').btn Zrušit
+          
+      //- nav.navbar
+      //-   a.navbar-item(onclick='getSite("home");')
+      //-     i.fas.fa-home.navbar-icon
+      //-   a.navbar-item(onclick='getSite("settings");')
+      //-     i.fas.fa-cogs.navbar-icon
+      //- script(src='js/jquery-3.3.1.min.js', type='text/javascript')    
+      //- script(src='js/home.js', type='text/javascript')
+      //- script(src='js/settings.js', type='text/javascript')
+      //- script(src='js/createanketa.js', type='text/javascript')
+      //- script(src='js/edit.js', type='text/javascript')
+      //- script(src='js/results.js', type='text/javascript')

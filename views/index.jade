@@ -1,0 +1,73 @@
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    meta(charset='utf-8')
+    //- link(rel='stylesheet', href='css/main2.css')
+    //- link(rel='stylesheet', href='css/home.css')
+    //- link(rel='stylesheet', href='css/settings.css')
+    //- link(rel='stylesheet', href='css/animation.css')
+    //- link(rel='stylesheet', href='css/createanketa.css')
+    //- link(rel='stylesheet', href='css/edit.css')
+    //- link(rel='stylesheet', href='css/results.css')
+    link(rel='manifest', href='manifest.json')
+    link(rel='stylesheet', href='css/main.css')
+    link(rel='stylesheet', href='../css/odometer-theme-default.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+    title
+  body
+    div.content-container
+      //- div.main-container
+      //-   div.navbar
+      //-     div.navbar-item.navbar-item-active
+      //-       i.navbar-item-icon.fas.fa-home(onclick='getSite("home");')
+      //-     div.navbar-item
+      //-       i.navbar-item-icon.fas.fa-bars(onclick='getSite("settings");')
+      //-     div.navbar-item.navbar-item-cluster
+      //-       div.cluster-shape-out
+      //-         div.cluster-shape-in
+      //-           span.cluster-shape-text HMI
+        //- div.content
+        
+      div.cluster-select-container
+        div.cluster-select-shape-out(data-cluster='adas')
+          div.cluster-select-shape-in
+            span.cluster-select-shape-text ADAS
+        div.cluster-select-shape-out(data-cluster='emob')
+          div.cluster-select-shape-in
+            span.cluster-select-shape-text eMOB
+        div.cluster-select-shape-out(data-cluster='hmi')
+          div.cluster-select-shape-in
+            span.cluster-select-shape-text HMI
+        div.cluster-select-shape-out(data-cluster='iae')
+          div.cluster-select-shape-in
+            span.cluster-select-shape-text I&E
+        div.cluster-select-shape-out(data-cluster='light')
+          div.cluster-select-shape-in
+            span.cluster-select-shape-text LIGHT
+        div.cluster-select-shape-out(data-cluster='mod')
+          div.cluster-select-shape-in
+            span.cluster-select-shape-text MOD
+        div.cluster-select-shape-out(data-cluster='car')
+          div.cluster-select-shape-in
+            span.cluster-select-shape-text  CAR
+        //- div.content-loading(style='display:none;')
+        //- i.fas.fa-cog.content-loading-icon
+          
+      div.popup-window(style='display:none;').password
+          input.password-input(type='password')
+          div.popup-window-btn-container
+            button.btn.btn-confirm(onclick='confirmPassword();') OK
+            button.btn(onclick='cancelPassword();') Zrušit
+          
+      //- nav.navbar
+      //-   a.navbar-item(onclick='getSite("home");')
+      //-     i.fas.fa-home.navbar-icon
+      //-   a.navbar-item(onclick='getSite("settings");')
+      //-     i.fas.fa-cogs.navbar-icon
+          
+      script(src='js/jquery-3.3.1.min.js', type='text/javascript')    
+      script(src='js/ajaxSubmit.js', type='text/javascript')    
+      script(src='js/home.js', type='text/javascript')
+      script(src='js/createanketa.js', type='text/javascript')
+      script(src='js/createquiz.js', type='text/javascript')
+      script(type='text/javascript', src='../js/odometer.js')

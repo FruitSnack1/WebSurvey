@@ -1,0 +1,10 @@
+{
+    "name": "Quiz",
+    "short_name": "Quiz",
+    "description": "Quiz",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "display": "fullscreen",
+    "orientation": "landscape",
+    "start_url": "/"
+  }

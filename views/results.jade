@@ -1,0 +1,62 @@
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    meta(charset='utf-8')
+    link(rel='stylesheet', href='../css/main2.css')
+    link(rel='stylesheet', href='../css/results.css')
+    link(rel='stylesheet', href='../css/odometer-theme-default.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+    title
+  body
+    div.content-container
+      div.content
+        div.container
+          div.graph-container
+            div.bars
+              div#bar1
+              div#bar2
+              div#bar3
+              div#bar4
+              div#bar5
+            div.names
+              span Ano
+              span Spíš ano
+              span Neutral
+              span Spíš ne
+              span Ne
+          div.data-container
+            h3.data-name 
+            ul.data-list
+              li.item
+                span.data-list-item-name Vyplněných anket:
+                span.data-list-item-value#quiz_count.odometer 0
+              li.item
+                span.data-list-item-name Průměrný čas:
+                span.data-list-item-value#time 0 
+                span s
+              li.item
+                span.data-list-item-name Počet mužů:
+                span.data-list-item-value#male_count 0
+              li.item
+                span.data-list-item-name Počet žen:
+                span.data-list-item-value#female_count 0
+              li.item
+                span.data-list-item-name Počet otázek:
+                span.data-list-item-value#questions_count 0
+                script(type='text/javascript').
+                  var local_data =!{JSON.stringify(result)}
+                  var name =!{JSON.stringify(name)}
+            div.data-container-excel-container
+              button.data-container-excel(onclick='download();').btn.btn-confirm
+                i.fas.fa-file-excel.data-container-icon
+                span.data-container-span     Výsledky v excelu
+              
+      
+          
+    script(type='text/javascript', src='../js/jquery-3.3.1.min.js')
+    script(type='text/javascript').
+      var local_data =!{JSON.stringify(result)}
+      var name =!{JSON.stringify(name)}
+    script(type='text/javascript', src='../js/odometer.js')
+    script(type='text/javascript', src='../js/results.js')
+    //- script(type='text/javascript' src='../js/settings.js')

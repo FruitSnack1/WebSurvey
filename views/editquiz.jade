@@ -1,0 +1,131 @@
+
+
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    //- meta(charset='utf-8')
+    //- link(rel='stylesheet', href='css/main.css')
+    //- link(rel='stylesheet', href='css/bootstrap.css')
+    //- link(rel='stylesheet', href='css/create.css')
+    //- link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+    //- title
+  body
+    div.content-container
+      div.statusBar
+      div.content
+        div.quizForm
+          form(ref='uploadForm',name="edit_quiz", enctype='multipart/form-data',method="post", action="/edit_quiz")
+            label Název
+            input(type="text", name="name", value=quiz[0].name).main-input
+            input(type='text', name='originalName', style='display:none', value=quiz[0].name)
+            label Obrázek
+            div(style="background-image:url('../"+quiz[0].img+"')").img-container
+              label(for='img').input-img-label Změnit obrázek
+              input.input-img(type="file", name="img", id='img', onchange='imgChange(this)')
+            label Popis
+            textarea.form-control(name="desc").main-input #{quiz[0].desc}
+            input(type="number", value='#{quiz[0].count}', name="count", style='display:none')
+            hr
+            div.questionInput
+              - for (var x = 0; x < 50; x++)
+                if x < quiz[0].count
+                  div(id='question' + x)
+                    label Otázka
+                    span.delete-icon-container
+                      i.fas.fa-times(onclick='deleteQuestionQ('+x+');').delete-icon
+                    input.input-text(type='text', name='question' + x, value=quiz[0].questions[x].question)
+                    
+                    label Obrázek
+                    div(style="background-image:url('../"+quiz[0].questions[x].img+"')").img-container
+                      label.input-img-label(for='img'+x) Změnit obrázek
+                      input.input-img(type='file', name='img'+x, id='img'+x, onchange='imgChange(this)')
+                    
+                    label Počet odpovědí
+                    select.quiz-select(onchange='selectChange(this);', name='answers-count'+x, id='answers-count'+x)
+                      //- if quiz[0].questions[x].answers.length == 2
+                      //-   option(selected) 2
+                      //- else
+                      //-   option 2
+                      //- if quiz[0].questions[x].answers.length == 3
+                      //-   option(selected) 3
+                      //- else
+                      //-   option 3
+                      //- if quiz[0].questions[x].answers.length == 4
+                      //-   option(selected) 4
+                      //- else
+                      //-   option 4
+                      //- if quiz[0].questions[x].answers.length == 5
+                      //-   option(selected) 5
+                      //- else
+                      //-   option 5
+                      option 2
+                      option(selected) 3
+                      option 4
+                      option 5
+                    - for (var y = 0; y < 5; y++)
+                      if y < quiz[0].questions[x].answers.length
+                        div(id='answers'+x+y).checkbox-container
+                          div.check-container
+                            label.checkbox-label(for='checkbox'+x+y)
+                              input(type='checkbox', name='ra'+x+y, value=y, id='checkbox'+x+y).input-checkbox
+                              span.checkmark
+                          input(type='text', name='a'+x+y, value=quiz[0].questions[x].answers[y]).input-checkbox-question
+                      else
+                        div(id='answers'+x+y, style='display:none').checkbox-container
+                          div.check-container
+                            label.checkbox-label(for='checkbox'+x+y)
+                              input(type='checkbox', name='ra'+x+y, value=y, id='checkbox'+x+y).input-checkbox
+                              span.checkmark
+                          input(type='text', name='a'+x+y).input-checkbox-question
+                    hr
+                else  
+                  div(id='question' + x, style='display:none')
+                    label Otázka
+                    span.delete-icon-container
+                      i.fas.fa-times(onclick='deleteQuestionQ('+x+');').delete-icon
+                    input.input-text(type='text', name='question' + x)
+                    
+                    label Obrázek
+                    div.img-container
+                      label.input-img-label(for='img'+x) Vybrat obrázek
+                      input.input-img(type='file', name='img'+x, id='img'+x, onchange='imgChange(this)')
+                    
+                    span.quiz-label Počet odpovědí
+                    select.quiz-select(onchange='selectChange(this);', name='answers-count'+x, id='answers-count'+x)
+                      option 2
+                      option(selected) 3
+                      option 4
+                      option 5
+                    - for (var y = 0; y < 5; y++)
+                      if y < 3
+                        div(id='answers'+x+y).checkbox-container
+                          div.check-container
+                            label.checkbox-label(for='checkbox'+x+y)
+                              input(type='checkbox', name='ra'+x+y, value=y, id='checkbox'+x+y).input-checkbox
+                              span.checkmark
+                          input(type='text', name='a'+x+y).input-checkbox-question
+                      else
+                        div(id='answers'+x+y, style='display:none').checkbox-container
+                          div.check-container
+                            label.checkbox-label(for='checkbox'+x+y)
+                              input(type='checkbox', name='ra'+x+y, value=y, id='checkbox'+x+y).input-checkbox
+                              span.checkmark
+                          input(type='text', name='a'+x+y).input-checkbox-question
+                    hr
+                    
+            button.add-btn.btn.btn-block(onclick='addQuestionQ();', type='button') Přidat otázku
+            button.submitBtn.btn.btn-block.btn-primary.btn-confirm(type="button", onclick='finishEditQ();') Upravit 
+            script(type='text/javascript').
+              var right_answers =!{JSON.stringify(quiz[0])}
+              check();
+              countQ ='#{quiz[0].count}';
+              editQuizJson = !{JSON.stringify(quiz[0])};
+              editLinkImgsQ();
+        
+      //- nav.nav.navbar
+      //-   a.navbar-item.nav-link(href='/')
+      //-     i.fas.fa-home.icons
+      //-   a.navbar-item.nav-link(href='settings')
+      //-     i.fas.fa-cogs.icons
+      //- script(type='text/javascript', src='js/jquery-3.3.1.min.js')
+      //- script(type='text/javascript', src='js/createquiz.js')

@@ -1,0 +1,80 @@
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    meta(charset='utf-8')
+    link(rel='stylesheet', href='../../css/main.css')
+    //- link(rel='stylesheet', href='../../css/bootstrap.css')
+    //- link(rel='stylesheet', href='../../css/playA.css')
+    //- link(rel='stylesheet', href='../../css/playQ.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+    //- style.
+    //-   .content{
+    //-     background: url("../../img/background2.png");
+    //-     background-size: cover;
+    //-     background-repeat: no-repeat;
+    //-   }
+    title
+  body
+    div.content-container
+      div.main-container
+        //- div.play-container
+        div.play
+          div.question
+            h3.text-white#q #{quiz[0].questions[0].q} 
+          div.play-container-main
+            div.play-arrow
+              //- img(src='../../img/Left.png', onclick='prvQuestion();')#left
+              i.fas.fa-caret-left(onclick='prvQuestion();')#left
+            div.play-img
+              img#questionImg
+            div.play-buttons-container
+              button.btn-answer#answer1.btn(type="button", value="1", onclick='select(1);')
+              button.btn-answer#answer2.btn(type="button", value="1", onclick='select(2);')
+              button.btn-answer#answer3.btn(type="button", value="1", onclick='select(3);')
+              button.btn-answer#answer4.btn(type="button", value="1", onclick='select(4);')
+              button.btn-answer#answer5.btn(type="button", value="1", onclick='select(5);')
+            div.play-arrow
+              //- img(src='../../img/Right.png', onclick='nextQuestion();')#right  
+              i.fas.fa-caret-right(onclick='nextQuestion();')#right
+          div.progressBar
+            //- div.progress-bar-container
+            //-   img(src='../../img/progress_car.png').progress-car
+            //-   img(src='../../img/finish.png').progress-end
+            div.progress-bar-container
+              div.progressBar-background
+                span.progress-bar-count 1/3
+                div.progressBar-foreground
+        div.desc
+          div.desc-name
+            h1.desc-title #{quiz[0].name} 
+          div.desc-data
+            div.desc-popis
+              h2.desc-popis-title Popis Quizu :
+              p.desc-content #{quiz[0].desc}
+            div.user-data
+              label.desc-input-label Jméno : 
+              input(type='text', name='jmeno').desc-input
+              label.desc-input-label Příjmení : 
+              input(type='text', name='prijmeni').desc-input
+              label.desc-input-label Věk : 
+              input(type='number', name='age', min='1', max='100').desc-input
+              label.desc-input-label Pohlaví : 
+              select(type='text', name='sex').desc-input.desc-select
+                option Muž
+                option Žena
+              div.btn-container
+                button.desc-btn.btn.btn-confirm(onclick='start();') Začít
+        div.end
+          h1.end-text Děkujeme za spolupráci
+          button(onclick='reset();').end-bnt.btn.btn-confirm Spustit znovu
+        //- div.progressBar
+        //-   div.progress-bar-container
+        //-     img(src='../../img/progress_car.png').progress-car
+        //-     img(src='../../img/finish.png').progress-end
+        //-     span.progress-bar-count 1/3
+          
+    script(type='text/javascript').
+      var local_data =!{JSON.stringify(quiz)}
+      var cluster = !{JSON.stringify(cluster)}
+    script(type='text/javascript', src='../../js/jquery-3.3.1.min.js')
+    script(type='text/javascript' src='../../js/playQ.js')  

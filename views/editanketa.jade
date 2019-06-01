@@ -1,0 +1,74 @@
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    meta(charset='utf-8')
+    //- link(rel='stylesheet', href='css/main.css')
+    link(rel='stylesheet', href='../css/main2.css')
+    link(rel='stylesheet', href='../css/createanketa.css')
+    link(rel='stylesheet', href='../css/edit.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+    title
+  body
+    div.content-container
+      div.statusBar
+      div.content
+        div.quizForm
+          form(ref='uploadForm',name="edit_anketa", enctype='multipart/form-data',method="post", action="/edit_anketa")
+            label Název
+            input(type="text", name="name", value=anketa[0].name).main-input
+            input(type='text', name='originalName', style='display:none', value=anketa[0].name)
+            label Obrázek
+            div(style="background-image:url('../#{anketa[0].img}')").img-container
+              label(for='img').input-img-label Změnit obrázek
+              input.input-img(type="file", name="img", id='img', value=anketa[0].img, onchange='imgChange(this)')
+            label Popis
+            textarea.form-control(name="desc").main-input #{anketa[0].desc}
+            input(type="number", value='1', name="count", style='display:none')
+            hr
+            div.questionInput
+              - for(var x =0; x< 20; x++)
+                if x < anketa[0].count
+                  div(id='question' + x)
+                    label Otázka
+                    span.delete-icon-container
+                      i.fas.fa-times(onclick='deleteQuestion('+x+');').delete-icon
+                    input.input-text(type='text', name='question' + x, value=anketa[0].questions[x].q)
+                    
+                    label Obrázek
+                    div(style="background-image:url('../"+anketa[0].questions[x].img+"')").img-container
+                      label.input-img-label(for='img'+x) Změnit obrázek
+                      input.input-img(type='file', name='img'+x, id='img'+x, onchange='imgChange(this)')
+                    hr
+                else
+                  div(id='question' + x, style='display:none;')
+                    label Otázka
+                    span.delete-icon-container
+                      i.fas.fa-times(onclick='deleteQuestion('+x+');').delete-icon
+                    input.input-text(type='text', name='question' + x)
+                    
+                    label Obrázek
+                    div.img-container
+                      label.input-img-label(for='img'+x) Vybrat obrázek
+                      input.input-img(type='file', name='img'+x, id='img'+x, onchange='imgChange(this)')
+                    hr
+                    
+            //- button.add-btn(onclick='addQuestion();', type='button') 
+            //-   i.fas.fa-plus
+            button.add-btn.btn.btn-block(onclick='addQuestion();', type='button') Přidat otázku
+            br
+            //- button.submitBtn.btn.btn-block.btn-confirm(type="button", onclick='finish();') Vytvořit 
+            button.submitBtn.btn.btn-block.btn-confirm(type="button", onclick='finishEditA();') Upravit 
+            script.
+              count="#{anketa[0].count}";
+            script.
+              editAnketaJson = !{JSON.stringify(anketa[0])};
+              editLinkImgs();
+        
+      //- nav.navbar
+      //-   a.navbar-item(href='/')
+      //-     i.fas.fa-home.navbar-icon
+      //-   a.navbar-item(href='../settings')
+      //-     i.fas.fa-cogs.navbar-icon
+      //- script(type='text/javascript', src='../js/jquery-3.3.1.min.js')
+      //- 
+      //- script(type='text/javascript', src='../js/edit.js')

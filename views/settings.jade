@@ -1,0 +1,58 @@
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    meta(charset='utf-8')
+    //- link(rel='stylesheet', href='css/bootstrap.css')
+    //- link(rel='stylesheet', href='css/main.css')
+    link(rel='stylesheet', href='css/main2.css')
+    link(rel='stylesheet', href='css/settings.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+    title
+  body
+    div.content-container
+      div.content
+        div.container.container-settings
+          div.settings-switch-container
+            div.settings-switch-item#switch-ankety.settings-switch-item-active(onclick='settingsSwitch("ankety");')
+              span.settings-switch-label Ankety
+            div.settings-switch-item#switch-quiz(onclick='settingsSwitch("quiz");')
+              span.settings-switch-label Kvízy
+              
+          div.settings-container#settings-quiz(style='display:none')
+            ul.settings-list
+              li.settings-item
+                button.btn.settings-add.btn-confirm(onclick='getSite("createquiz");') Přidat kvíz
+              
+              each quiz, i in quizzes
+                li.settings-item
+                  div.settings-item-img(style='background-image:url("#{quiz.img}")')
+                  span.settings-item-name #{quiz.name}
+                  span.settings-item-date #{quiz.date}
+                  button.btn.settings-btn(onclick='getSite("editquiz", "#{quiz.name}");') Upravit
+                  button.btn.settings-btn Výsledky
+                  button.btn.settings-btn.btn-decline(onclick='delete_item("#{quiz.name}","quiz");') Odstranit
+          
+          div.settings-container#settings-anketa
+            ul.settings-list
+              li.settings-item
+                button.btn.settings-add.btn-confirm(onclick='getSite("createanketa")') Přidat anketu
+              
+              each anketa, i in ankety
+                li.settings-item
+                  div.settings-item-img(style='background-image:url("#{anketa.img}")')
+                  span.settings-item-name #{anketa.name}
+                  span.settings-item-date #{anketa.date}
+                  button.btn.settings-btn(onclick='getSite("editanketa", "#{anketa.name}");') Upravit
+                  button.btn.settings-btn(onclick='getSite("results","#{anketa.name}");') Výsledky
+                  button.btn.settings-btn.btn-decline(onclick='delete_item("#{anketa.name}","anketa");') Odstranit
+
+          div.confirm-delete#confirm-delete(style='display:none;')
+            h3.confirm-delete-label Opravdu chcete odstranit
+            div.confirm-btn-container
+              button(onclick='confirm();').btn.btn-decline Ano
+              button(onclick='decline();').btn Ne
+        
+      
+          
+    script(type='text/javascript', src='../js/jquery-3.3.1.min.js')
+    script(type='text/javascript' src='../js/settings.js')
