@@ -1173,46 +1173,50 @@ router.post('/addanketa', function(req, res) {
   //     fs.mkdirSync(dir);
   // }
   var Jimp = require('jimp');
-  if (req.files['img']) {
-    var file = req.files['img'];
-    var filename = file.name;
-    filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
-    anketa.img = "data/" + anketa.name + "/" + filename;
-    file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
-      if (err) {
-        console.log(err);;
-      } else {
+  if (req.files) {
+    if(req.files['img']){
+      var file = req.files['img'];
+      var filename = file.name;
+      filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
+      anketa.img = "data/" + anketa.name + "/" + filename;
+      file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
+        if (err) {
+          console.log(err);;
+        } else {
 
-      }
-    });
+        }
+      });
+    }
 
   } else {
     anketa.img = 'data/default.png';
   }
 
   for (var i = 0; i < anketa.count; i++) {
-    if (req.files['img' + i]) {
-      var file = req.files['img' + i];
-      var filename = file.name;
-      filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
-      anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
-      file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
-        if (err) {
-          throw err;
-        } else {
-          // Jimp.read('public/data/' + quiz.name + '/' + filename)
-          //   .then(function(file) {
-          //     file
-          //       .cover(400, 400)
-          //       .write('public/data/' + quiz.name + '/' + filename);
-          //   })
-          //   .catch(function(err) {
-          //     console.log(err);
-          //   });
+    if (req.files) {
+      if(req.files['img' + i]){
+        var file = req.files['img' + i];
+        var filename = file.name;
+        filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
+        anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
+        file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
+          if (err) {
+            throw err;
+          } else {
+            // Jimp.read('public/data/' + quiz.name + '/' + filename)
+            //   .then(function(file) {
+            //     file
+            //       .cover(400, 400)
+            //       .write('public/data/' + quiz.name + '/' + filename);
+            //   })
+            //   .catch(function(err) {
+            //     console.log(err);
+            //   });
 
-        }
+          }
 
-      });
+        });
+      }
 
     } else {
       anketa.questions[i].img = "data/default.png";
@@ -1301,7 +1305,6 @@ router.get('/data', function(req, res) {
   });
 });
 
-router.get('/test', function(req, res) {
-  res.render('test');
-});
+
+
 module.exports = router;

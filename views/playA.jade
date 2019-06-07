@@ -31,6 +31,19 @@ html(lang='cz', dir='ltr')
               div.note
                 textarea.play-textarea(placeholder="Komentář ...")#note
                 i(onclick='record();').fas.fa-microphone.note-button(style="display:none;")
+                
+            div.play-buttons-container-mps(style="display:none;")
+              button.btn.btn-mps 0
+              button.btn.btn-mps 1
+              button.btn.btn-mps 2
+              button.btn.btn-mps 3
+              button.btn.btn-mps 4
+              button.btn.btn-mps 5
+              button.btn.btn-mps 6
+              button.btn.btn-mps 7
+              button.btn.btn-mps 8
+              button.btn.btn-mps 9
+              button.btn.btn-mps 10
             div.play-arrow
               //- img(src='../../img/Right.png', onclick='changeQuestion(1);')#right  
               i.fas.fa-caret-right(onclick='changeQuestion(1);')#right
@@ -43,7 +56,9 @@ html(lang='cz', dir='ltr')
               div.progressBar-background
                 span.progress-bar-count 1/3
                 div.progressBar-foreground
-            
+        
+          
+        
         div.desc
           div.desc-name
               h1.desc-title #{anketa[0].name} 

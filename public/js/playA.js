@@ -117,15 +117,13 @@ function changeQuestion(dir) {
         $('#note').val(result.answers[n].note);
       }
     }else{
-      $('.btn-answer').css('border', 'rgb(147, 51, 51) .07rem solid');
+      $('.btn-answer').css('border','none');
+      $('.btn-answer').css('border', 'rgb(177,31,31) .1rem solid');
       $('.btn-answer').animate({
-        opacity: .8
-      }, 300)
-      .animate({
         opacity: 1
-      },300, ()=>{
+      }, 500, ()=>{
         $('.btn-answer').css('border','none');
-      });
+      })
     }
   }
 }

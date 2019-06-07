@@ -278,13 +278,13 @@ input[type="text"], input[type="number"]{
   width: 90%;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   align-content: start;
 }
 .quiz-tile{
   height: 0;
-  flex:0 0 33%;
-  padding-top: 33%;
+  flex:0 0 32.5%;
+  padding-top: 32.5%;
   position: relative;
   display: flex;
   justify-content: center;
@@ -752,6 +752,7 @@ select{
   /* box-shadow: 0px 0.1rem rgb(55,59,63); */
   margin: 0 auto;
   /* border : solid .1rem #4BA82E; */
+  transition: border .5s ease;
 }
 .btn-answer:focus{
   outline:0;
@@ -1077,4 +1078,11 @@ select{
 }
 #q{
   margin: 0 3rem;
+}
+.play-buttons-container-mps{
+  flex: 1 0 40%;
+
+}
+.btn-mps{
+  width: 6%;
 }
