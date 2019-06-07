@@ -23,14 +23,14 @@ html(lang='cz', dir='ltr')
             div.play-img
               img#questionImg
             div.play-buttons-container
-              button.btn-answer#answer1.btn(type="button", value="1", onclick='select(1);') Ano
-              button.btn-answer#answer2.btn(type="button", value="1", onclick='select(2);') Spíš ano
-              button.btn-answer#answer3.btn(type="button", value="1", onclick='select(3);') Neutral
-              button.btn-answer#answer4.btn(type="button", value="1", onclick='select(4);') Spíš ne
-              button.btn-answer#answer5.btn(type="button", value="1", onclick='select(5);') Ne
+              button.btn-answer#answer1.btn(type="button", value="1", onclick='select(1);') Určitě Ano
+              button.btn-answer#answer2.btn(type="button", value="1", onclick='select(2);') Spíše ano
+              button.btn-answer#answer3.btn(type="button", value="1", onclick='select(3);') Nemohu rozhodnout
+              button.btn-answer#answer4.btn(type="button", value="1", onclick='select(4);') Spíše ne
+              button.btn-answer#answer5.btn(type="button", value="1", onclick='select(5);') Určitě ne
               div.note
-                textarea.play-textarea(placeholder="Vlastní odpověď ...")#note
-                i(onclick='record();').fas.fa-microphone.note-button
+                textarea.play-textarea(placeholder="Komentář ...")#note
+                i(onclick='record();').fas.fa-microphone.note-button(style="display:none;")
             div.play-arrow
               //- img(src='../../img/Right.png', onclick='changeQuestion(1);')#right  
               i.fas.fa-caret-right(onclick='changeQuestion(1);')#right
@@ -52,18 +52,20 @@ html(lang='cz', dir='ltr')
               h2.desc-popis-title Popis Ankety :
               p.desc-content #{anketa[0].desc}
             div.user-data
-              label.desc-input-label Jméno : 
-              input(type='text', name='jmeno').desc-input
-              label.desc-input-label Příjmení : 
-              input(type='text', name='prijmeni').desc-input
-              label.desc-input-label Věk : 
-              input(type='number', name='age', min='1', max='100').desc-input
-              label.desc-input-label Pohlaví : 
-              select(type='text', name='sex').desc-input.desc-select
-                option Muž
-                option Žena
-              div.btn-container
-                button.desc-btn.btn.btn-confirm(onclick='start();') Začít
+              div.user-data-form
+                label.desc-input-label Jméno : 
+                input(type='text', name='jmeno').desc-input
+                label.desc-input-label Příjmení : 
+                input(type='text', name='prijmeni').desc-input
+                label.desc-input-label Věk : 
+                input(type='number', name='age', min='1', max='100').desc-input
+                label.desc-input-label Pohlaví : 
+                select(type='text', name='sex').desc-input.desc-select
+                  option Muž
+                  option Žena
+              //- div.btn-container
+          div.desc-btn-start    
+            button.desc-btn.btn.btn-confirm(onclick='start();') Začít
               
         div.end
           h1.end-text Děkujeme za spolupráci

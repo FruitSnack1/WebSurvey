@@ -657,11 +657,12 @@ select{
   flex-direction: column;
   height: 100%;
   width: 100%;
+  justify-content: space-around;
 }
 
 .desc-name {
   width: 100%;
-  height: 25%;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -669,11 +670,18 @@ select{
 
 .desc-data {
   width: 100%;
-  height: 85%;
+  height: 65%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+.desc-btn-start{
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
 }
 
 .desc-popis {
@@ -705,7 +713,7 @@ select{
 }
 
 .desc-content {
-  margin-left: 1rem;
+  margin: 1rem;
   color: rgb(200, 200, 200);
 }
 
@@ -736,20 +744,23 @@ select{
 
 .btn-answer {
   background-color: rgb(65, 69, 73);
-  border: none;
+  /* border: none; */
   font-family: skodaFontRegular;
   width: 85%;
   height: 10%;
   /* border-radius: 0.2rem; */
   /* box-shadow: 0px 0.1rem rgb(55,59,63); */
   margin: 0 auto;
+  /* border : solid .1rem #4BA82E; */
 }
-
+.btn-answer:focus{
+  outline:0;
+}
 .desc-btn {
   /* background-color: rgb(116, 203, 70); */
   border: none;
   font-family: skodaFontRegular;
-  width: 100%;
+  width: 40%;
   height: 65%;
   /* border-radius: 0.2rem; */
   /* box-shadow: 0px 0.1rem rgb(76, 163, 30); */
@@ -801,7 +812,7 @@ select{
 }
 
 .play-buttons-container {
-  flex: 0 0 40%;
+  flex: 1 0 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -848,7 +859,7 @@ select{
   width: calc(100% - 2rem);
   font-size: 0.8rem;
   display: block;
-  color: #495057;
+  color: white;
   margin: 0;
   font-family: skodaFontLight;
   /* border-radius: 0.25rem; */
@@ -857,6 +868,11 @@ select{
   padding-right: 1.6rem;
   height: 3rem;
   resize: none;
+  background-color: rgb(65, 69, 73);
+}
+.play-textarea::placeholder{
+  color: white;
+  opacity: .6;
 }
 
 .note-button {
@@ -1058,4 +1074,7 @@ select{
   justify-content: space-between;
   color: gray;
   padding: 0 .2rem;
+}
+#q{
+  margin: 0 3rem;
 }

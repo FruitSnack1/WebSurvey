@@ -36,13 +36,27 @@ for (var i = 0; i < anketa.questions.length; i++) {
 }
 $('.play').css('display', 'none');
 $('.progressBar').css('display', 'none');
-
+if(!anketa.comments){
+  $('.note').hide();
+  $('.btn-answer').css('height', '13%');
+}
+if(!anketa.user_data){
+  $('.user-data-form').css('opacity','0');
+}
+if(anketa.desc.length == 0){
+  $('.desc-popis-title').hide();
+}
+if(!anketa.user_data && anketa.desc.length == 0){
+  $('.desc-data').hide();
+}
 function changeQuestion(dir) {
   if (n + dir == anketa.count) {
-    result.first_name = $('input[name=jmeno]').val();
-    result.last_name = $('input[name=prijmeni]').val();
-    result.age = $('input[name=age]').val();
-    result.sex = $('select[name=sex]').val();
+    if(anketa.user_data){
+      result.first_name = $('input[name=jmeno]').val();
+      result.last_name = $('input[name=prijmeni]').val();
+      result.age = $('input[name=age]').val();
+      result.sex = $('select[name=sex]').val();
+    }
     result.totalTime = 0;
     for (var i = 0; i < anketa.questions.length; i++) {
       result.answers[i].time = questionTime[i];
@@ -66,31 +80,52 @@ function changeQuestion(dir) {
     $('.play').css('display', 'none');
     $('.progressBar').css('display', 'none');
   } else {
-    n += dir;
-    progress(dir);
-    $('#q').html(anketa.questions[n].q);
-    $('#questionImg').attr('src', '../../' + anketa.questions[n].img);
-    $('#note').val('');
-    for (var i = 0; i < 5; i++) {
-      $('#answer' + (i + 1)).css('display', 'block');
-      $('#answer' + (i + 1)).css('opacity', '1');
-      $('#answer' + (i + 1)).css('color', 'white');
-    }
+    if (dir == -1 || n ==-1 || result.answers[n].answer) {
+      $('#right').css('opacity','.5');
+      n += dir;
+      progress(dir);
+      $('#q').html(anketa.questions[n].q);
+      if(anketa.questions[n].img != 'data/default.png'){
+        $('.play-img').show();
+        $('#questionImg').attr('src', '../../' + anketa.questions[n].img);
+      }else{
+        $('.play-img').hide();
+      }
+      $('#note').val('');
+      for (var i = 0; i < 5; i++) {
+        $('#answer' + (i + 1)).css('display', 'block');
+        $('#answer' + (i + 1)).css('opacity', '1');
+        $('#answer' + (i + 1)).css('color', 'white');
+        $('#answer' + (i + 1)).css('border', 'none');
+      }
 
-    if (result.answers[n].answer) {
-      for (var i = 1; i <= 5; i++) {
-        if ($('#answer' + i).html() != result.answers[n].answer) {
-          $('#answer' + i).css('opacity', '0.5');
-          $('#answer' + i).css('color', 'white');
-        } else {
-          $('#answer' + i).css('opacity', '1');
-          $('#answer' + i).css('color', colors[i - 1]);
+      if (result.answers[n].answer) {
+        for (var i = 1; i <= 5; i++) {
+          if ($('#answer' + i).html() != result.answers[n].answer) {
+            $('#answer' + i).css('opacity', '0.5');
+            $('#answer' + i).css('color', 'white');
+            $('#answer' + i).css('border','none')
+          } else {
+            $('#answer' + i).css('opacity', '1');
+            // $('#answer' + i).css('color', colors[i - 1]);
+            $('#answer' + i).css('border','solid .07rem #4BA82E');
+          }
         }
       }
-    }
 
-    if (result.answers[n].note) {
-      $('#note').val(result.answers[n].note);
+      if (result.answers[n].note) {
+        $('#note').val(result.answers[n].note);
+      }
+    }else{
+      $('.btn-answer').css('border', 'rgb(147, 51, 51) .07rem solid');
+      $('.btn-answer').animate({
+        opacity: .8
+      }, 300)
+      .animate({
+        opacity: 1
+      },300, ()=>{
+        $('.btn-answer').css('border','none');
+      });
     }
   }
 }
@@ -103,14 +138,17 @@ function start() {
 }
 
 function select(button) {
+  $('#right').css('opacity','1');
   result.answers[n].answer = $('#answer' + button).html();
   for (var i = 1; i <= 5; i++) {
     if (i != button) {
       $('#answer' + i).css('opacity', '0.5');
       $('#answer' + i).css('color', 'white');
+      $('#answer' + i).css('border','none');
     } else {
       $('#answer' + i).css('opacity', '1');
-      $('#answer' + i).css('color', colors[button - 1]);
+      // $('#answer' + i).css('color', colors[button - 1]);
+      $('#answer' + i).css('border' ,'solid .07rem #4BA82E');
     }
   }
 }

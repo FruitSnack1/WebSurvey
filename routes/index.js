@@ -1132,7 +1132,9 @@ router.post('/addanketa', function(req, res) {
     questions: [],
     random_order: false,
     weights: false,
-    sectors: false
+    sectors: false,
+    comments: false,
+    user_data: false
   };
   for (var i = 0; i < anketa.count; i++) {
     var o = {};
@@ -1142,6 +1144,12 @@ router.post('/addanketa', function(req, res) {
   }
   if(req.body.random_order){
     anketa.random_order = true;
+  }
+  if(req.body.note){
+    anketa.comments = true;
+  }
+  if (req.body.user_data) {
+    anketa.user_data = true;
   }
   if(req.body.weights){
     anketa.weights = true;
