@@ -12,6 +12,12 @@ html(lang='cz', dir='ltr')
       div.content
         div.container
           div.graph-container
+            div.graph-container-values
+              span#bar1-value
+              span#bar2-value
+              span#bar3-value
+              span#bar4-value
+              span#bar5-value
             div.bars
               div#bar1
               div#bar2
@@ -33,7 +39,6 @@ html(lang='cz', dir='ltr')
               li.item
                 span.data-list-item-name Průměrný čas:
                 span.data-list-item-value#time 0 
-                span s
               li.item
                 span.data-list-item-name Počet mužů:
                 span.data-list-item-value#male_count 0
@@ -46,13 +51,18 @@ html(lang='cz', dir='ltr')
                 script(type='text/javascript').
                   var local_data =!{JSON.stringify(result)}
                   var name =!{JSON.stringify(name)}
+                
             div.data-container-excel-container
               button.data-container-excel(onclick='download();').btn.btn-confirm
                 i.fas.fa-file-excel.data-container-icon
                 span.data-container-span     Výsledky v excelu
-              
-      
-          
+              button.data-container-chart.btn(onclick='showCharts();') 
+                i.fas.fa-chart-pie.data-container-icon
+                span.data-container-span     Grafy otázek
+          div.results-chart-container(style='display:none;')
+            //- div.chart
+            //-   canvas(id='myChart')
+                
     script(type='text/javascript', src='../js/jquery-3.3.1.min.js')
     script(type='text/javascript').
       var local_data =!{JSON.stringify(result)}

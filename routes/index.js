@@ -1216,6 +1216,8 @@ router.post('/addanketa', function(req, res) {
           }
 
         });
+      }else{
+        anketa.questions[i].img = "data/default.png";
       }
 
     } else {

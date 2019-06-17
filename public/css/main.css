@@ -451,10 +451,8 @@ background-color: rgb(255,121,0);
 #bar5{
 background-color: rgb(222,29,14);
 }
-[id^=bar]{
-
+#bar1, #bar2, #bar3, #bar4, #bar5{
   width: 3.5%;
-  background: white;
   min-height: 1%;
   animation: grow 1500ms ease;
 }
@@ -464,7 +462,7 @@ background-color: rgb(222,29,14);
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  padding-top: 10%;
+  /* padding-top: 10%; */
 }
 .names{
   width: 100%;
@@ -501,9 +499,47 @@ background-color: rgb(222,29,14);
   text-align: right;
 }
 .data-container-excel{
-  margin-top: 5vw;
+  /* margin-top: 5vw; */
   width: 35vw;
-  margin-left: 5vw;
+  /* margin-left: 5vw; */
+}
+.data-container-chart{
+  width: 35vw;
+  margin-top: -5vw;
+}
+.results-chart-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+}
+.chart{
+  height: 100%;
+  flex: 0 0 48.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.chart:first-child{
+  margin-left: 1rem
+}
+.chart:last-child{
+  padding-right: 1rem;
+}
+.chart-span{
+  font-size: 1.2rem;
+  font-family: skodaFontRegular;
+  text-align: center;
+  padding: 1.2rem;
+}
+.data-container-excel-container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  height: 43%;
 }
 .input-img{
   border: none;
@@ -1085,4 +1121,16 @@ select{
 }
 .btn-mps{
   width: 6%;
+}
+.graph-container-values{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+#bar1-value, #bar2-value, #bar3-value, #bar4-value, #bar5-value{
+  width: 10%;
+  text-align: center;
+  opacity: .4;
 }
