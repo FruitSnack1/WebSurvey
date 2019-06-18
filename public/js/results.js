@@ -139,7 +139,11 @@ function displayCharts() {
         data: data,
         options: {
           legend: {
-            position: 'right'
+            position: 'right',
+            labels: {
+              fontSize: 20,
+              fontColor: 'rgb(190,190,190)'
+            }
           },
           animateScale : true,
           animation:{

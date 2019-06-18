@@ -617,9 +617,9 @@ textarea:focus, input:focus{
 }
 select{
   border: solid .1rem #585858;
-  padding: 0 .2rem;
+  padding: 0 .4rem;
   font-family: skodaFontLight;
-  width: 50%;
+  width: 52.5%;
   height: 1.7rem;
 }
 
@@ -1041,7 +1041,6 @@ select{
 .confirm-delete-label{
   font-family: skodaFontLight;
   margin: 0;
-  margin-top: 2rem;
 }
 .confirm-btn-container{
   width: 80%;
@@ -1133,4 +1132,46 @@ select{
   width: 10%;
   text-align: center;
   opacity: .4;
+}
+.lang-icon{
+  width: 5%;
+  margin-right: .4rem;
+}
+.lang-icon-container{
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
+}
+.confirm-lang-container{
+  width: 47%;
+  height: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+.confirm-lang-icon{
+  width: 36%;
+  height: auto;
+  opacity: .3;
+}
+.confirm-lang-icon-selected{
+  opacity: 1;
+}
+#playConfirm{
+  padding: 1rem 0;
+  height: calc(30vw - 2rem);
+}
+.lang-switch-container{
+  position: absolute;
+  width: 4rem;
+  height: 1.6rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.lang-switch-icon{
+  width: 40%;
+  opacity: .4;
+}
+.lang-switch-icon-selected{
+  opacity: 1;
 }

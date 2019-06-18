@@ -1,6 +1,8 @@
+let n = -1;
+langSwitch();
+$('#lang-'+lang).addClass('lang-switch-icon-selected');
 let dropAnim = false;
 let anketa = local_data[0];
-let n = -1;
 let result = {};
 let colors = ['rgb(116,203,70)', 'rgb(235,216,18)', 'rgb(255,255,255)', 'rgb(255,121,0)', 'rgb(222,29,14)'];
 let date = new Date();
@@ -50,7 +52,7 @@ if(!anketa.user_data && anketa.desc.length == 0){
   $('.desc-data').hide();
 }
 function changeQuestion(dir) {
-  if (n + dir == anketa.count) {
+  if (n + dir == anketa.count && result.answers[n].answer) {
     if(anketa.user_data){
       result.first_name = $('input[name=jmeno]').val();
       result.last_name = $('input[name=prijmeni]').val();
@@ -76,7 +78,7 @@ function changeQuestion(dir) {
     $('.end').css('display', 'flex');
   } else if (n + dir == -1) {
     n--;
-    $('.desc').css('display', 'block');
+    $('.desc').show();
     $('.play').css('display', 'none');
     $('.progressBar').css('display', 'none');
   } else {
@@ -84,10 +86,13 @@ function changeQuestion(dir) {
       $('#right').css('opacity','.5');
       n += dir;
       progress(dir);
-      $('#q').html(anketa.questions[n].q);
+      if(lang == 'cz')
+        $('#q').html(anketa.questions[n].q[0]);
+      else
+        $('#q').html(anketa.questions[n].q[1]);
       if(anketa.questions[n].img != 'data/default.png'){
         $('.play-img').show();
-        $('#questionImg').attr('src', '../../' + anketa.questions[n].img);
+        $('#questionImg').attr('src', '../../../' + anketa.questions[n].img);
       }else{
         $('.play-img').hide();
       }
@@ -163,35 +168,6 @@ function progress(dir) {
   }else{
     $('.progressBar-foreground').css('border-radius', '2rem 0 0 2rem');
   }
-  // let start = (n - dir) / (anketa.count - 1);
-  // let end = n / (anketa.count - 1);
-  //
-  // if (start >= 0) {
-  //   if (start < end) {
-  //     var id = setInterval(frame, 10);
-  //
-  //     function frame() {
-  //       if (start >= end) {
-  //         clearInterval(id);
-  //       } else {
-  //         start += 0.01;
-  //         $('.progress-car').css('margin-left', start * 88.5 + '%');
-  //       }
-  //     }
-  //   } else {
-  //     var id = setInterval(frame, 10);
-  //
-  //     function frame() {
-  //       if (start <= end) {
-  //         clearInterval(id);
-  //       } else {
-  //         start -= 0.01;
-  //         $('.progress-car').css('margin-left', start * 89.5 + '%');
-  //       }
-  //     }
-  //   }
-  // }
-  // $('.progressBar-foreground').css('width', p+'%');
   $('.progressBar-foreground').animate({
     width:p+'%'
   }, 200);
@@ -249,7 +225,7 @@ function reset() {
     o.note = null;
     result.answers.push(o);
   }
-  $('.desc').css('display', 'block');
+  $('.desc').show();
   $('.play').css('display', 'none');
   $('.progressBar').css('display', 'none');
   $('.end').css('display', 'none');
@@ -284,4 +260,54 @@ function shuffle(array) {
     array[randomIndex] = temporaryValue;
   }
   return array;
+}
+
+function langSwitch() {
+  if(lang == 'cz'){
+    $('.desc-btn').html('Začít');
+    $('#answer1').html('Určitě Ano');
+    $('#answer2').html('Spíše ano');
+    $('#answer3').html('Nemohu rozhodnout');
+    $('#answer4').html('Spíše ne');
+    $('#answer5').html('Určitě ne');
+    $('.end-text').html('Děkujeme za spolupráci');
+    $('.end-bnt').html('Spustit znovu');
+    $('#note').attr('placeholder','Komentář ...');
+    $('.user-data-form').find('label').eq(0).html("Jméno :");
+    $('.user-data-form').find('label').eq(1).html("Příjmení :");
+    $('.user-data-form').find('label').eq(2).html("Věk :");
+    $('.user-data-form').find('label').eq(3).html("Pohlaví :");
+    if(n != -1)
+      $('#q').html(anketa.questions[n].q[0]);
+  }else{
+    $('.desc-btn').html('Begin');
+    $('#answer1').html('Definitely yes');
+    $('#answer2').html('Rather yes');
+    $('#answer3').html("Can't decide");
+    $('#answer4').html('Rather no');
+    $('#answer5').html('Definitely no');
+    $('.end-text').html('Thank you for your cooperation');
+    $('.end-bnt').html('Start again');
+    $('#note').attr('placeholder','Comment ...');
+    $('.user-data-form').find('label').eq(0).html("First name :");
+    $('.user-data-form').find('label').eq(1).html("Last name :");
+    $('.user-data-form').find('label').eq(2).html("Age :");
+    $('.user-data-form').find('label').eq(3).html("Sex :");
+    if(n !=-1)
+      $('#q').html(anketa.questions[n].q[1]);
+  }
+}
+
+function switchLang(l) {
+  if(l == lang)
+    return;
+  lang = l;
+  langSwitch();
+  if(lang == 'cz'){
+    $('#lang-cz').addClass('lang-switch-icon-selected');
+    $('#lang-en').removeClass('lang-switch-icon-selected');
+  }else{
+    $('#lang-en').addClass('lang-switch-icon-selected');
+    $('#lang-cz').removeClass('lang-switch-icon-selected');
+  }
 }

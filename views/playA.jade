@@ -4,7 +4,7 @@ html(lang='cz', dir='ltr')
     meta(charset='utf-8')
     //- link(rel='stylesheet', href='../../css/main2.css')
     //- link(rel='stylesheet', href='../../css/playA.css')
-    link(rel='stylesheet', href='../../css/main.css')
+    link(rel='stylesheet', href='../../../css/main.css')
     //- link(rel='stylesheet', href='../css/bootstrap.css')
     link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
     
@@ -85,11 +85,13 @@ html(lang='cz', dir='ltr')
         div.end
           h1.end-text Děkujeme za spolupráci
           button(onclick='reset();').end-bnt.btn.btn-confirm Spustit znovu
-    
-    
+        div.lang-switch-container
+          img(src='../../../img/cz_icon.png', onclick='switchLang("cz")').lang-switch-icon#lang-cz
+          img(src='../../../img/en_icon.png', onclick='switchLang("en")').lang-switch-icon#lang-en
         
       script(type='text/javascript').
         var local_data =!{JSON.stringify(anketa)}
         var cluster = !{JSON.stringify(cluster)}
-    script(type='text/javascript', src='../../js/jquery-3.3.1.min.js')
-    script(type='text/javascript' src='../../js/playA.js')  
+        var lang = !{JSON.stringify(lang)}
+    script(type='text/javascript', src='../../../js/jquery-3.3.1.min.js')
+    script(type='text/javascript' src='../../../js/playA.js')  

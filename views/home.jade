@@ -68,6 +68,9 @@ html(lang='cz', dir='ltr')
           
       div.popup-window#playConfirm(style='display:none;')
         h3.confirm-delete-label Chcete spustit ?
+        div.confirm-lang-container
+          img(src='img/cz_icon.png', onclick='changeLang("cz")').confirm-lang-icon.confirm-lang-icon-selected#lang-cz
+          img(src='img/en_icon.png', onclick='changeLang("en")').confirm-lang-icon#lang-en
         div.confirm-btn-container
           button(onclick='confirmPlay();').btn.btn-confirm Spustit
           button(onclick='declinePlay();').btn Zrušit

@@ -13,6 +13,7 @@ let editAnketaJson;
 let editLinkImgsJson = {};
 let imgJson = {};
 let playSelect;
+let playLang = 'cz';
 $('.active').click(function() {
   if (anim) {
     $('.cluster-list-drop').css('display', 'block');
@@ -193,8 +194,18 @@ function playConfirm(name) {
   playSelect = name;
 }
 function confirmPlay() {
-  window.location.replace('http://localhost:9000/playA/'+cluster+'/'+playSelect);
+  window.location.replace('http://localhost:9000/playA/'+cluster+'/'+playSelect+'/'+playLang);
 }
 function declinePlay() {
   $('#playConfirm').hide();
+}
+function changeLang(lang) {
+  playLang = lang;
+  if(lang == 'cz'){
+    $('#lang-cz').addClass('confirm-lang-icon-selected');
+    $('#lang-en').removeClass('confirm-lang-icon-selected');
+  }else{
+    $('#lang-en').addClass('confirm-lang-icon-selected');
+    $('#lang-cz').removeClass('confirm-lang-icon-selected');
+  }
 }

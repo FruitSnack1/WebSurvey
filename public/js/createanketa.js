@@ -135,9 +135,18 @@ function weightChange() {
 }
 
 function sectorCountChange() {
-  console.log($('#sector-count-select').val());
   $('.sector-select').empty();
   for (var i = 1; i <= $('#sector-count-select').val(); i++) {
     $('.sector-select').append($('<option></option>').text(i));
+  }
+}
+
+function langEnChange() {
+  if($('.lang-en-input').is(':visible')){
+    $('.lang-en-input').hide();
+    $('.lang-cz-input').css('padding-bottom','0');
+  }else{
+    $('.lang-en-input').fadeIn(300);
+    $('.lang-cz-input').css('padding-bottom','.2rem');
   }
 }

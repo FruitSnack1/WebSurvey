@@ -805,7 +805,7 @@ router.get('/createanketa', function(req, res, next) {
 //   });
 // });
 
-router.get('/playA/:cluster/:anketa', function(req, res) {
+router.get('/playA/:cluster/:anketa/:lang', function(req, res) {
   var MongoClient = mongodb.MongoClient;
   var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
@@ -823,7 +823,8 @@ router.get('/playA/:cluster/:anketa', function(req, res) {
 
           res.render('playA', {
             'anketa': result,
-            'cluster': req.params.cluster
+            'cluster': req.params.cluster,
+            'lang': req.params.lang
           })
 
         }
@@ -1121,7 +1122,6 @@ router.post('/addquiz', function(req, res) {
 router.post('/addanketa', function(req, res) {
   let date = new Date();
   let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
-  console.log(req.body['sector_count']);
   //create object
   var anketa = {
     name: req.body.name,
@@ -1134,7 +1134,8 @@ router.post('/addanketa', function(req, res) {
     weights: false,
     sectors: false,
     comments: false,
-    user_data: false
+    user_data: false,
+    languages:['cz']
   };
   for (var i = 0; i < anketa.count; i++) {
     var o = {};
@@ -1150,6 +1151,9 @@ router.post('/addanketa', function(req, res) {
   }
   if (req.body.user_data) {
     anketa.user_data = true;
+  }
+  if (req.body.lang_en) {
+    anketa.languages.push('en');
   }
   if(req.body.weights){
     anketa.weights = true;
