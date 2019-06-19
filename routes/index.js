@@ -1311,6 +1311,27 @@ router.get('/data', function(req, res) {
   });
 });
 
-
+router.get('/ajax/:cluster/:name', (req,res)=>{
+  let target = req.params.name;
+  var MongoClient = mongodb.MongoClient;
+  var url = 'mongodb://127.0.0.1:27017/quiz';
+  MongoClient.connect(url, function(err, client) {
+    if (err) {
+      console.log('Unable to connect to the Server', err);
+    } else {
+      var db = client.db("quiz");
+      var collection = db.collection(req.params.cluster+'_anketa_results');
+      collection.find({
+        'name': target
+      }).toArray(function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    }
+  });
+});
 
 module.exports = router;

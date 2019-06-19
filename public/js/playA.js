@@ -1,6 +1,10 @@
 let n = -1;
 langSwitch();
-$('#lang-'+lang).addClass('lang-switch-icon-selected');
+if(local_data[0].languages.length < 2){
+  $('.lang-switch-container').hide();
+}else{
+  $('#lang-'+lang).addClass('lang-switch-icon-selected');
+}
 let dropAnim = false;
 let anketa = local_data[0];
 let result = {};
@@ -27,7 +31,7 @@ if(result.sectors)
   result.sector_count = anketa.sector_count;
 for (var i = 0; i < anketa.questions.length; i++) {
   let o = {};
-  o.question = anketa.questions[i].q;
+  o.question = anketa.questions[i].q[0];
   o.answer = null;
   o.note = null;
   if(result.weights)
@@ -47,6 +51,8 @@ if(!anketa.user_data){
 }
 if(anketa.desc.length == 0){
   $('.desc-popis-title').hide();
+}else{
+  $('.desc-popis-title').show();
 }
 if(!anketa.user_data && anketa.desc.length == 0){
   $('.desc-data').hide();
@@ -142,7 +148,7 @@ function start() {
 
 function select(button) {
   $('#right').css('opacity','1');
-  result.answers[n].answer = $('#answer' + button).html();
+  result.answers[n].answer = button;
   for (var i = 1; i <= 5; i++) {
     if (i != button) {
       $('#answer' + i).css('opacity', '0.5');
@@ -277,6 +283,8 @@ function langSwitch() {
     $('.user-data-form').find('label').eq(1).html("Příjmení :");
     $('.user-data-form').find('label').eq(2).html("Věk :");
     $('.user-data-form').find('label').eq(3).html("Pohlaví :");
+    $('.desc-select').find('option').eq(0).html('Muž');
+    $('.desc-select').find('option').eq(1).html('Žena');
     if(n != -1)
       $('#q').html(anketa.questions[n].q[0]);
   }else{
@@ -293,6 +301,8 @@ function langSwitch() {
     $('.user-data-form').find('label').eq(1).html("Last name :");
     $('.user-data-form').find('label').eq(2).html("Age :");
     $('.user-data-form').find('label').eq(3).html("Sex :");
+    $('.desc-select').find('option').eq(0).html('Man');
+    $('.desc-select').find('option').eq(1).html('Woman');
     if(n !=-1)
       $('#q').html(anketa.questions[n].q[1]);
   }

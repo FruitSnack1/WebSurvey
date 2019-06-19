@@ -188,13 +188,17 @@ function confirmSwitch(){
 function declineSwitch(){
   $('.switch-cluster').hide();
 }
-function playConfirm(name) {
+function playConfirm(name, len) {
+  if(len == 2)
+    $('.confirm-lang-container').show();
+  else
+    $('.confirm-lang-container').hide();
   $('#playConfirm').show();
   $('#playConfirm').find('h3').html('Chcete spustit '+name+' ?');
   playSelect = name;
 }
 function confirmPlay() {
-  window.location.replace('http://localhost:9000/playA/'+cluster+'/'+playSelect+'/'+playLang);
+  window.location.href = 'http://localhost:9000/playA/'+cluster+'/'+playSelect+'/'+playLang;
 }
 function declinePlay() {
   $('#playConfirm').hide();

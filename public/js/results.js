@@ -1,3 +1,16 @@
+setInterval(()=>{
+  $.ajax({
+    url: 'http://'+location.host+'/ajax/'+cluster+'/'+name
+  }).done((data)=>{
+    if(data.length != local_data.length){
+      local_data = data;
+      setResultData();
+      if($('.results-chart-container').is(':visible'))
+        updateCharts();
+    }
+  });
+},3000);
+
 let charts = [];
 function setResultData() {
   $('.data-name').html(name);
@@ -8,19 +21,19 @@ function setResultData() {
       for (var j = 0; j < local_data[i].answers.length; j++) {
         if (local_data[i].answers[j].answer) {
           switch (local_data[i].answers[j].answer) {
-            case 'Určitě Ano':
+            case 1:
               score[0]++;
               break;
-            case 'Spíše ano':
+            case 2:
               score[1]++;
               break;
-            case 'Nemohu rozhodnout':
+            case 3:
               score[2]++;
               break;
-            case 'Spíše ne':
+            case 4:
               score[3]++;
               break;
-            case 'Určitě ne':
+            case 5:
               score[4]++;
               break;
             default:
@@ -54,7 +67,7 @@ function setResultData() {
   for (var i = 0; i < local_data.length; i++) {
     if (local_data[i].sex === 'Muž') {
       male_count++;
-    } else {
+    } else if(local_data[i].sex === 'Žena'){
       female_count++;
     }
     if (local_data[i].totalTime != null) {
@@ -98,19 +111,19 @@ function displayCharts() {
     let answers =[0,0,0,0,0];
     for (var j = 0; j < local_data.length; j++) {
       switch (local_data[j].answers[i].answer) {
-        case 'Určitě Ano':
+        case 1:
           answers[0]++;
           break;
-        case 'Spíše ano':
+        case 2:
           answers[1]++;
           break;
-        case 'Nemohu rozhodnout':
+        case 3:
           answers[2]++;
           break;
-        case 'Spíše ne':
+        case 4:
           answers[3]++;
           break;
-        case 'Určitě ne':
+        case 5:
           answers[4]++;
           break;
         default:
@@ -151,5 +164,40 @@ function displayCharts() {
           }
         }
     });
+  }
+}
+
+function updateCharts() {
+  for (var i = 0; i < charts.length; i++) {
+    let answers =[0,0,0,0,0];
+    for (var j = 0; j < local_data.length; j++) {
+      switch (local_data[j].answers[i].answer) {
+        case 1:
+        answers[0]++;
+        break;
+        case 2:
+        answers[1]++;
+        break;
+        case 3:
+        answers[2]++;
+        break;
+        case 4:
+        answers[3]++;
+        break;
+        case 5:
+        answers[4]++;
+        break;
+        default:
+
+      }
+    }
+
+    let data = [answers[0], answers[1], answers[2], answers[3], answers[4]];
+
+    charts[i].data.datasets.forEach((dataset) =>{
+      dataset.data = data
+    });
+    charts[i].update();
+
   }
 }

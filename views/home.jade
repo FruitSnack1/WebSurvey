@@ -37,7 +37,7 @@ html(lang='cz', dir='ltr')
                 each anketa, i in ankety
                   div.quiz-tile
                     div.quiz-tile-content
-                      a( onclick='playConfirm("'+anketa.name+'");').quiz-tile-link
+                      a( onclick='playConfirm("'+anketa.name+'","'+anketa.languages.length+'");').quiz-tile-link
                         span.quiz-tile-name #{anketa.name} 
                         img.quiz-tile-img(src=anketa.img)
             div.quiz-container

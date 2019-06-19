@@ -13,7 +13,7 @@ html(lang='cz', dir='ltr')
     div.content-container
       div.main-container
         //- div.play-container
-        div.play
+        div.play(style="display:none;")
           div.question
               h3.text-white#q #{anketa[0].questions[0].q} 
           div.play-container-main
@@ -23,11 +23,11 @@ html(lang='cz', dir='ltr')
             div.play-img
               img#questionImg
             div.play-buttons-container
-              button.btn-answer#answer1.btn(type="button", value="1", onclick='select(1);') Určitě Ano
-              button.btn-answer#answer2.btn(type="button", value="1", onclick='select(2);') Spíše ano
-              button.btn-answer#answer3.btn(type="button", value="1", onclick='select(3);') Nemohu rozhodnout
-              button.btn-answer#answer4.btn(type="button", value="1", onclick='select(4);') Spíše ne
-              button.btn-answer#answer5.btn(type="button", value="1", onclick='select(5);') Určitě ne
+              button.btn-answer#answer1.btn(type="button", value=1, onclick='select(1);') Určitě Ano
+              button.btn-answer#answer2.btn(type="button", value=2, onclick='select(2);') Spíše ano
+              button.btn-answer#answer3.btn(type="button", value=3, onclick='select(3);') Nemohu rozhodnout
+              button.btn-answer#answer4.btn(type="button", value=4, onclick='select(4);') Spíše ne
+              button.btn-answer#answer5.btn(type="button", value=5, onclick='select(5);') Určitě ne
               div.note
                 textarea.play-textarea(placeholder="Komentář ...")#note
                 i(onclick='record();').fas.fa-microphone.note-button(style="display:none;")
@@ -64,7 +64,7 @@ html(lang='cz', dir='ltr')
               h1.desc-title #{anketa[0].name} 
           div.desc-data
             div.desc-popis
-              h2.desc-popis-title Popis Ankety :
+              h2.desc-popis-title(style='display:none') Popis Ankety :
               p.desc-content #{anketa[0].desc}
             div.user-data
               div.user-data-form
@@ -76,13 +76,13 @@ html(lang='cz', dir='ltr')
                 input(type='number', name='age', min='1', max='100').desc-input
                 label.desc-input-label Pohlaví : 
                 select(type='text', name='sex').desc-input.desc-select
-                  option Muž
-                  option Žena
+                  option(value='Muž') Muž
+                  option(value='Žena') Žena
               //- div.btn-container
           div.desc-btn-start    
             button.desc-btn.btn.btn-confirm(onclick='start();') Začít
               
-        div.end
+        div.end(style="display:none;")
           h1.end-text Děkujeme za spolupráci
           button(onclick='reset();').end-bnt.btn.btn-confirm Spustit znovu
         div.lang-switch-container

@@ -347,6 +347,8 @@ input[type="text"], input[type="number"]{
   width: 100%;
   display: flex;
   justify-content: center;
+  max-height: 75%;
+  overflow-y: auto;
 }
 .settings-list{
   list-style-type: none;
@@ -455,6 +457,7 @@ background-color: rgb(222,29,14);
   width: 3.5%;
   min-height: 1%;
   animation: grow 1500ms ease;
+  transition: height 1s;
 }
 .bars{
   width: 100%;
