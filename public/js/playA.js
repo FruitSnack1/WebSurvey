@@ -1,10 +1,13 @@
+$(function() {
+
+  langSwitch();
+  if(local_data[0].languages.length < 2){
+    $('.lang-switch-container').hide();
+  }else{
+    $('#lang-'+lang).addClass('lang-switch-icon-selected');
+  }
+});
 let n = -1;
-langSwitch();
-if(local_data[0].languages.length < 2){
-  $('.lang-switch-container').hide();
-}else{
-  $('#lang-'+lang).addClass('lang-switch-icon-selected');
-}
 let dropAnim = false;
 let anketa = local_data[0];
 let result = {};
@@ -31,7 +34,7 @@ if(result.sectors)
   result.sector_count = anketa.sector_count;
 for (var i = 0; i < anketa.questions.length; i++) {
   let o = {};
-  o.question = anketa.questions[i].q[0];
+  o.question = anketa.questions[i].q;
   o.answer = null;
   o.note = null;
   if(result.weights)

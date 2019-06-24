@@ -1120,6 +1120,7 @@ router.post('/addquiz', function(req, res) {
 });
 
 router.post('/addanketa', function(req, res) {
+  console.log(req.body);
   let date = new Date();
   let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
   //create object
@@ -1190,6 +1191,8 @@ router.post('/addanketa', function(req, res) {
 
         }
       });
+    }else{
+      anketa.img = 'data/default.png';
     }
 
   } else {

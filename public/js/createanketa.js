@@ -87,7 +87,6 @@ function finish() {
 // });
 
 function imgChange(element){
-  console.log('image uploaded');
   let preview = $(element).parent();
   let file = element.files[0];
   let reader = new FileReader();

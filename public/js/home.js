@@ -180,7 +180,6 @@ function editLinkImgsQ(){
 }
 function switchCluster(){
   $('.switch-cluster').css('display','flex');
-  console.log("asdf");
 }
 function confirmSwitch(){
   location.reload();

@@ -104,8 +104,13 @@ function displayCharts() {
 
   for (var i = 0; i < local_data[0].answers.length; i++) {
     let el = $('<div class="chart"></div>');
+    // let el2 = $('<div class="chart-container"></div>');
     el.append($('<span class="chart-span">'+ local_data[0].answers[i].question+'</span>'))
-    el.append($('<canvas id="chart'+ i +'"></canvas>'));
+    let cont = $('<div class="chart-graph-container"></div>');
+    let cont2 = $('<div class="chart-graph"></div>');
+    el.append(cont);
+    cont.append(cont2);
+    cont2.append($('<canvas id="chart'+ i +'"></canvas>'));
     $('.results-chart-container').append(el);
 
     let answers =[0,0,0,0,0];
@@ -154,10 +159,16 @@ function displayCharts() {
           legend: {
             position: 'right',
             labels: {
-              fontSize: 20,
-              fontColor: 'rgb(190,190,190)'
+              fontSize: $(window).width()*.405/30,
+              fontColor: 'rgb(190,190,190)',
+              boxWidth:$(window).width()*.405/15,
+              padding:$(window).width()*.405/80
             }
           },
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio:1,
+          onResize: chartResize,
           animateScale : true,
           animation:{
             duration: 1000
@@ -200,4 +211,11 @@ function updateCharts() {
     charts[i].update();
 
   }
+}
+
+function chartResize(chart, size) {
+  chart.options.legend.labels.fontSize = size.width/30;
+  chart.options.legend.labels.boxWidth = size.width/15;
+  chart.options.legend.labels.padding = size.width/80;
+  chart.update();
 }
