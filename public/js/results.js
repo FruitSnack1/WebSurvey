@@ -78,8 +78,14 @@ function setResultData() {
   time = Math.floor(time);
   let time_min = Math.floor(time/60);
   let time_el = time_min + ':' + (time - (time_min*60));
-  $('#male_count').html(male_count);
-  $('#female_count').html(female_count);
+  if(male_count == 0 && local_data.length)
+    $('#male_count').html('-');
+  else
+    $('#male_count').html(male_count);
+  if(male_count == 0 && local_data.length)
+    $('#female_count').html('-');
+  else
+    $('#female_count').html(female_count);
   $('#time').html(time_el);
   $('#quiz_count').html(local_data.length);
   $('#questions_count').html(local_data[0].answers.length);
@@ -218,4 +224,10 @@ function chartResize(chart, size) {
   chart.options.legend.labels.boxWidth = size.width/15;
   chart.options.legend.labels.padding = size.width/80;
   chart.update();
+}
+function getJsonResults() {
+  window.open('http://' + location.host + '/results/' + cluster + '/anketa/'+ name + '/json')
+}
+function getCsvResults() {
+  window.open('http://' + location.host + '/results/' + cluster + '/anketa/'+ name + '/csv');
 }

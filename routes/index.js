@@ -1,162 +1,154 @@
 var express = require('express');
 var router = express.Router();
 var mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
+const jsonexport = require('jsonexport');
+const url = 'mongodb://127.0.0.1:27017/quiz';
 let passwords = {
   'hmi': '0000',
-  'mod': '0000'
+  'mod': '0000',
+  'adas': '0000',
+  'emob': '0000',
+  'iae': '0000',
+  'light': '0000',
+  'car': '0000'
 }
-/* GET home page. */
-router.get('/', function(req, res) {
+
+router.get('/', (req, res) =>{
   res.render('index');
-
 });
 
-router.get('/template', (req,res) => {
-  res.render('template');
+router.get('/home', (req,res) =>{
+  if(req.query.pass != passwords[req.query.cluster])
+    return
+  MongoClient.connect(url, function(err, client) {
+    if (err) return console.log('Unable to connect to the Server', err);
+    var db = client.db("quiz");
+    console.log('Connection established to', url);
+    var quizzes;
+    var ankety;
+    db.collection(req.query.cluster + '_quizzes').find().toArray().
+    then(function(data) {
+      quizzes = data;
+      db.collection(req.query.cluster + '_ankety').find().toArray().
+      then(function(data2) {
+        ankety = data2;
+        res.render('home', {
+          "quizzes": quizzes,
+          "ankety": ankety,
+          "cluster": req.query.cluster
+        });
+      });
+    });
+  });
 });
 
-router.post('/', function(req, res) {
-  if (req.body.pass == passwords[req.body.cluster]) {
-    if (req.body.site == 'home') {
+router.get('/settings', (req,res) =>{
+  if(req.query.pass != passwords[req.query.cluster])
+    return
+  MongoClient.connect(url, function(err, client) {
+    if (err) return console.log('Unable to connect to the Server', err);
 
-      var MongoClient = mongodb.MongoClient;
-      var url = 'mongodb://127.0.0.1:27017/quiz';
-      MongoClient.connect(url, function(err, client) {
-        if (err) {
-          console.log('Unable to connect to the Server', err);
-        } else {
-          var db = client.db("quiz");
-          console.log('Connection established to', url);
-          var quizzes;
-          var ankety;
-          db.collection(req.body.cluster + '_quizzes').find().toArray().
-          then(function(data) {
-            quizzes = data;
-            db.collection(req.body.cluster + '_ankety').find().toArray().
-            then(function(data2) {
-              ankety = data2;
-              res.render('home', {
-                "quizzes": quizzes,
-                "ankety": ankety,
-                "cluster": req.body.cluster
-              });
-            });
-          });
-        }
+    var db = client.db("quiz");
+    console.log('Connection established to', url);
+    var quizzes;
+    var ankety;
+    db.collection(req.query.cluster + '_quizzes').find().toArray().
+    then(function(data) {
+      quizzes = data;
+      db.collection(req.query.cluster + '_ankety').find().toArray().
+      then(function(data2) {
+        ankety = data2;
+        res.render('settings', {
+          "quizzes": quizzes,
+          "ankety": ankety,
+          "cluster": req.query.cluster
+        });
       });
-    } else if (req.body.site == 'settings') {
+    });
+  });
+});
 
-      var MongoClient = mongodb.MongoClient;
-      var url = 'mongodb://127.0.0.1:27017/quiz';
-      MongoClient.connect(url, function(err, client) {
-        if (err) {
-          console.log('Unable to connect to the Server', err);
-        } else {
-          var db = client.db("quiz");
-          console.log('Connection established to', url);
-          var quizzes;
-          var ankety;
-          db.collection(req.body.cluster + '_quizzes').find().toArray().
-          then(function(data) {
-            quizzes = data;
-            db.collection(req.body.cluster + '_ankety').find().toArray().
-            then(function(data2) {
-              ankety = data2;
-              res.render('settings', {
-                "quizzes": quizzes,
-                "ankety": ankety
-              });
-            });
-          });
-        }
-      });
+router.get('/createanketa', (req, res)=>{
+  res.render('createanketa');
+});
 
-    } else if (req.body.site == 'createanketa') {
-      res.render('createanketa');
-    } else if (req.body.site == 'createquiz') {
-      res.render('createquiz');
-    } else if (req.body.site == 'results') {
+router.get('/createanketa', (req, res)=>{
+  res.render('createanketa');
+});
 
-      let target = req.body.params;
-      var MongoClient = mongodb.MongoClient;
-      var url = 'mongodb://127.0.0.1:27017/quiz';
-      MongoClient.connect(url, function(err, client) {
+router.get('/results', (req, res)=>{
+  let target = req.query.param;
+  MongoClient.connect(url, function(err, client) {
+    if (err) {
+      console.log('Unable to connect to the Server', err);
+    } else {
+      var db = client.db("quiz");
+      var collection = db.collection(req.query.cluster + '_anketa_results');
+      collection.find({
+        'name': target
+      }).toArray(function(err, result) {
         if (err) {
-          console.log('Unable to connect to the Server', err);
+          console.log(err);
         } else {
-          var db = client.db("quiz");
-          var collection = db.collection(req.body.cluster + '_anketa_results');
-          collection.find({
-            'name': target
-          }).toArray(function(err, result) {
-            if (err) {
-              console.log(err);
-            } else {
-              res.render('results', {
-                result: result,
-                name: target
-              });
-            }
-          });
-        }
-      });
-
-    } else if (req.body.site == 'editanketa') {
-      let target = req.body.params;
-      var MongoClient = mongodb.MongoClient;
-      var url = 'mongodb://127.0.0.1:27017/quiz';
-      MongoClient.connect(url, function(err, client) {
-        if (err) {
-          console.log('Unable to connect to the Server', err);
-        } else {
-          var db = client.db("quiz");
-          var collection = db.collection(req.body.cluster + '_ankety');
-          collection.find({
-            'name': target
-          }).toArray(function(err, result) {
-            if (err) {
-              console.log(err);
-            } else {
-              res.render('editanketa', {
-                'anketa': result
-              });
-            }
-          });
-        }
-      });
-    } else if (req.body.site == 'editquiz') {
-      let target = req.body.params;
-      var MongoClient = mongodb.MongoClient;
-      var url = 'mongodb://127.0.0.1:27017/quiz';
-      MongoClient.connect(url, function(err, client) {
-        if (err) {
-          console.log('Unable to connect to the Server', err);
-        } else {
-          var db = client.db("quiz");
-          var collection = db.collection(req.body.cluster + '_quizzes');
-          collection.find({
-            'name': target
-          }).toArray(function(err, result) {
-            if (err) {
-              console.log(err);
-            } else {
-              res.render('editquiz', {
-                'quiz': result
-              });
-            }
+          res.render('results', {
+            result: result,
+            name: target
           });
         }
       });
     }
-
-  } else {
-    res.send('Incorrect password');
-  }
-
+  });
 });
+
+router.get('/editanketa', (req,res)=>{
+  let target = req.query.param;
+  MongoClient.connect(url, function(err, client) {
+    if (err) {
+      console.log('Unable to connect to the Server', err);
+    } else {
+      var db = client.db("quiz");
+      var collection = db.collection(req.query.cluster + '_ankety');
+      collection.find({
+        'name': target
+      }).toArray(function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render('editanketa', {
+            'anketa': result
+          });
+        }
+      });
+    }
+  });
+});
+
+router.get('/editquiz', (req,res)=>{
+  let target = req.query.param;
+  MongoClient.connect(url, function(err, client) {
+    if (err) {
+      console.log('Unable to connect to the Server', err);
+    } else {
+      var db = client.db("quiz");
+      var collection = db.collection(req.query.cluster + '_quizzes');
+      collection.find({
+        'name': target
+      }).toArray(function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render('editquiz', {
+            'quiz': result
+          });
+        }
+      });
+    }
+  });
+});
+
+
 router.get('/edit_anketa/:quiz', function(req, res) {
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -331,8 +323,6 @@ router.post('/edit_anketa', function(req, res) {
 
   // delete tmp folder
   var target = req.body.originalName;
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -373,8 +363,6 @@ router.post('/edit_anketa', function(req, res) {
 
   });
   //adding object to db
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       res.send(err);
@@ -558,8 +546,6 @@ router.post('/edit_quiz', function(req, res) {
   console.log(quiz);
   //delete original dir
   var target = req.body.originalName;
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -598,8 +584,6 @@ router.post('/edit_quiz', function(req, res) {
 
   });
   //adding object to db
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       res.send(err);
@@ -631,10 +615,8 @@ router.get('/settings', function(req, res) {
   // });
 
   // Get a Mongo client to work with the Mongo server
-  var MongoClient = mongodb.MongoClient;
 
   // Define where the MongoDB server is
-  var url = 'mongodb://127.0.0.1:27017/quiz';
 
   // Connect to the server
   MongoClient.connect(url, function(err, client) {
@@ -672,8 +654,6 @@ router.get('/settings', function(req, res) {
 });
 router.get('/results/:anketa', function(req, res) {
   let target = req.params.anketa;
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -696,11 +676,58 @@ router.get('/results/:anketa', function(req, res) {
   });
 });
 
+router.get('/results/:cluster/:type/:target/json', (req,res)=>{
+  let target = req.params.target;
+  MongoClient.connect(url, function(err, client) {
+    if (err) {
+      console.log('Unable to connect to the Server', err);
+    } else {
+      var db = client.db("quiz");
+      let collectionName = req.params.cluster + '_' + req.params.type +  '_results';
+      console.log(collectionName);
+      var collection = db.collection(collectionName);
+      collection.find({
+        'name': target
+      }).toArray(function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    }
+  });
+});
+
+router.get('/results/:cluster/:type/:target/csv', (req,res)=>{
+  let target = req.params.target;
+  MongoClient.connect(url, function(err, client) {
+    if (err) {
+      console.log('Unable to connect to the Server', err);
+    } else {
+      var db = client.db("quiz");
+      let collectionName = req.params.cluster + '_' + req.params.type +  '_results';
+      console.log(collectionName);
+      var collection = db.collection(collectionName);
+      collection.find({
+        'name': target
+      }).toArray(function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          jsonexport(result, {rowDelimiter: ';'}, function(err, csv){
+            if(err) return console.log(err);
+            res.send(csv);
+          });
+        }
+      });
+    }
+  });
+});
+
 router.post('/deleteAnketa', function(req, res) {
   if (req.body.pass == passwords[req.body.cluster]) {
     var target = req.body.item;
-    var MongoClient = mongodb.MongoClient;
-    var url = 'mongodb://127.0.0.1:27017/quiz';
     MongoClient.connect(url, function(err, client) {
       if (err) {
         console.log('Unable to connect to the Server', err);
@@ -722,8 +749,6 @@ router.post('/deleteAnketa', function(req, res) {
 router.post('/deleteQuiz', function(req, res) {
   if (req.body.pass == passwords[req.body.cluster]) {
     var target = req.body.item;
-    var MongoClient = mongodb.MongoClient;
-    var url = 'mongodb://127.0.0.1:27017/quiz';
     MongoClient.connect(url, function(err, client) {
       if (err) {
         console.log('Unable to connect to the Server', err);
@@ -744,8 +769,6 @@ router.post('/deleteQuiz', function(req, res) {
 
 router.get('/delete/:quiz', function(req, res) {
   var target = req.params.quiz;
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -806,8 +829,6 @@ router.get('/createanketa', function(req, res, next) {
 // });
 
 router.get('/playA/:cluster/:anketa/:lang', function(req, res) {
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -834,8 +855,6 @@ router.get('/playA/:cluster/:anketa/:lang', function(req, res) {
 });
 
 router.get('/playQ/:cluster/:quiz', function(req, res) {
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -861,8 +880,6 @@ router.get('/playQ/:cluster/:quiz', function(req, res) {
 });
 
 router.post('/quiz_result', function(req, res) {
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       res.send(err);
@@ -889,8 +906,6 @@ router.post('/quiz_result', function(req, res) {
 
 router.post('/anketa_result', function(req, res) {
   console.log(req.body);
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       res.send(err);
@@ -910,8 +925,6 @@ router.post('/anketa_result', function(req, res) {
 });
 
 router.get('/quiz_result', function(req, res) {
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -933,8 +946,6 @@ router.get('/quiz_result', function(req, res) {
 });
 
 router.get('/anketa_results/:cluster', function(req, res) {
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -956,8 +967,6 @@ router.get('/anketa_results/:cluster', function(req, res) {
 });
 
 router.get('/quiz_results/:cluster', function(req, res) {
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -1091,8 +1100,6 @@ router.post('/addquiz', function(req, res) {
 
   });
   //adding object to db
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       res.send(err);
@@ -1140,7 +1147,7 @@ router.post('/addanketa', function(req, res) {
   };
   for (var i = 0; i < anketa.count; i++) {
     var o = {};
-    o.q = req.body['question' + i];
+    o.question = req.body['question' + i];
     o.img = null;
     anketa.questions.push(o);
   }
@@ -1172,6 +1179,9 @@ router.post('/addanketa', function(req, res) {
   var root = require('app-root-path');
   var path = root.path;
   var fs = require('fs');
+  if (!fs.existsSync('./public/data')) {
+    fs.mkdirSync('./public/data');
+  }
   var dir = './public/data/' + anketa.name;
   fs.mkdirSync(dir);
   // if (!fs.existsSync(dir)){
@@ -1254,8 +1264,6 @@ router.post('/addanketa', function(req, res) {
 
   });
   //adding object to db
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       res.send(err);
@@ -1305,19 +1313,9 @@ router.post('/addanketa', function(req, res) {
   });
 });
 
-router.get('/data', function(req, res) {
-  var fs = require('fs');
-  var obj;
-  fs.readFile('public/data.json', 'utf8', function(err, data) {
-    if (err) throw err;
-    res.send(data);
-  });
-});
 
 router.get('/ajax/:cluster/:name', (req,res)=>{
   let target = req.params.name;
-  var MongoClient = mongodb.MongoClient;
-  var url = 'mongodb://127.0.0.1:27017/quiz';
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);

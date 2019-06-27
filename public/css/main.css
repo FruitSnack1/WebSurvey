@@ -202,7 +202,6 @@ input[type="text"], input[type="number"]{
 .password input{
   font-family: sans-serif;
   text-align: center !important;
-  margin-top: 3rem;
   width: 70%;
   height: 1.5rem;
 }
@@ -456,7 +455,7 @@ background-color: rgb(222,29,14);
 #bar1, #bar2, #bar3, #bar4, #bar5{
   width: 3.5%;
   min-height: 1%;
-  animation: grow 1500ms ease;
+  animation: grow 500ms ease;
   transition: height 1s;
 }
 .bars{
@@ -508,7 +507,6 @@ background-color: rgb(222,29,14);
 }
 .data-container-chart{
   width: 35vw;
-  margin-top: -5vw;
 }
 .results-chart-container{
   width: 100%;
@@ -517,6 +515,7 @@ background-color: rgb(222,29,14);
   flex-direction: row;
   overflow-x: auto;
   overflow-y: hidden;
+  text-align: center;
 }
 .chart{
   height: 100%;
@@ -550,7 +549,8 @@ background-color: rgb(222,29,14);
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  height: 43%;
+  height: 36%;
+  margin-top: .9rem;
 }
 .input-img{
   border: none;
@@ -1206,4 +1206,70 @@ select{
   margin: 0 auto;
   align-items: center;
   justify-content: center;
+}
+/*
+ * DOM element rendering detection
+ * https://davidwalsh.name/detect-node-insertion
+ */
+@keyframes chartjs-render-animation {
+	from { opacity: 0.99; }
+	to { opacity: 1; }
+}
+
+.chartjs-render-monitor {
+	animation: chartjs-render-animation 0.001s;
+}
+
+/*
+ * DOM element resizing detection
+ * https://github.com/marcj/css-element-queries
+ */
+.chartjs-size-monitor,
+.chartjs-size-monitor-expand,
+.chartjs-size-monitor-shrink {
+	position: absolute;
+	direction: ltr;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	pointer-events: none;
+	visibility: hidden;
+	z-index: -1;
+}
+
+.chartjs-size-monitor-expand > div {
+	position: absolute;
+	width: 1000000px;
+	height: 1000000px;
+	left: 0;
+	top: 0;
+}
+
+.chartjs-size-monitor-shrink > div {
+	position: absolute;
+	width: 200%;
+	height: 200%;
+	left: 0;
+	top: 0;
+}
+.btn-small{
+  width: 40%;
+}
+.btn-small-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 35vw;
+  height: 5vw;
+}
+.admin-menu-icon{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: #4BA82E;
+  opacity: .6;
+  margin: 0 0 .1rem .1rem;
 }

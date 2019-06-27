@@ -53,12 +53,20 @@ html(lang='cz', dir='ltr')
                   var name =!{JSON.stringify(name)}
                 
             div.data-container-excel-container
-              button.data-container-excel(onclick='download();').btn.btn-confirm
-                i.fas.fa-file-excel.data-container-icon
-                span.data-container-span     Výsledky v excelu
-              button.data-container-chart.btn(onclick='showCharts();') 
+              //- button.data-container-excel(onclick='download();').btn.btn-confirm
+              //-   i.fas.fa-file-excel.data-container-icon
+              //-   span.data-container-span     Výsledky v excelu
+              button.data-container-chart.btn.btn-confirm(onclick='showCharts();') 
                 i.fas.fa-chart-pie.data-container-icon
                 span.data-container-span     Grafy otázek
+              span Stáhnout výsledky :
+              div.btn-small-container
+                button.data-container-chart.btn.btn-small(onclick="getJsonResults();") 
+                  i.fas.fa-file-code.data-container-icon
+                  span.data-container-span  JSON   
+                button.data-container-chart.btn.btn-small(onclick='getCsvResults();') 
+                  i.fas.fa-file-csv.data-container-icon
+                  span.data-container-span  CSV   
           div.results-chart-container(style='display:none;')
             //- div.chart
             //-   canvas(id='myChart')

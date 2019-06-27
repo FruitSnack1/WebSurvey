@@ -19,6 +19,13 @@ html(lang='cz', dir='ltr')
     div.content-container
       div.main-container
         //- div.play-container
+        i.fa.fa-cog.admin-menu-icon(onclick="$('#admin-menu-window').show()")
+        div.switch-cluster#admin-menu-window(style='display:none')
+          h3.confirm-delete-label Chcete odejít do admin menu ?
+          div.confirm-btn-container
+            button.btn(onclick = "window.location.href = 'http://'+location.host") Ano
+            button.btn(onclick = "$('#admin-menu-window').hide()") Ne
+            
         div.play(style="display:none;")
           div.question
               h3.text-white#q #{anketa[0].questions[0].q} 

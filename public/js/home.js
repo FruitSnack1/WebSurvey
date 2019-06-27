@@ -14,6 +14,8 @@ let editLinkImgsJson = {};
 let imgJson = {};
 let playSelect;
 let playLang = 'cz';
+
+
 $('.active').click(function() {
   if (anim) {
     $('.cluster-list-drop').css('display', 'block');
@@ -71,7 +73,60 @@ function successCange() {
   target.children().eq(0).attr('src', active);
 }
 
-function getSite(site, params) {
+// function getSite2(site, params) {
+//   if(site=='home'){
+//     $('#settings').removeClass('navbar-item-active');
+//     $('#home').addClass('navbar-item-active');
+//   }
+//   if(site=='settings'){
+//     $('#home').removeClass('navbar-item-active');
+//     $('#settings').addClass('navbar-item-active');
+//   }
+//   let oReq = new XMLHttpRequest();
+//   oReq.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//       if (this.responseText == 'Incorrect password') {
+//         $('.password').addClass('shake').delay(500).queue(function(){
+//           $(this).removeClass('shake');
+//           $(this).dequeue();
+//         });
+//         $('.password-input').focus();
+//       } else {
+//         changeCluster(cluster);
+//         $('.password').hide();
+//         $('.password-input').val('');
+//         $('.cluster-list').show();
+//         $('.content').replaceWith($(this.responseText).find('.content'));
+//         if(!scripts[site]){
+//           $.getScript('js/'+site+'.js', function(){
+//             scripts[site] = true;
+//             if(site=='results'){
+//               setResultData();``
+//             }
+//           });
+//         }else if(site=='results'){
+//           setResultData();
+//           // $('.content').replaceWith($(this.responseText).find('.content'));
+//         }
+//         // $('.container').css('display', 'flex');
+//         // successCange();
+//       }
+//       // document.write(this.responseText);
+//     }
+//   };
+//   // oReq.addEventListener("load", reqListener);
+//   oReq.open('POST', '/', true);
+//   oReq.setRequestHeader("Content-Type", "application/json");
+//   oReq.send(JSON.stringify({
+//     cluster,
+//     "site": site,
+//     "pass": pass,
+//     "params": params
+//   }));
+//
+// }
+
+function getSite(site, param) {
   if(site=='home'){
     $('#settings').removeClass('navbar-item-active');
     $('#home').addClass('navbar-item-active');
@@ -80,10 +135,8 @@ function getSite(site, params) {
     $('#home').removeClass('navbar-item-active');
     $('#settings').addClass('navbar-item-active');
   }
-  let oReq = new XMLHttpRequest();
-  oReq.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      if (this.responseText == 'Incorrect password') {
+  $.get('/'+site, {pass,cluster,param}, (data)=>{
+      if (data == 'Incorrect password') {
         $('.password').addClass('shake').delay(500).queue(function(){
           $(this).removeClass('shake');
           $(this).dequeue();
@@ -94,7 +147,8 @@ function getSite(site, params) {
         $('.password').hide();
         $('.password-input').val('');
         $('.cluster-list').show();
-        $('.content').replaceWith($(this.responseText).find('.content'));
+        $('.content').replaceWith($(data).find('.content'));
+
         if(!scripts[site]){
           $.getScript('js/'+site+'.js', function(){
             scripts[site] = true;
@@ -110,18 +164,8 @@ function getSite(site, params) {
         // successCange();
       }
       // document.write(this.responseText);
-    }
-  };
-  // oReq.addEventListener("load", reqListener);
-  oReq.open('POST', '/', true);
-  oReq.setRequestHeader("Content-Type", "application/json");
-  oReq.send(JSON.stringify({
-    cluster,
-    "site": site,
-    "pass": pass,
-    "params": params
-  }));
 
+  });
 }
 
 function changeCluster(name){
@@ -132,34 +176,23 @@ function changeCluster(name){
 }
 
 function login(){
-  let oReq = new XMLHttpRequest();
-  oReq.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      if (this.responseText == 'Incorrect password') {
-        $('.password').addClass('shake').delay(500).queue(function(){
-          $(this).removeClass('shake');
-          $(this).dequeue();
-        });
-        $('.password-input').focus();
-      } else {
-        pass = temp_pass;
-        cluster = temp_cluster;
-        changeCluster(cluster);
-        $('.password').hide();
-        $('.password-input').val('');
-        $('.cluster-list').show();
-        $('.content-container').replaceWith(this.responseText);
-        }
-      }
-
-  };
-  oReq.open('POST', '/', true);
-  oReq.setRequestHeader("Content-Type", "application/json");
-  oReq.send(JSON.stringify({
-    'cluster' : temp_cluster,
-    "site": 'home',
-    "pass": temp_pass
-  }));
+  $.get('/home', {"pass":temp_pass,"cluster":temp_cluster}, (data)=>{
+    if(data == 'Incorrect password'){
+      $('.password').addClass('shake').delay(500).queue(function(){
+        $(this).removeClass('shake');
+        $(this).dequeue();
+      });
+      $('.password-input').focus();
+    }else{
+      pass = temp_pass;
+      cluster = temp_cluster;
+      changeCluster(cluster);
+      $('.password').hide();
+      $('.password-input').val('');
+      $('.cluster-list').show();
+      $('.content-container').replaceWith(data);
+    }
+  });
 }
 
 function editLinkImgs(){
