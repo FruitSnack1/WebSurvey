@@ -133,9 +133,9 @@ function weightChange() {
   }
 }
 
-function sectorCountChange() {
+function sectorCountChange(count) {
   $('.sector-select').empty();
-  for (var i = 1; i <= $('#sector-count-select').val(); i++) {
+  for (var i = 1; i <= count; i++) {
     $('.sector-select').append($('<option></option>').text(i));
   }
 }
@@ -148,4 +148,8 @@ function langEnChange() {
     $('.lang-en-input').fadeIn(300);
     $('.lang-cz-input').css('padding-bottom','.2rem');
   }
+}
+
+function addMpsQuestion() {
+
 }

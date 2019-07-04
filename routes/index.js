@@ -70,12 +70,10 @@ router.get('/settings', (req,res) =>{
 });
 
 router.get('/createanketa', (req, res)=>{
-  res.render('createanketa');
+  res.render('createanketa',{'anketa':['a']});
 });
 
-router.get('/createanketa', (req, res)=>{
-  res.render('createanketa');
-});
+
 
 router.get('/results', (req, res)=>{
   let target = req.query.param;
@@ -115,7 +113,7 @@ router.get('/editanketa', (req,res)=>{
         if (err) {
           console.log(err);
         } else {
-          res.render('editanketa', {
+          res.render('createanketa', {
             'anketa': result
           });
         }
@@ -174,244 +172,241 @@ router.get('/edit_anketa/:quiz', function(req, res) {
     }
   });
 });
-router.post('/edit_anketa', function(req, res) {
-  let imgJson = JSON.parse(req.body.imgJson);
-
-  let fs = require('fs');
-  const tmpDirName = 'tmptmptmp'
-  const ppath = require('path');
-  const rootDir = ppath.join(__dirname, '..');
-  fs.renameSync(rootDir + '/public/data/' + req.body.originalName, rootDir + '/public/data/' + tmpDirName);
-  // let originalImgs = fs.readdirSync(rootDir+'/public/data/'+tmpDirName);
-  // console.log(originalImgs);
-  //
-  // var dir = './public/data/' + req.body.name;
-  // fs.mkdirSync(dir);
-
-  // let re = new RegExp(req.body.originalName+'1.');
-  // for (var i = 0; i < originalImgs.length; i++) {
-  //     if(re.exec(originalImgs[i]) != null){
-  //       console.log(originalImgs[i]);
-  //       var filename = originalImgs[i];
-  //       filename = filename.replace(filename.split('.').slice(0, -1).join('.'), req.body.name+1);
-  //       fs.copyFileSync(rootDir+'/public/data/'+tmpDirName+'/'+originalImgs[i], rootDir+'/public/data/'+req.body.name+'/'+filename);
-  //       break;
-  //     }
-  // }
-
-
-
-  let date = new Date();
-  let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
-
-  //create object
-  var anketa = {
-    name: req.body.name,
-    img: null,
-    count: req.body.count,
-    desc: req.body.desc,
-    date: time,
-    questions: []
-  };
-  for (var i = 0; i < anketa.count; i++) {
-    var o = {};
-    o.q = req.body['question' + i];
-    o.img = null;
-    anketa.questions.push(o);
-  }
-  var root = require('app-root-path');
-  var path = root.path;
-  // var fs = require('fs');
-  var dir = './public/data/' + anketa.name;
-  fs.mkdirSync(dir);
-  // if (!fs.existsSync(dir)){
-  //     fs.mkdirSync(dir);
-  // }
-  var Jimp = require('jimp');
-
-  if (req.files) {
-    if (req.files['img']) {
-      var file = req.files['img'];
-      var filename = file.name;
-      filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
-      anketa.img = "data/" + anketa.name + "/" + filename;
-      file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
-        if (err) {
-          console.log(err);;
-        } else {
-
-        }
-      });
-    }
-
-  } else {
-    let originalImgs = fs.readdirSync(rootDir + '/public/data/' + tmpDirName);
-    // var dir = './public/data/' + req.body.name;
-    // fs.mkdirSync(dir);
-    let re = new RegExp(req.body.originalName + '.');
-    let foundImg = null;
-    for (var i = 0; i < originalImgs.length; i++) {
-      if (re.exec(originalImgs[i]) != null) {
-        foundImg = originalImgs[i];
-        break;
-      }
-    }
-    if (foundImg != null) {
-      var filename = foundImg;
-      filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
-      anketa.img = "data/" + anketa.name + "/" + filename;
-      fs.copyFileSync(rootDir + '/public/data/' + tmpDirName + '/' + foundImg, rootDir + '/public/data/' + anketa.name + '/' + filename);
-    } else {
-      anketa.img = 'data/default.png';
-    }
-    // if (imgJson[99]) {
-    //   let oldSrc = imgJson[99];
-    //   console.log(oldSrc);
-    //   var filename = oldSrc;
-    //   filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
-    //   console.log(filename);
-    //   anketa.img = "data/" + anketa.name + "/" + filename;
-    //   oldSrc = oldSrc.replace(req.body.originalName, tmpDirName);
-    //   console.log(oldSrc);
-    //   fs.copyFileSync(rootDir+'/public/'+oldSrc, rootDir+'/public/data/'+anketa.name+'/'+filename);
-    // }else{
-    //   anketa.img = 'data/default.png';
-    // }
-  }
-
-
-  for (var i = 0; i < anketa.count; i++) {
-    if (req.files) {
-      if (req.files['img' + i]) {
-        var file = req.files['img' + i];
-        var filename = file.name;
-        filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
-        anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
-        file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
-          if (err) {
-            throw err;
-          } else {
-            // Jimp.read('public/data/' + quiz.name + '/' + filename)
-            //   .then(function(file) {
-            //     file
-            //       .cover(400, 400)
-            //       .write('public/data/' + quiz.name + '/' + filename);
-            //   })
-            //   .catch(function(err) {
-            //     console.log(err);
-            //   });
-
-          }
-
-        });
-      }
-    } else {
-
-      if (imgJson[i]) {
-        let oldSrc = imgJson[i];
-        var filename = oldSrc;
-        filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
-        anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
-        oldSrc = oldSrc.replace(req.body.originalName, tmpDirName);
-        fs.copyFileSync(rootDir + '/public/' + oldSrc, rootDir + '/public/data/' + anketa.name + '/' + filename);
-      } else {
-        anketa.questions[i].img = 'data/default.png';
-      }
-    }
-  }
-
-
-  // delete tmp folder
-  var target = req.body.originalName;
-  MongoClient.connect(url, function(err, client) {
-    if (err) {
-      console.log('Unable to connect to the Server', err);
-    } else {
-      var db = client.db("quiz");
-      db.collection(req.body.cluster + '_ankety').deleteOne({
-        'name': target
-      });
-    }
-  });
-  var rimraf = require('rimraf');
-  rimraf('public/data/' + tmpDirName, function() {
-    // console.log('folder ' + target + ' deleted');
-    // res.status(200).send('Success');
-  });
-
-
-  //size files
-  // var fs = require('fs');
-  fs.readdir('public/data/' + anketa.name, function(err, files) {
-    if (err) {
-      console.log(err);
-    } else {
-      files.forEach(function(file) {
-        var path = 'public/data/' + anketa.name + '/' + file;
-        console.log('path = ' + path);
-        Jimp.read(path)
-          .then(function(file) {
-            file
-              .cover(400, 400)
-              .write(path);
-          })
-          .catch(function(err) {
-            console.log(err);
-          });
-      });
-    }
-
-  });
-  //adding object to db
-  MongoClient.connect(url, function(err, client) {
-    if (err) {
-      res.send(err);
-    } else {
-      console.log('Connection established to', url);
-      var db = client.db("quiz");
-      var collection = db.collection(req.body.cluster + '_ankety');
-      console.log(req.body.cluster + '_ankety');
-      collection.insert([anketa], function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-
-          // Redirect to the updated student list
-          res.status(200).send('Success');
-          // var MongoClient = mongodb.MongoClient;
-          // var url = 'mongodb://127.0.0.1:27017/quiz';
-          // MongoClient.connect(url, function(err, client) {
-          //   if (err) {
-          //     console.log('Unable to connect to the Server', err);
-          //   } else {
-          //     var db = client.db("quiz");
-          //     console.log('Connection established to', url);
-          //     var quizzes;
-          //     var ankety;
-          //     db.collection(req.body.cluster + '_quizzes').find().toArray().
-          //     then(function(data) {
-          //       quizzes = data;
-          //       db.collection(req.body.cluster + '_ankety').find().toArray().
-          //       then(function(data2) {
-          //         ankety = data2;
-          //         res.render('settings', {
-          //           "quizzes": quizzes,
-          //           "ankety": ankety
-          //         });
-          //       });
-          //     });
-          //   }
-          // });
-
-        }
-
-        // Close the database
-        client.close();
-      });
-    }
-  });
-
-});
+// router.post('/edit_anketa', function(req, res) {
+//   let imgJson = JSON.parse(req.body.imgJson);
+//
+//   let fs = require('fs');
+//   const tmpDirName = 'tmptmptmp'
+//   const ppath = require('path');
+//   const rootDir = ppath.join(__dirname, '..');
+//   fs.renameSync(rootDir + '/public/data/' + req.body.originalName, rootDir + '/public/data/' + tmpDirName);
+//   // let originalImgs = fs.readdirSync(rootDir+'/public/data/'+tmpDirName);
+//   // console.log(originalImgs);
+//   //
+//   // var dir = './public/data/' + req.body.name;
+//   // fs.mkdirSync(dir);
+//
+//   // let re = new RegExp(req.body.originalName+'1.');
+//   // for (var i = 0; i < originalImgs.length; i++) {
+//   //     if(re.exec(originalImgs[i]) != null){
+//   //       console.log(originalImgs[i]);
+//   //       var filename = originalImgs[i];
+//   //       filename = filename.replace(filename.split('.').slice(0, -1).join('.'), req.body.name+1);
+//   //       fs.copyFileSync(rootDir+'/public/data/'+tmpDirName+'/'+originalImgs[i], rootDir+'/public/data/'+req.body.name+'/'+filename);
+//   //       break;
+//   //     }
+//   // }
+//
+//
+//
+//   let date = new Date();
+//   let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+//
+//   //create object
+//   var anketa = {
+//     name: req.body.name,
+//     img: null,
+//     count: req.body.count,
+//     desc: req.body.desc,
+//     date: time,
+//     questions: []
+//   };
+//   for (var i = 0; i < anketa.count; i++) {
+//     var o = {};
+//     o.q = req.body['question' + i];
+//     o.img = null;
+//     anketa.questions.push(o);
+//   }
+//   var root = require('app-root-path');
+//   var path = root.path;
+//   // var fs = require('fs');
+//   var dir = './public/data/' + anketa.name;
+//   fs.mkdirSync(dir);
+//   // if (!fs.existsSync(dir)){
+//   //     fs.mkdirSync(dir);
+//   // }
+//   var Jimp = require('jimp');
+//
+//   if (req.files) {
+//     if (req.files['img']) {
+//       var file = req.files['img'];
+//       var filename = file.name;
+//       filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
+//       anketa.img = "data/" + anketa.name + "/" + filename;
+//       file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
+//         if (err) {
+//           console.log(err);;
+//         } else {
+//
+//         }
+//       });
+//     }
+//
+//   } else {
+//     let originalImgs = fs.readdirSync(rootDir + '/public/data/' + tmpDirName);
+//     // var dir = './public/data/' + req.body.name;
+//     // fs.mkdirSync(dir);
+//     let re = new RegExp(req.body.originalName + '.');
+//     let foundImg = null;
+//     for (var i = 0; i < originalImgs.length; i++) {
+//       if (re.exec(originalImgs[i]) != null) {
+//         foundImg = originalImgs[i];
+//         break;
+//       }
+//     }
+//     if (foundImg != null) {
+//       var filename = foundImg;
+//       filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
+//       anketa.img = "data/" + anketa.name + "/" + filename;
+//       fs.copyFileSync(rootDir + '/public/data/' + tmpDirName + '/' + foundImg, rootDir + '/public/data/' + anketa.name + '/' + filename);
+//     } else {
+//       anketa.img = 'data/default.png';
+//     }
+//     // if (imgJson[99]) {
+//     //   let oldSrc = imgJson[99];
+//     //   console.log(oldSrc);
+//     //   var filename = oldSrc;
+//     //   filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
+//     //   console.log(filename);
+//     //   anketa.img = "data/" + anketa.name + "/" + filename;
+//     //   oldSrc = oldSrc.replace(req.body.originalName, tmpDirName);
+//     //   console.log(oldSrc);
+//     //   fs.copyFileSync(rootDir+'/public/'+oldSrc, rootDir+'/public/data/'+anketa.name+'/'+filename);
+//     // }else{
+//     //   anketa.img = 'data/default.png';
+//     // }
+//   }
+//
+//
+//   for (var i = 0; i < anketa.count; i++) {
+//     if (req.files) {
+//       if (req.files['img' + i]) {
+//         var file = req.files['img' + i];
+//         var filename = file.name;
+//         filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
+//         anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
+//         file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
+//           if (err) {
+//             throw err;
+//           } else {
+//             // Jimp.read('public/data/' + quiz.name + '/' + filename)
+//             //   .then(function(file) {
+//             //     file
+//             //       .cover(400, 400)
+//             //       .write('public/data/' + quiz.name + '/' + filename);
+//             //   })
+//             //   .catch(function(err) {
+//             //     console.log(err);
+//             //   });
+//
+//           }
+//
+//         });
+//       }
+//     } else {
+//
+//       if (imgJson[i]) {
+//         let oldSrc = imgJson[i];
+//         var filename = oldSrc;
+//         filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
+//         anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
+//         oldSrc = oldSrc.replace(req.body.originalName, tmpDirName);
+//         fs.copyFileSync(rootDir + '/public/' + oldSrc, rootDir + '/public/data/' + anketa.name + '/' + filename);
+//       } else {
+//         anketa.questions[i].img = 'data/default.png';
+//       }
+//     }
+//   }
+//
+//
+//   // delete tmp folder
+//   var target = req.body.originalName;
+//   MongoClient.connect(url, function(err, client) {
+//     if (err) {
+//       console.log('Unable to connect to the Server', err);
+//     } else {
+//       var db = client.db("quiz");
+//       db.collection(req.body.cluster + '_ankety').deleteOne({
+//         'name': target
+//       });
+//     }
+//   });
+//   var rimraf = require('rimraf');
+//   rimraf('public/data/' + tmpDirName, function() {
+//     // console.log('folder ' + target + ' deleted');
+//     // res.status(200).send('Success');
+//   });
+//
+//
+//   //size files
+//   // var fs = require('fs');
+//   fs.readdir('public/data/' + anketa.name, function(err, files) {
+//     if (err) return console.log(err);
+//     files.forEach(function(file) {
+//       var path = 'public/data/' + anketa.name + '/' + file;
+//       console.log('path = ' + path);
+//       Jimp.read(path)
+//         .then(function(file) {
+//           file
+//             .cover(400, 400)
+//             .write(path);
+//         })
+//         .catch(function(err) {
+//           console.log(err);
+//         });
+//     });
+//
+//   });
+//   //adding object to db
+//   MongoClient.connect(url, function(err, client) {
+//     if (err) {
+//       res.send(err);
+//     } else {
+//       console.log('Connection established to', url);
+//       var db = client.db("quiz");
+//       var collection = db.collection(req.body.cluster + '_ankety');
+//       console.log(req.body.cluster + '_ankety');
+//       collection.insert([anketa], function(err, result) {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//
+//           // Redirect to the updated student list
+//           res.status(200).send('Success');
+//           // var MongoClient = mongodb.MongoClient;
+//           // var url = 'mongodb://127.0.0.1:27017/quiz';
+//           // MongoClient.connect(url, function(err, client) {
+//           //   if (err) {
+//           //     console.log('Unable to connect to the Server', err);
+//           //   } else {
+//           //     var db = client.db("quiz");
+//           //     console.log('Connection established to', url);
+//           //     var quizzes;
+//           //     var ankety;
+//           //     db.collection(req.body.cluster + '_quizzes').find().toArray().
+//           //     then(function(data) {
+//           //       quizzes = data;
+//           //       db.collection(req.body.cluster + '_ankety').find().toArray().
+//           //       then(function(data2) {
+//           //         ankety = data2;
+//           //         res.render('settings', {
+//           //           "quizzes": quizzes,
+//           //           "ankety": ankety
+//           //         });
+//           //       });
+//           //     });
+//           //   }
+//           // });
+//
+//         }
+//
+//         // Close the database
+//         client.close();
+//       });
+//     }
+//   });
+//
+// });
 router.post('/edit_quiz', function(req, res) {
   console.log('editing quiz');
   console.log(req.body.originalName);
@@ -1165,16 +1160,16 @@ router.post('/addanketa', function(req, res) {
   }
   if(req.body.weights){
     anketa.weights = true;
-    for(var i = 0; i < anketa.count; i++){
-      anketa.questions[i].weight = req.body['weight'+i];
-    }
+  }
+  for(var i = 0; i < anketa.count; i++){
+    anketa.questions[i].weight = req.body['weight'+i];
   }
   if(req.body.sectors){
     anketa.sectors = true;
-    anketa.sector_count = req.body['sector_count'];
-    for(var i = 0; i < anketa.count; i++){
-      anketa.questions[i].sector = req.body['sector'+i];
-    }
+  }
+  anketa.sector_count = req.body['sector_count'];
+  for(var i = 0; i < anketa.count; i++){
+    anketa.questions[i].sector = req.body['sector'+i];
   }
   var root = require('app-root-path');
   var path = root.path;
@@ -1335,4 +1330,7 @@ router.get('/ajax/:cluster/:name', (req,res)=>{
   });
 });
 
+router.post('/editanketa', (req,res)=>{
+  
+});
 module.exports = router;

@@ -56,6 +56,8 @@ for (var i = 0; i < anketa.questions.length; i++) {
   o.question = anketa.questions[i].question[0];
   o.answer = null;
   o.note = null;
+  o.weight = anketa.questions[i].weight;
+  o.sector = anketa.questions[i].sector;
   // if(result.weights)
   //   o.weight = anketa.questions[i].weight;
   // if(result.sectors)
@@ -172,9 +174,10 @@ function select(button) {
   }
 }
 
-$('#note').change(function() {
+
+function noteChanged() {
   result.answers[n].note = $('#note').val();
-});
+}
 
 function progress(dir) {
   $('.progress-bar-count').html(n+1+'/'+anketa.count);
@@ -237,6 +240,7 @@ function reset() {
   result.random_order = anketa.random_order;
   result.weights = anketa.weights;
   result.sectors = anketa.sectors;
+  result.sector_count = anketa.sector_count;
   for (var i = 0; i < anketa.questions.length; i++) {
     let o = {};
     o.question = anketa.questions[i].question[0];

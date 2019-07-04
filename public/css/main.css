@@ -1128,10 +1128,21 @@ select{
 }
 .play-buttons-container-mps{
   flex: 1 0 40%;
-
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .btn-mps{
   width: 6%;
+  background: rgb(65, 69, 73);
+  flex: 0 0 15;
+}
+.btn-half{
+  width: 50%;
+}
+.submitBtn{
+  margin-top: .4rem;
 }
 .graph-container-values{
   width: 100%;
@@ -1272,4 +1283,20 @@ select{
   color: #4BA82E;
   opacity: .6;
   margin: 0 0 .1rem .1rem;
+}
+.add-btn-mps{
+  margin-left: .4rem;
+  width: calc(50% - .4rem);
+}
+.sector-select{
+  width:25%;
+}
+input[type="number"]{
+  width:22.5%;
+}
+#sector-count{
+  margin-bottom: .3rem;
+}
+select[name='sector_count']{
+  width: 35%;
 }

@@ -14,7 +14,7 @@ let editLinkImgsJson = {};
 let imgJson = {};
 let playSelect;
 let playLang = 'cz';
-
+let editData;
 
 $('.active').click(function() {
   if (anim) {
@@ -152,13 +152,16 @@ function getSite(site, param) {
         if(!scripts[site]){
           $.getScript('js/'+site+'.js', function(){
             scripts[site] = true;
-            if(site=='results'){
-              setResultData();``
-            }
+            if(site=='results')
+              setResultData();
+            if(site=='editanketa')
+              setEditData();
           });
-        }else if(site=='results'){
-          setResultData();
-          // $('.content').replaceWith($(this.responseText).find('.content'));
+        }else{
+          if(site=='results')
+            setResultData();
+          if(site=='editanketa')
+            setEditData();
         }
         // $('.container').css('display', 'flex');
         // successCange();
