@@ -36,11 +36,11 @@ html(lang='cz', dir='ltr')
             div.play-img
               img#questionImg
             div.play-buttons-container
-              button.btn-answer#answer1.btn(type="button", value=1, onclick='select(1);') Určitě Ano
+              button.btn-answer#answer1.btn(type="button", value=1, onclick='select(1);') Ano
               button.btn-answer#answer2.btn(type="button", value=2, onclick='select(2);') Spíše ano
-              button.btn-answer#answer3.btn(type="button", value=3, onclick='select(3);') Nemohu rozhodnout
+              button.btn-answer#answer3.btn(type="button", value=3, onclick='select(3);') Jak kdy
               button.btn-answer#answer4.btn(type="button", value=4, onclick='select(4);') Spíše ne
-              button.btn-answer#answer5.btn(type="button", value=5, onclick='select(5);') Určitě ne
+              button.btn-answer#answer5.btn(type="button", value=5, onclick='select(5);') Ne
               div.note
                 textarea.play-textarea(placeholder="Komentář ...")#note
                 i(onclick='record();').fas.fa-microphone.note-button(style="display:none;")
