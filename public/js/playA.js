@@ -284,11 +284,11 @@ function shuffle(array) {
 function langSwitch() {
   if(lang == 'cz'){
     $('.desc-btn').html('Začít');
-    $('#answer1').html('Určitě Ano');
+    $('#answer1').html('Ano');
     $('#answer2').html('Spíše ano');
-    $('#answer3').html('Nemohu rozhodnout');
+    $('#answer3').html('Jak kdy');
     $('#answer4').html('Spíše ne');
-    $('#answer5').html('Určitě ne');
+    $('#answer5').html('Ne');
     $('.end-text').html('Děkujeme za spolupráci');
     $('.end-bnt').html('Spustit znovu');
     $('#note').attr('placeholder','Komentář ...');
