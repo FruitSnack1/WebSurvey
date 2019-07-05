@@ -1273,3 +1273,67 @@ select{
   opacity: .6;
   margin: 0 0 .1rem .1rem;
 }
+
+/* Poopeek css */
+.desc-btn{
+  /* background-color: #662D91; */
+  background-image: linear-gradient(0.25turn, #4e007999, #c0007fb3);
+}
+.main-container{
+  background: #F4F8FC;
+}
+body{
+  color: black;
+}
+.admin-menu-icon{
+  display: none !important;
+}
+.progressBar-foreground{
+  /* background-color: #662D91; */
+  background-image: linear-gradient(0.25turn, #4e007999, #c0007fb3);
+}
+.progress-bar-count{
+  color: white;
+}
+#left,#right{
+  color: #662D91;
+}
+.btn-answer{
+  background-image: linear-gradient(0.25turn, #4e007999, #c0007fb3);
+  outline: none;
+  transition: none;
+}
+.end-bnt{
+  background-image: linear-gradient(0.25turn, #4e007999, #c0007fb3);
+}
+.poopeek-logo{
+  width: 20%;
+  margin: -3rem 0 -3rem 0;
+}
+.end-text{
+  margin: 0;
+}
+.desc-content{
+  color: gray;
+}
+#note{
+  background: white;
+  color: black;
+  border-color: #c8d5e0;
+}
+#note::placeholder{
+  color: gray;
+}
+.progressBar-background{
+  background: rgb(200,200,200);
+  background: #c8d5e0;
+}
+.lang-switch-icon{
+  /* box-shadow: 0 0 1rem  1rem rgba(255,255,255,1); */
+}
+input{
+  border-color: #c8d5e0;
+}
+select{
+  border-color: #c8d5e0;
+}

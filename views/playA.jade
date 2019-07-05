@@ -82,9 +82,9 @@ html(lang='cz', dir='ltr')
             div.user-data
               div.user-data-form
                 label.desc-input-label Jméno : 
-                input(type='text', name='jmeno').desc-input
+                input(type='text', name='jmeno', placeholder='nepovinné').desc-input
                 label.desc-input-label Příjmení : 
-                input(type='text', name='prijmeni').desc-input
+                input(type='text', name='prijmeni', placeholder='nepovinné').desc-input
                 label.desc-input-label Věk : 
                 input(type='number', name='age', min='1', max='100').desc-input
                 label.desc-input-label Pohlaví : 
@@ -97,11 +97,11 @@ html(lang='cz', dir='ltr')
               
         div.end(style="display:none;")
           h1.end-text Děkujeme za spolupráci
+          img(src='../../../img/poopeek_logo.png', class='poopeek-logo')
           button(onclick='reset();').end-bnt.btn.btn-confirm Spustit znovu
         div.lang-switch-container
           img(src='../../../img/cz_icon.png', onclick='switchLang("cz")').lang-switch-icon#lang-cz
           img(src='../../../img/en_icon.png', onclick='switchLang("en")').lang-switch-icon#lang-en
-        
       //- script(type='text/javascript').
       //-   var local_data =!{JSON.stringify(anketa)}
       //-   var cluster = !{JSON.stringify(cluster)}

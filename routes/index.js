@@ -3,8 +3,8 @@ var router = express.Router();
 var mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
-const url = 'mongodb://127.0.0.1:27017/quiz';
-let passwords = {
+const url = 'mongodb://mongo:27017/quiz';
+const passwords = {
   'hmi': '0000',
   'mod': '0000',
   'adas': '0000',
@@ -35,13 +35,37 @@ router.get('/home', (req,res) =>{
         ankety = data2;
         res.render('home', {
           "quizzes": quizzes,
-          "ankety": ankety,
-          "cluster": req.query.cluster
+          "ankety": ankety
         });
       });
     });
   });
 });
+
+// router.get('/home', (req,res)=>{
+//       MongoClient.connect(url, function(err, client) {
+//         if (err) {
+//           console.log('Unable to connect to the Server', err);
+//         } else {
+//           var db = client.db("quiz");
+//           console.log('Connection established to', url);
+//           var quizzes;
+//           var ankety;
+//           db.collection(req.query.cluster + '_quizzes').find().toArray().
+//           then(function(data) {
+//             quizzes = data;
+//             db.collection(req.query.cluster + '_ankety').find().toArray().
+//             then(function(data2) {
+//               ankety = data2;
+//               res.render('home', {
+//                 "quizzes": quizzes,
+//                 "ankety": ankety,
+//                 "cluster": req.query
+//             });
+//           });
+//         }
+//       });
+// });
 
 router.get('/settings', (req,res) =>{
   if(req.query.pass != passwords[req.query.cluster])
@@ -1194,7 +1218,7 @@ router.post('/addanketa', function(req, res) {
       var filename = file.name;
       filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
       anketa.img = "data/" + anketa.name + "/" + filename;
-      file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
+      file.mv(path + "/public/data/" + anketa.name + "/" + filename, function(err) {
         if (err) {
           console.log(err);;
         } else {
@@ -1216,7 +1240,7 @@ router.post('/addanketa', function(req, res) {
         var filename = file.name;
         filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
         anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
-        file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
+        file.mv(path + "/public/data/" + anketa.name + "/" + filename, function(err) {
           if (err) {
             throw err;
           } else {

@@ -230,7 +230,7 @@ function playConfirm(name, len) {
   playSelect = name;
 }
 function confirmPlay() {
-  window.location.href = 'http://localhost:9000/playA/'+cluster+'/'+playSelect+'/'+playLang;
+  window.location.href = 'http://'+location.host+'/playA/'+cluster+'/'+playSelect+'/'+playLang;
 }
 function declinePlay() {
   $('#playConfirm').hide();

@@ -167,7 +167,7 @@ function select(button) {
     } else {
       $('#answer' + i).css('opacity', '1');
       // $('#answer' + i).css('color', colors[button - 1]);
-      $('#answer' + i).css('border' ,'solid .07rem #4BA82E');
+      // $('#answer' + i).css('border' ,'solid .07rem #4BA82E');
     }
   }
 }
