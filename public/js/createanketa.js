@@ -48,7 +48,8 @@ function deleteQuestion(index) {
 
 
 function finish() {
-  $('.content-loading').css('display','flex');
+  $('.main-container').css('filter','blur(.2rem)');
+  $('.content-loading').show();
   var input = $("<input>")
                  .attr("type", "hidden")
                  .attr("name", "cluster").val(cluster);
@@ -62,8 +63,10 @@ function finish() {
   $('form').ajaxSubmit(function(){
     getSite('settings');
     $('.content-loading').hide();
+    $('.main-container').css('filter','none');
   });
 }
+
 // $('.input-img').change(function() {
 //   var file = this.files[0].name;
 //   $(this).prev().eq(0).html(file);

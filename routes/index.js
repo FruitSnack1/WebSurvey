@@ -14,115 +14,85 @@ let passwords = {
   'car': '0000'
 }
 
-router.get('/', (req, res) =>{
+router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.get('/home', (req,res) =>{
-  if(req.query.pass != passwords[req.query.cluster])
-    return
-  MongoClient.connect(url, function(err, client) {
+router.get('/home', (req, res) => {
+  if (req.query.pass != passwords[req.query.cluster]) return;
+  MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
-    var db = client.db("quiz");
     console.log('Connection established to', url);
-    var quizzes;
-    var ankety;
-    db.collection(req.query.cluster + '_quizzes').find().toArray().
-    then(function(data) {
-      quizzes = data;
-      db.collection(req.query.cluster + '_ankety').find().toArray().
-      then(function(data2) {
-        ankety = data2;
-        res.render('home', {
-          "quizzes": quizzes,
-          "ankety": ankety,
-          "cluster": req.query.cluster
-        });
-      });
+    const db = client.db("quiz");
+    const quizzes = await db.collection(`${req.query.cluster}_quizzes`).find().toArray();
+    const ankety = await db.collection(`${req.query.cluster}_ankety`).find().toArray();
+    const cluster = req.query.cluster;
+    res.render('home', {
+      quizzes,
+      ankety,
+      cluster
+    }, (err, html) => {
+      if (err) return console.log(err);
+      res.send(html);
     });
   });
 });
 
-router.get('/settings', (req,res) =>{
-  if(req.query.pass != passwords[req.query.cluster])
-    return
-  MongoClient.connect(url, function(err, client) {
+router.get('/settings', (req, res) => {
+  if (req.query.pass != passwords[req.query.cluster]) return;
+  MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
-
-    var db = client.db("quiz");
     console.log('Connection established to', url);
-    var quizzes;
-    var ankety;
-    db.collection(req.query.cluster + '_quizzes').find().toArray().
-    then(function(data) {
-      quizzes = data;
-      db.collection(req.query.cluster + '_ankety').find().toArray().
-      then(function(data2) {
-        ankety = data2;
-        res.render('settings', {
-          "quizzes": quizzes,
-          "ankety": ankety,
-          "cluster": req.query.cluster
-        });
-      });
+    const db = client.db("quiz");
+    const quizzes = await db.collection(`${req.query.cluster}_quizzes`).find().toArray();
+    const ankety = await db.collection(`${req.query.cluster}_ankety`).find().toArray();
+    const cluster = req.query.cluster;
+    res.render('settings', {
+      quizzes,
+      ankety,
+      cluster
+    }, (err, html) => {
+      if (err) return console.log(err);
+      res.send(html);
     });
   });
 });
 
-router.get('/createanketa', (req, res)=>{
-  res.render('createanketa',{'anketa':['a']});
-});
-
-
-
-router.get('/results', (req, res)=>{
-  let target = req.query.param;
-  MongoClient.connect(url, function(err, client) {
-    if (err) {
-      console.log('Unable to connect to the Server', err);
-    } else {
-      var db = client.db("quiz");
-      var collection = db.collection(req.query.cluster + '_anketa_results');
-      collection.find({
-        'name': target
-      }).toArray(function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.render('results', {
-            result: result,
-            name: target
-          });
-        }
-      });
-    }
+router.get('/createanketa', (req, res) => {
+  res.render('createanketa', {
+    'anketa': ['a']
   });
 });
 
-router.get('/editanketa', (req,res)=>{
-  let target = req.query.param;
-  MongoClient.connect(url, function(err, client) {
-    if (err) {
-      console.log('Unable to connect to the Server', err);
-    } else {
-      var db = client.db("quiz");
-      var collection = db.collection(req.query.cluster + '_ankety');
-      collection.find({
-        'name': target
-      }).toArray(function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.render('createanketa', {
-            'anketa': result
-          });
-        }
-      });
-    }
+router.get('/results', (req, res) => {
+  const target = req.query.param;
+  MongoClient.connect(url, async (err, client) => {
+    if (err) return console.log('Unable to connect to the Server', err);
+    const db = client.db("quiz");
+    const collection = db.collection(`${req.query.cluster}_anketa_results`);
+    const result = await collection.find({'name': target}).toArray();
+    res.render('results', {result, target}, (err, html) => {
+      if (err) return console.log(err);
+      res.send(html);
+    });
   });
 });
 
-router.get('/editquiz', (req,res)=>{
+router.get('/editanketa', (req, res) => {
+  const target = req.query.param;
+  MongoClient.connect(url, async (err, client) => {
+    if (err) return console.log('Unable to connect to the Server', err);
+    const db = client.db("quiz");
+    const collection = db.collection(`${req.query.cluster}_ankety`);
+    const anketa = await collection.find({'name': target}).toArray();
+    res.render('createanketa', {anketa}, (err, html) => {
+      if (err) return console.log(err);
+      res.send(html);
+    });
+  });
+});
+
+router.get('/editquiz', (req, res) => {
   let target = req.query.param;
   MongoClient.connect(url, function(err, client) {
     if (err) {
@@ -456,7 +426,7 @@ router.post('/edit_quiz', function(req, res) {
   // }
   var Jimp = require('jimp');
   if (req.files) {
-    if(req.files['img']){
+    if (req.files['img']) {
       var file = req.files['img'];
       var filename = file.name;
       filename = filename.replace(filename.split('.').slice(0, -1).join('.'), quiz.name);
@@ -500,7 +470,7 @@ router.post('/edit_quiz', function(req, res) {
 
   for (var i = 0; i < quiz.count; i++) {
     if (req.files) {
-      if(req.files['img' + i]){
+      if (req.files['img' + i]) {
 
         var file = req.files['img' + i];
         var filename = file.name;
@@ -671,52 +641,28 @@ router.get('/results/:anketa', function(req, res) {
   });
 });
 
-router.get('/results/:cluster/:type/:target/json', (req,res)=>{
-  let target = req.params.target;
-  MongoClient.connect(url, function(err, client) {
-    if (err) {
-      console.log('Unable to connect to the Server', err);
-    } else {
-      var db = client.db("quiz");
-      let collectionName = req.params.cluster + '_' + req.params.type +  '_results';
-      console.log(collectionName);
-      var collection = db.collection(collectionName);
-      collection.find({
-        'name': target
-      }).toArray(function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-    }
+router.get('/results/:cluster/:type/:target/json', (req, res) => {
+  const target = req.params.target;
+  MongoClient.connect(url, async (err, client) => {
+    if (err) return console.log('Unable to connect to the Server', err);
+    const db = client.db("quiz");
+    const collection = db.collection(`${req.params.cluster}_${req.params.type}_results`);
+    const result = await collection.find({'name':target}).toArray();
+    res.send(result);
   });
 });
 
-router.get('/results/:cluster/:type/:target/csv', (req,res)=>{
-  let target = req.params.target;
-  MongoClient.connect(url, function(err, client) {
-    if (err) {
-      console.log('Unable to connect to the Server', err);
-    } else {
-      var db = client.db("quiz");
-      let collectionName = req.params.cluster + '_' + req.params.type +  '_results';
-      console.log(collectionName);
-      var collection = db.collection(collectionName);
-      collection.find({
-        'name': target
-      }).toArray(function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          jsonexport(result, {rowDelimiter: ';'}, function(err, csv){
-            if(err) return console.log(err);
-            res.send(csv);
-          });
-        }
-      });
-    }
+router.get('/results/:cluster/:type/:target/csv', (req, res) => {
+  const target = req.params.target;
+  MongoClient.connect(url, async (err, client) => {
+    if (err) return console.log('Unable to connect to the Server', err);
+    const db = client.db("quiz");
+    const collection = db.collection(`${req.params.cluster}_${req.params.type}_results`);
+    const result = await collection.find({'name':target}).toArray();
+    jsonexport(result, {rowDelimiter:';'}, (err, data) => {
+      if(err) return console.log(err);
+      res.send(data);
+    });
   });
 });
 
@@ -1122,55 +1068,9 @@ router.post('/addquiz', function(req, res) {
 });
 
 router.post('/addanketa', function(req, res) {
-  console.log(req.body);
-  let date = new Date();
-  let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
-  //create object
-  var anketa = {
-    name: req.body.name,
-    img: null,
-    count: req.body.count,
-    desc: req.body.desc,
-    date: time,
-    questions: [],
-    random_order: false,
-    weights: false,
-    sectors: false,
-    comments: false,
-    user_data: false,
-    languages:['cz']
-  };
-  for (var i = 0; i < anketa.count; i++) {
-    var o = {};
-    o.question = req.body['question' + i];
-    o.img = null;
-    anketa.questions.push(o);
-  }
-  if(req.body.random_order){
-    anketa.random_order = true;
-  }
-  if(req.body.note){
-    anketa.comments = true;
-  }
-  if (req.body.user_data) {
-    anketa.user_data = true;
-  }
-  if (req.body.lang_en) {
-    anketa.languages.push('en');
-  }
-  if(req.body.weights){
-    anketa.weights = true;
-  }
-  for(var i = 0; i < anketa.count; i++){
-    anketa.questions[i].weight = req.body['weight'+i];
-  }
-  if(req.body.sectors){
-    anketa.sectors = true;
-  }
-  anketa.sector_count = req.body['sector_count'];
-  for(var i = 0; i < anketa.count; i++){
-    anketa.questions[i].sector = req.body['sector'+i];
-  }
+
+  let anketa = createAnketaObj(req.body);
+
   var root = require('app-root-path');
   var path = root.path;
   var fs = require('fs');
@@ -1184,7 +1084,7 @@ router.post('/addanketa', function(req, res) {
   // }
   var Jimp = require('jimp');
   if (req.files) {
-    if(req.files['img']){
+    if (req.files['img']) {
       var file = req.files['img'];
       var filename = file.name;
       filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
@@ -1196,7 +1096,7 @@ router.post('/addanketa', function(req, res) {
 
         }
       });
-    }else{
+    } else {
       anketa.img = 'data/default.png';
     }
 
@@ -1206,7 +1106,7 @@ router.post('/addanketa', function(req, res) {
 
   for (var i = 0; i < anketa.count; i++) {
     if (req.files) {
-      if(req.files['img' + i]){
+      if (req.files['img' + i]) {
         var file = req.files['img' + i];
         var filename = file.name;
         filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
@@ -1228,7 +1128,7 @@ router.post('/addanketa', function(req, res) {
           }
 
         });
-      }else{
+      } else {
         anketa.questions[i].img = "data/default.png";
       }
 
@@ -1239,84 +1139,44 @@ router.post('/addanketa', function(req, res) {
   //size files
   var fs = require('fs');
   fs.readdir('public/data/' + anketa.name, function(err, files) {
-    if (err) {
-      console.log(err);
-    } else {
-      files.forEach(function(file) {
-        var path = 'public/data/' + anketa.name + '/' + file;
-        console.log('path = ' + path);
-        Jimp.read(path)
-          .then(function(file) {
-            file
-              .cover(400, 400)
-              .write(path);
-          })
-          .catch(function(err) {
-            console.log(err);
-          });
-      });
-    }
+    if (err) return console.log(err);
+    files.forEach(function(file) {
+      var path = 'public/data/' + anketa.name + '/' + file;
+      console.log('path = ' + path);
+      Jimp.read(path)
+        .then(function(file) {
+          file
+            .cover(400, 400)
+            .write(path);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    });
+
 
   });
   //adding object to db
   MongoClient.connect(url, function(err, client) {
-    if (err) {
-      res.send(err);
-    } else {
-      console.log('Connection established to', url);
-      var db = client.db("quiz");
-      var collection = db.collection(req.body.cluster + '_ankety');
-      console.log(req.body.cluster + '_ankety');
-      collection.insert([anketa], function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-
-          // Redirect to the updated student list
-          res.status(200).send('Success');
-          // var MongoClient = mongodb.MongoClient;
-          // var url = 'mongodb://127.0.0.1:27017/quiz';
-          // MongoClient.connect(url, function(err, client) {
-          //   if (err) {
-          //     console.log('Unable to connect to the Server', err);
-          //   } else {
-          //     var db = client.db("quiz");
-          //     console.log('Connection established to', url);
-          //     var quizzes;
-          //     var ankety;
-          //     db.collection(req.body.cluster + '_quizzes').find().toArray().
-          //     then(function(data) {
-          //       quizzes = data;
-          //       db.collection(req.body.cluster + '_ankety').find().toArray().
-          //       then(function(data2) {
-          //         ankety = data2;
-          //         res.render('settings', {
-          //           "quizzes": quizzes,
-          //           "ankety": ankety
-          //         });
-          //       });
-          //     });
-          //   }
-          // });
-
-        }
-
-        // Close the database
-        client.close();
-      });
-    }
+    if (err) return console.log(err);
+    console.log('Connection established to', url);
+    var db = client.db("quiz");
+    var collection = db.collection(req.body.cluster + '_ankety');
+    collection.insert([anketa], function(err, result) {
+      if (err) console.log(err);
+      res.status(200).send('Success');
+    });
   });
 });
 
-
-router.get('/ajax/:cluster/:name', (req,res)=>{
+router.get('/ajax/:cluster/:name', (req, res) => {
   let target = req.params.name;
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
     } else {
       var db = client.db("quiz");
-      var collection = db.collection(req.params.cluster+'_anketa_results');
+      var collection = db.collection(req.params.cluster + '_anketa_results');
       collection.find({
         'name': target
       }).toArray(function(err, result) {
@@ -1330,7 +1190,67 @@ router.get('/ajax/:cluster/:name', (req,res)=>{
   });
 });
 
-router.post('/editanketa', (req,res)=>{
-  
+router.post('/editanketa', (req, res) => {
+  let anketa = createAnketaObj(req.body);
+  console.log(anketa);
+  MongoClient.connect(url, (err, client) => {
+    if (err) console.log(err);
+    const db = client.db('quiz');
+    const collection = db.collection(`${req.body.cluster}_ankety`);
+    console.log(`${req.body.cluster}_ankety`);
+  })
+  res.sendStatus(200);
 });
+
+function createAnketaObj(body) {
+  let date = new Date();
+  let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+  //create object
+  var anketa = {
+    name: body.name,
+    img: null,
+    count: body.count,
+    desc: body.desc,
+    date: time,
+    questions: [],
+    random_order: false,
+    weights: false,
+    sectors: false,
+    comments: false,
+    user_data: false,
+    languages: ['cz']
+  };
+  for (var i = 0; i < anketa.count; i++) {
+    var o = {};
+    o.question = body['question' + i];
+    o.img = null;
+    anketa.questions.push(o);
+  }
+  if (body.random_order) {
+    anketa.random_order = true;
+  }
+  if (body.note) {
+    anketa.comments = true;
+  }
+  if (body.user_data) {
+    anketa.user_data = true;
+  }
+  if (body.lang_en) {
+    anketa.languages.push('en');
+  }
+  if (body.weights) {
+    anketa.weights = true;
+  }
+  for (var i = 0; i < anketa.count; i++) {
+    anketa.questions[i].weight = body['weight' + i];
+  }
+  if (body.sectors) {
+    anketa.sectors = true;
+  }
+  anketa.sector_count = body['sector_count'];
+  for (var i = 0; i < anketa.count; i++) {
+    anketa.questions[i].sector = body['sector' + i];
+  }
+  return anketa;
+}
 module.exports = router;

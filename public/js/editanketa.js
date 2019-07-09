@@ -69,6 +69,7 @@ function setEditData() {
     }
   }
   if(editData.languages.length > 1){
+    $('.lang-cz-input').css('padding-bottom','.2rem');
     $('input[name="lang_en"]').prop( "checked", true );
     $('.lang-en-input').show();
     for (var i = 0; i < editData.questions.length; i++) {
@@ -89,4 +90,28 @@ function setEditData() {
     $('input[name="img"]').parent().css('background-image','url('+editData.img+')');
     $('input[name="img"]').prev().html('Změnit obrázek');
   }
+  count = editData.questions.length;
+  $('<input>').attr({
+    type: 'hidden',
+    name: 'id'
+  }).appendTo('form');
+  $('input[name="id"]').val(editData._id);
+  $('.submitBtn').html('Upravit');
+  $('form').attr('action','/editanketa');
+  $('.submitBtn').attr('onclick','submitEdit()');
+}
+
+function submitEdit() {
+  $('.main-container').css('filter','blur(.2rem)');
+  $('.content-loading').show();
+  var input = $("<input>")
+                 .attr("type", "hidden")
+                 .attr("name", "cluster").val(cluster);
+  $('form').append(input);
+  $("input[type=number][name=count]").val(count);
+
+  $('form').ajaxSubmit(function(){
+    $('.content-loading').hide();
+    $('.main-container').css('filter','none');
+  });
 }
