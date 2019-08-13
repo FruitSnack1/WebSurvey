@@ -8,6 +8,8 @@ html(lang='cz', dir='ltr')
     //- link(rel='stylesheet', href='../css/bootstrap.css')
     //- link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
     link(rel='stylesheet', href='../../../css/fa.css')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    //- meta (name="mobile-web-app-capable", content="yes")
     title
   body
     script(type='text/javascript').
@@ -69,9 +71,17 @@ html(lang='cz', dir='ltr')
               div.progressBar-background
                 span.progress-bar-count 1/3
                 div.progressBar-foreground
-        
+          i.fas.fa-comment#comment-mobile(onclick='toggleMobileComment()')
+          div.comment-mobile-background
+            div.comment-mobile-foreground
+              i.fas.fa-times.comment-mobile-close(onclick='toggleMobileComment()')
+              textarea.comment-mobile-textarea(placeholder='Komentář...')
+              button.btn.btn-confirm.comment-mobile-btn(onclick='toggleMobileComment()') Potvrdit
           
-        
+          
+          
+              
+          
         div.desc
           div.desc-name
               h1.desc-title #{anketa[0].name} 
@@ -97,11 +107,22 @@ html(lang='cz', dir='ltr')
               
         div.end(style="display:none;")
           h1.end-text Děkujeme za spolupráci
-          button(onclick='reset();').end-bnt.btn.btn-confirm Spustit znovu
+          div.end-btn-container
+            button.main-menu-btn.btn.btn-confirm
+              i.fas.fa-th-large.end-btn-icon
+              span Hlavní nabídka
+            button(onclick='reset();').end-bnt.btn.btn-confirm
+              i.fas.fa-redo.end-btn-icon
+              span.end-btn-span Spustit znovu
         div.lang-switch-container
           img(src='../../../img/cz_icon.png', onclick='switchLang("cz")').lang-switch-icon#lang-cz
           img(src='../../../img/en_icon.png', onclick='switchLang("en")').lang-switch-icon#lang-en
-        
+        i.fas.fa-language#lang-mobile(onclick='toggleMobileLang()')
+      div.lang-mobile-background(style='display:none', onclick='toggleMobileLang()')
+        div.lang-mobile-foreground
+          img(src='../../../img/cz_icon.png', onclick='switchLang("cz")').lang-mobile-icon
+          img(src='../../../img/en_icon.png', onclick='switchLang("en")').lang-mobile-icon
+          img(src='../../../img/de_icon.png').lang-mobile-icon
       //- script(type='text/javascript').
       //-   var local_data =!{JSON.stringify(anketa)}
       //-   var cluster = !{JSON.stringify(cluster)}

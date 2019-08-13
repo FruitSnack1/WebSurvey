@@ -4,22 +4,81 @@ var mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
 const url = 'mongodb://127.0.0.1:27017/quiz';
-let passwords = {
-  'hmi': '0000',
-  'mod': '0000',
-  'adas': '0000',
-  'emob': '0000',
-  'iae': '0000',
-  'light': '0000',
-  'car': '0000'
-}
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const crypto = require('crypto');
+const rimraf = require('rimraf');
+// let name = 'karel';
+// let hash = crytpo.createHash('md5').update(name).digest('hex');
+// console.log(hash);
 
+
+
+
+router.get('/menu', (req, res) => {
+  res.render('menu');
+});
 router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.get('/home', (req, res) => {
-  if (req.query.pass != passwords[req.query.cluster]) return;
+
+router.post('/auth', (req, res) => {
+  console.log(req.body);
+  let name = 'kokot';
+  var hash = crypto.createHash('md5').update(name).digest('hex');
+  console.log(hash);
+  console.log(hash);
+  console.log(hash);
+  console.log(hash);
+  console.log(hash);
+});
+
+router.get('/jwt', (req, res) => {
+  let privateKey = fs.readFileSync('./private.pem', 'utf8');
+  let token = jwt.sign({ "body": "stuff" }, privateKey, { algorithm: 'HS256'});
+  res.send(token);
+});
+
+function isAuthenticated(req, res, next) {
+    if (typeof req.headers.authorization !== "undefined") {
+        let token = req.headers.authorization.split(" ")[1];
+        let privateKey = fs.readFileSync('./private.pem', 'utf8');
+        jwt.verify(token, privateKey, { algorithm: "HS256" }, (err, user) => {
+            if (err) {
+                res.status(500).json({ error: "Not Authorized" });
+                throw new Error("Not Authorized");
+            }
+            return next();
+        });
+    } else {
+        res.status(500).json({ error: "Not Authorized" });
+        throw new Error("Not Authorized");
+    }
+}
+
+router.post('/login', (req, res)=>{
+  let pass = req.body.pass;
+  let hash = crypto.createHash('md5').update(pass).digest('hex');
+
+  MongoClient.connect(url, async (err, client) =>{
+    if (err) return console.log('Unable to connect to the Server', err);
+    const db = client.db("quiz");
+    const dbpass = await db.collection('pass').find({'cluster':`${req.body.cluster}`}).toArray();
+    console.log(dbpass);
+
+    if(hash == dbpass[0].pass){
+      let privateKey = fs.readFileSync('./private.pem', 'utf8');
+      let token = jwt.sign({ "body": "stuff" }, privateKey, { algorithm: 'HS256'});
+      res.send(token);
+    }else{
+      res.send('Wrong password');
+    }
+  });
+});
+
+router.get('/home', isAuthenticated, (req, res) => {
+  // if (req.query.pass != passwords[req.query.cluster]) return;
   MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
     console.log('Connection established to', url);
@@ -33,13 +92,13 @@ router.get('/home', (req, res) => {
       cluster
     }, (err, html) => {
       if (err) return console.log(err);
+      console.log(html);
       res.send(html);
     });
   });
 });
 
-router.get('/settings', (req, res) => {
-  if (req.query.pass != passwords[req.query.cluster]) return;
+router.get('/settings', isAuthenticated, (req, res) => {
   MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
     console.log('Connection established to', url);
@@ -64,7 +123,8 @@ router.get('/createanketa', (req, res) => {
   });
 });
 
-router.get('/results', (req, res) => {
+router.get('/results', isAuthenticated, (req, res) => {
+  console.log(req.query);
   const target = req.query.param;
   MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
@@ -382,7 +442,6 @@ router.post('/edit_quiz', function(req, res) {
   console.log(req.body.originalName);
   let imgJson = JSON.parse(req.body.imgJson);
   console.log('parse succes');
-  let fs = require('fs');
   const tmpDirName = 'tmptmptmptmp';
   const ppath = require('path');
   const rootDir = ppath.join(__dirname, '..');
@@ -521,7 +580,6 @@ router.post('/edit_quiz', function(req, res) {
       });
     }
   });
-  var rimraf = require('rimraf');
   rimraf('public/data/' + tmpDirName, function() {
     // console.log('folder ' + target + ' deleted');
     // res.status(200).send('Success');
@@ -574,49 +632,49 @@ router.post('/edit_quiz', function(req, res) {
     }
   });
 });
-router.get('/settings', function(req, res) {
-  // res.render('index', {
-  //   title: 'Express'
-  // });
-
-  // Get a Mongo client to work with the Mongo server
-
-  // Define where the MongoDB server is
-
-  // Connect to the server
-  MongoClient.connect(url, function(err, client) {
-    if (err) {
-      console.log('Unable to connect to the Server', err);
-    } else {
-      var db = client.db("quiz");
-      // We are connected
-      console.log('Connection established to', url);
-
-
-      var quizzes;
-      var ankety;
-      db.collection('hmi_quizzes').find().toArray().
-      then(function(data) {
-        quizzes = data;
-        db.collection('hmi_ankety').find().toArray().
-        then(function(data2) {
-          ankety = data2;
-          console.log(quizzes.length);
-          console.log(ankety.length);
-          res.render('settings', {
-
-            // Pass the returned database documents to Jade
-            "quizzes": quizzes,
-            "ankety": ankety
-          });
-        });
-      });
-
-      // Find all students
-
-    }
-  });
-});
+// router.get('/settings', function(req, res) {
+//   // res.render('index', {
+//   //   title: 'Express'
+//   // });
+//
+//   // Get a Mongo client to work with the Mongo server
+//
+//   // Define where the MongoDB server is
+//
+//   // Connect to the server
+//   MongoClient.connect(url, function(err, client) {
+//     if (err) {
+//       console.log('Unable to connect to the Server', err);
+//     } else {
+//       var db = client.db("quiz");
+//       // We are connected
+//       console.log('Connection established to', url);
+//
+//
+//       var quizzes;
+//       var ankety;
+//       db.collection('hmi_quizzes').find().toArray().
+//       then(function(data) {
+//         quizzes = data;
+//         db.collection('hmi_ankety').find().toArray().
+//         then(function(data2) {
+//           ankety = data2;
+//           console.log(quizzes.length);
+//           console.log(ankety.length);
+//           res.render('settings', {
+//
+//             // Pass the returned database documents to Jade
+//             "quizzes": quizzes,
+//             "ankety": ankety
+//           });
+//         });
+//       });
+//
+//       // Find all students
+//
+//     }
+//   });
+// });
 router.get('/results/:anketa', function(req, res) {
   let target = req.params.anketa;
   MongoClient.connect(url, function(err, client) {
@@ -666,25 +724,19 @@ router.get('/results/:cluster/:type/:target/csv', (req, res) => {
   });
 });
 
-router.post('/deleteAnketa', function(req, res) {
-  if (req.body.pass == passwords[req.body.cluster]) {
-    var target = req.body.item;
+router.post('/deleteAnketa', isAuthenticated, function(req, res) {
+    const target = req.body.item;
     MongoClient.connect(url, function(err, client) {
-      if (err) {
-        console.log('Unable to connect to the Server', err);
-      } else {
-        var db = client.db("quiz");
-        db.collection(req.body.cluster + '_ankety').deleteOne({
-          'name': target
-        });
-      }
+      if (err) console.log('Unable to connect to the Server', err);
+      var db = client.db("quiz");
+      db.collection(req.body.cluster + '_ankety').deleteOne({
+        'name': target
+      });
     });
-    var rimraf = require('rimraf');
     rimraf('public/data/' + target, function() {
       console.log('folder ' + target + ' deleted');
       res.status(200).send('Success');
     });
-  }
 });
 
 router.post('/deleteQuiz', function(req, res) {
@@ -700,7 +752,6 @@ router.post('/deleteQuiz', function(req, res) {
         });
       }
     });
-    var rimraf = require('rimraf');
     rimraf('public/data/' + target, function() {
       console.log('folder ' + target + ' deleted');
       res.status(200).send('Success');
@@ -723,7 +774,6 @@ router.get('/delete/:quiz', function(req, res) {
       });
     }
   });
-  var rimraf = require('rimraf');
   rimraf('public/data/' + target, function() {
     console.log('folder ' + target + ' deleted');
   });
@@ -960,7 +1010,6 @@ router.post('/addquiz', function(req, res) {
 
   var root = require('app-root-path');
   var path = root.path;
-  var fs = require('fs');
   var dir = './public/data/' + quiz.name;
   fs.mkdirSync(dir);
   // if (!fs.existsSync(dir)){
@@ -1019,7 +1068,6 @@ router.post('/addquiz', function(req, res) {
     }
   }
   //size files
-  var fs = require('fs');
   fs.readdir('public/data/' + quiz.name, function(err, files) {
     if (err) {
       console.log(err);
@@ -1073,7 +1121,6 @@ router.post('/addanketa', function(req, res) {
 
   var root = require('app-root-path');
   var path = root.path;
-  var fs = require('fs');
   if (!fs.existsSync('./public/data')) {
     fs.mkdirSync('./public/data');
   }
@@ -1137,7 +1184,6 @@ router.post('/addanketa', function(req, res) {
     }
   }
   //size files
-  var fs = require('fs');
   fs.readdir('public/data/' + anketa.name, function(err, files) {
     if (err) return console.log(err);
     files.forEach(function(file) {

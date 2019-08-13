@@ -1,6 +1,13 @@
 
-
 $(function() {
+
+  const updateVH = () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  updateVH();
+  window.onresize = updateVH;
 
   langSwitch();
   if(local_data[0].languages.length < 2){
@@ -11,6 +18,7 @@ $(function() {
   if(!anketa.comments){
     $('.note').hide();
     $('.btn-answer').css('height', '13%');
+    $('#comment-mobile').hide();
   }
   if(!anketa.user_data){
     $('.user-data-form').css('opacity','0');
@@ -110,8 +118,10 @@ function changeQuestion(dir) {
       if(anketa.questions[n].img != 'data/default.png'){
         $('.play-img').show();
         $('#questionImg').attr('src', '../../../' + anketa.questions[n].img);
+        $('.play-buttons-container').css('height','45%');
       }else{
         $('.play-img').hide();
+        $('.play-buttons-container').css('height','80%');
       }
       $('#note').val(result.answers[n].note);
       for (var i = 0; i < 5; i++) {
@@ -144,7 +154,7 @@ function changeQuestion(dir) {
       $('.btn-answer').css('border', 'rgb(177,31,31) .1rem solid');
       $('.btn-answer').animate({
         opacity: 1
-      }, 500, ()=>{
+      }, 0, ()=>{
         $('.btn-answer').css('border','none');
       })
     }
@@ -152,6 +162,7 @@ function changeQuestion(dir) {
 }
 
 function start() {
+  // document.body.requestFullscreen();
   $('.desc').css('display', 'none');
   $('.play').css('display', 'flex');
   $('.progressBar').css('display', 'block');
@@ -182,10 +193,12 @@ function noteChanged() {
 function progress(dir) {
   $('.progress-bar-count').html(n+1+'/'+anketa.count);
   let p = ((n+1)/(anketa.count))*100;
-  if(p == 100){
-    $('.progressBar-foreground').css('border-radius', '2rem');
-  }else{
-    $('.progressBar-foreground').css('border-radius', '2rem 0 0 2rem');
+  if($(window).width() > 480){
+    if(p == 100){
+      $('.progressBar-foreground').css('border-radius', '2rem');
+    }else{
+      $('.progressBar-foreground').css('border-radius', '2rem 0 0 2rem');
+    }
   }
   $('.progressBar-foreground').animate({
     width:p+'%'
@@ -294,7 +307,7 @@ function langSwitch() {
     $('#answer4').html('Spíše ne');
     $('#answer5').html('Určitě ne');
     $('.end-text').html('Děkujeme za spolupráci');
-    $('.end-bnt').html('Spustit znovu');
+    $('.end-btn-span').html('Spustit znovu');
     $('#note').attr('placeholder','Komentář ...');
     $('.user-data-form').find('label').eq(0).html("Jméno :");
     $('.user-data-form').find('label').eq(1).html("Příjmení :");
@@ -312,7 +325,7 @@ function langSwitch() {
     $('#answer4').html('Rather no');
     $('#answer5').html('Definitely no');
     $('.end-text').html('Thank you for your cooperation');
-    $('.end-bnt').html('Start again');
+    $('.end-btn-span').html('Start again');
     $('#note').attr('placeholder','Comment ...');
     $('.user-data-form').find('label').eq(0).html("First name :");
     $('.user-data-form').find('label').eq(1).html("Last name :");
@@ -336,5 +349,27 @@ function switchLang(l) {
   }else{
     $('#lang-en').addClass('lang-switch-icon-selected');
     $('#lang-cz').removeClass('lang-switch-icon-selected');
+  }
+}
+function toggleMobileComment() {
+  if(!$('.comment-mobile-background').is(':visible')){
+    $('.play-container-main').css('filter','blur(4px)');
+    $('.question').css('filter','blur(4px)');
+    $('#comment-mobile').css('filter','blur(4px)');
+    $('.comment-mobile-background').css('display','flex');
+  }else{
+    $('.play-container-main').css('filter','blur(0px)');
+    $('.question').css('filter','blur(0px)');
+    $('#comment-mobile').css('filter','blur(0px)');
+    $('.comment-mobile-background').hide();
+  }
+}
+function toggleMobileLang() {
+  if(!$('.lang-mobile-background').is(':visible')){
+    $('.main-container').css('filter','blur(4px)');
+    $('.lang-mobile-background').css('display','flex');
+  }else{
+    $('.main-container').css('filter','blur(0px)');
+    $('.lang-mobile-background').hide();
   }
 }

@@ -135,40 +135,74 @@ function getSite(site, param) {
     $('#home').removeClass('navbar-item-active');
     $('#settings').addClass('navbar-item-active');
   }
-  $.get('/'+site, {pass,cluster,param}, (data)=>{
-      if (data == 'Incorrect password') {
-        $('.password').addClass('shake').delay(500).queue(function(){
-          $(this).removeClass('shake');
-          $(this).dequeue();
-        });
-        $('.password-input').focus();
-      } else {
-        changeCluster(cluster);
-        $('.password').hide();
-        $('.password-input').val('');
-        $('.cluster-list').show();
-        $('.content').replaceWith($(data).find('.content'));
+  $.ajax({
+    type:'GET',
+    url:`/${site}`,
+    data:{
+      cluster,
+      param
+    },
+    beforeSend: function(xhr){
+      if(localStorage.token)
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+    },
+    success:function(data){
+      changeCluster(cluster);
+      $('.password').hide();
+      $('.password-input').val('');
+      $('.cluster-list').show();
+      $('.content').replaceWith($(data).find('.content'));
 
-        if(!scripts[site]){
-          $.getScript('js/'+site+'.js', function(){
-            scripts[site] = true;
-            if(site=='results')
-              setResultData();
-            if(site=='editanketa')
-              setEditData();
-          });
-        }else{
+      if(!scripts[site]){
+        $.getScript('js/'+site+'.js', function(){
+          scripts[site] = true;
           if(site=='results')
             setResultData();
           if(site=='editanketa')
             setEditData();
-        }
-        // $('.container').css('display', 'flex');
-        // successCange();
+        });
+      }else{
+        if(site=='results')
+          setResultData();
+        if(site=='editanketa')
+          setEditData();
       }
-      // document.write(this.responseText);
-
+    }
   });
+  // $.get('/'+site, {pass,cluster,param}, (data)=>{
+  //     if (data == 'Incorrect password') {
+  //       $('.password').addClass('shake').delay(500).queue(function(){
+  //         $(this).removeClass('shake');
+  //         $(this).dequeue();
+  //       });
+  //       $('.password-input').focus();
+  //     } else {
+  //       changeCluster(cluster);
+  //       $('.password').hide();
+  //       $('.password-input').val('');
+  //       $('.cluster-list').show();
+  //       $('.content').replaceWith($(data).find('.content'));
+  //
+  //       if(!scripts[site]){
+  //         $.getScript('js/'+site+'.js', function(){
+  //           scripts[site] = true;
+  //           if(site=='results')
+  //             setResultData();
+  //           if(site=='editanketa')
+  //             setEditData();
+  //         });
+  //       }else{
+  //         if(site=='results')
+  //           setResultData();
+  //         if(site=='editanketa')
+  //           setEditData();
+  //       }
+  //       // $('.container').css('display', 'flex');
+  //       // successCange();
+  //     }
+  //     // document.write(this.responseText);
+  //
+  // });
 }
 
 function changeCluster(name){
@@ -179,7 +213,7 @@ function changeCluster(name){
 }
 
 function login(){
-  $.get('/home', {"pass":temp_pass,"cluster":temp_cluster}, (data)=>{
+  $.post('/login', {"pass":temp_pass,"cluster":temp_cluster}, (data)=>{
     if(data == 'Incorrect password'){
       $('.password').addClass('shake').delay(500).queue(function(){
         $(this).removeClass('shake');
@@ -187,13 +221,33 @@ function login(){
       });
       $('.password-input').focus();
     }else{
-      pass = temp_pass;
+      // pass = temp_pass;
       cluster = temp_cluster;
-      changeCluster(cluster);
-      $('.password').hide();
-      $('.password-input').val('');
-      $('.cluster-list').show();
-      $('.content-container').replaceWith(data);
+      // changeCluster(cluster);
+      // $('.password').hide();
+      // $('.password-input').val('');
+      // $('.cluster-list').show();
+      // $('.content-container').replaceWith(data);
+      localStorage.token = data;
+      $.ajax({
+        type:'GET',
+        url:'/home',
+        data:{
+          cluster
+        },
+        beforeSend: function(xhr){
+          if(localStorage.token)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+        },
+        success:function(data){
+          cluster = temp_cluster;
+          changeCluster(cluster);
+          $('.password').hide();
+          $('.password-input').val('');
+          $('.cluster-list').show();
+          $('.content-container').replaceWith(data);
+        }
+      })
     }
   });
 }
@@ -233,7 +287,7 @@ function playConfirm(name, len) {
   playSelect = name;
 }
 function confirmPlay() {
-  window.location.href = 'http://localhost:9000/playA/'+cluster+'/'+playSelect+'/'+playLang;
+  window.location.href = `http://${location.host}/playA/${cluster}/${playSelect}/${playLang}`;
 }
 function declinePlay() {
   $('#playConfirm').hide();

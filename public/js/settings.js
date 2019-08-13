@@ -13,23 +13,38 @@ function decline(){
 }
 function confirm(){
   // window.location.replace("/delete/"+item);
-
-  let oReq = new XMLHttpRequest();
-  oReq.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
+  $.ajax({
+    type:'POST',
+    url:'/deleteAnketa',
+    data:{
+      cluster,
+      item
+    },
+    beforeSend: function(xhr){
+      if(localStorage.token)
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);
+    },
+    success:function(){
       getSite('settings');
     }
-  };
-  if(type=='anketa')
-    oReq.open('POST', '/deleteAnketa', true);
-  else
-    oReq.open('POST', '/deleteQuiz', true);
-  oReq.setRequestHeader("Content-Type", "application/json");
-  oReq.send(JSON.stringify({
-    cluster,
-    "pass": pass,
-    "item": item
-  }));
+  });
+
+  // let oReq = new XMLHttpRequest();
+  // oReq.onreadystatechange = function() {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     getSite('settings');
+  //   }
+  // };
+  // if(type=='anketa')
+  //   oReq.open('POST', '/deleteAnketa', true);
+  // else
+  //   oReq.open('POST', '/deleteQuiz', true);
+  // oReq.setRequestHeader("Content-Type", "application/json");
+  // oReq.send(JSON.stringify({
+  //   cluster,
+  //   "pass": pass,
+  //   "item": item
+  // }));
 
 }
 function check(){
