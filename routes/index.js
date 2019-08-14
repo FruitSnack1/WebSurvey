@@ -1116,7 +1116,7 @@ router.post('/addquiz', function(req, res) {
 });
 
 router.post('/addanketa', function(req, res) {
-
+  console.log(req.body);
   let anketa = createAnketaObj(req.body);
 
   var root = require('app-root-path');
@@ -1283,6 +1283,9 @@ function createAnketaObj(body) {
   }
   if (body.lang_en) {
     anketa.languages.push('en');
+  }
+  if (body.lang_de) {
+    anketa.languages.push('de');
   }
   if (body.weights) {
     anketa.weights = true;

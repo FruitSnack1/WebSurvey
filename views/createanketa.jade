@@ -72,6 +72,12 @@ html(lang='cz', dir='ltr')
                     input(type='checkbox', name='lang_en', id='lang_en', onchange='langEnChange();').input-checkbox
                     span.checkmark
                 span Přidat otázky v angličtině
+              div.checkbox-container
+                div.check-container
+                  label.checkbox-label(for='lang_de').advanced-settings-checkbox
+                    input(type='checkbox', name='lang_de', id='lang_de', onchange='langDeChange();').input-checkbox
+                    span.checkmark
+                span Přidat otázky v němčině
             hr
             div.questionInput
               - for(var x =0; x< 50; x++)
@@ -85,6 +91,9 @@ html(lang='cz', dir='ltr')
                       input.input-text(type='text', name='question' + x)
                     div.lang-icon-container.lang-en-input(style='display:none')
                       img(src='img/en_icon.png').lang-icon
+                      input.input-text(type='text', name='question' + x)
+                    div.lang-icon-container.lang-de-input(style='display:none')
+                      img(src='img/de_icon.png').lang-icon
                       input.input-text(type='text', name='question' + x)
                     
                     label Obrázek otázky

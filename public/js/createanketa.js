@@ -146,10 +146,20 @@ function sectorCountChange(count) {
 function langEnChange() {
   if($('.lang-en-input').is(':visible')){
     $('.lang-en-input').hide();
-    $('.lang-cz-input').css('padding-bottom','0');
+    // $('.lang-cz-input').css('padding-bottom','0');
   }else{
     $('.lang-en-input').fadeIn(300);
-    $('.lang-cz-input').css('padding-bottom','.2rem');
+    // $('.lang-cz-input').css('padding-bottom','.2rem');
+  }
+}
+
+function langDeChange() {
+  if($('.lang-de-input').is(':visible')){
+    $('.lang-de-input').hide();
+    // $('.lang-cz-input').css('padding-bottom','0');
+  }else{
+    $('.lang-de-input').fadeIn(300);
+    // $('.lang-cz-input').css('padding-bottom','.2rem');
   }
 }
 

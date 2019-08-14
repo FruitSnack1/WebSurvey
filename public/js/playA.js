@@ -299,48 +299,95 @@ function shuffle(array) {
 }
 
 function langSwitch() {
-  if(lang == 'cz'){
-    $('.desc-btn').html('Začít');
-    $('#answer1').html('Určitě Ano');
-    $('#answer2').html('Spíše ano');
-    $('#answer3').html('Nemohu rozhodnout');
-    $('#answer4').html('Spíše ne');
-    $('#answer5').html('Určitě ne');
-    $('.end-text').html('Děkujeme za spolupráci');
-    $('.end-btn-span').html('Spustit znovu');
-    $('#note').attr('placeholder','Komentář ...');
-    $('.user-data-form').find('label').eq(0).html("Jméno :");
-    $('.user-data-form').find('label').eq(1).html("Příjmení :");
-    $('.user-data-form').find('label').eq(2).html("Věk :");
-    $('.user-data-form').find('label').eq(3).html("Pohlaví :");
-    $('.desc-select').find('option').eq(0).html('Muž');
-    $('.desc-select').find('option').eq(1).html('Žena');
-    if(n != -1)
-    $('#q').html(anketa.questions[n].question[0]);
-  }else{
-    $('.desc-btn').html('Begin');
-    $('#answer1').html('Definitely yes');
-    $('#answer2').html('Rather yes');
-    $('#answer3').html("Can't decide");
-    $('#answer4').html('Rather no');
-    $('#answer5').html('Definitely no');
-    $('.end-text').html('Thank you for your cooperation');
-    $('.end-btn-span').html('Start again');
-    $('#note').attr('placeholder','Comment ...');
-    $('.user-data-form').find('label').eq(0).html("First name :");
-    $('.user-data-form').find('label').eq(1).html("Last name :");
-    $('.user-data-form').find('label').eq(2).html("Age :");
-    $('.user-data-form').find('label').eq(3).html("Sex :");
-    $('.desc-select').find('option').eq(0).html('Man');
-    $('.desc-select').find('option').eq(1).html('Woman');
-    if(n !=-1)
-    $('#q').html(anketa.questions[n].question[1]);
+  // if(lang == 'cz'){
+  //   $('.desc-btn').html('Začít');
+  //   $('#answer1').html('Určitě Ano');
+  //   $('#answer2').html('Spíše ano');
+  //   $('#answer3').html('Nemohu rozhodnout');
+  //   $('#answer4').html('Spíše ne');
+  //   $('#answer5').html('Určitě ne');
+  //   $('.end-text').html('Děkujeme za spolupráci');
+  //   $('.end-btn-span').html('Spustit znovu');
+  //   $('#note').attr('placeholder','Komentář ...');
+  //   $('.user-data-form').find('label').eq(0).html("Jméno :");
+  //   $('.user-data-form').find('label').eq(1).html("Příjmení :");
+  //   $('.user-data-form').find('label').eq(2).html("Věk :");
+  //   $('.user-data-form').find('label').eq(3).html("Pohlaví :");
+  //   $('.desc-select').find('option').eq(0).html('Muž');
+  //   $('.desc-select').find('option').eq(1).html('Žena');
+  //   if(n != -1)
+  //   $('#q').html(anketa.questions[n].question[0]);
+  // }else if(lang == 'en'){
+  //   $('.desc-btn').html('Begin');
+  //   $('#answer1').html('Definitely yes');
+  //   $('#answer2').html('Rather yes');
+  //   $('#answer3').html("Can't decide");
+  //   $('#answer4').html('Rather no');
+  //   $('#answer5').html('Definitely no');
+  //   $('.end-text').html('Thank you for your cooperation');
+  //   $('.end-btn-span').html('Start again');
+  //   $('#note').attr('placeholder','Comment ...');
+  //   $('.user-data-form').find('label').eq(0).html("First name :");
+  //   $('.user-data-form').find('label').eq(1).html("Last name :");
+  //   $('.user-data-form').find('label').eq(2).html("Age :");
+  //   $('.user-data-form').find('label').eq(3).html("Sex :");
+  //   $('.desc-select').find('option').eq(0).html('Man');
+  //   $('.desc-select').find('option').eq(1).html('Woman');
+  //   if(n !=-1)
+  //   $('#q').html(anketa.questions[n].question[1]);
+  // }else{
+  //   $('#q').html(anketa.questions[n].question[2]);
+  // }
+  let x;
+  switch (lang) {
+    case 'cz':
+      x = 0
+      break;
+    case 'en':
+      x = 1;
+      break;
+    case 'de':
+      x = 2;
+      break;
   }
+  $('.desc-btn').html(langTexts['desc-btn'][x]);
+  $('#answer1').html(langTexts['answer1'][x]);
+  $('#answer2').html(langTexts['answer2'][x]);
+  $('#answer3').html(langTexts['answer3'][x]);
+  $('#answer4').html(langTexts['answer4'][x]);
+  $('#answer5').html(langTexts['answer5'][x]);
+  $('.end-text').html(langTexts['end-text'][x]);
+  $('.end-btn-span').html(langTexts['end-btn'][x]);
+  $('#note').attr('placeholder',langTexts['note'][x]);
+  $('.user-data-form').find('label').eq(0).html(langTexts['user-data-form1'][x]);
+  $('.user-data-form').find('label').eq(1).html(langTexts['user-data-form2'][x]);
+  $('.user-data-form').find('label').eq(2).html(langTexts['user-data-form3'][x]);
+  $('.user-data-form').find('label').eq(3).html(langTexts['user-data-form4'][x]);
+  $('.desc-select').find('option').eq(0).html(langTexts['desc-select1'][x]);
+  $('.desc-select').find('option').eq(1).html(langTexts['desc-select2'][x]);
+  if(n != -1)
+  $('#q').html(anketa.questions[n].question[0]);
 }
-
+const langTexts = {
+  'desc-btn': ['Začít','Begin','GERMAN'],
+  'answer1':['Určitě ano','Definitely yes','GERMAN'],
+  'answer2':['Spíše ano','Rather yes','GERMAN'],
+  'answer3':['Nemohu rozhodnout',"Can't decide",'GERMAN'],
+  'answer4':['Spíše ne','Rather no','GERMAN'],
+  'answer5':['Určitě ne','Definitely no','GERMAN'],
+  'end-text':['Děkujeme za spolupráci','Thank you for your cooperation','GERMAN'],
+  'end-btn':['Spustit znovu','Start again','GERMAN'],
+  'note':['Komentář ...','Comment ...','GERMAN'],
+  'user-data-form1':['Jméno','First name :','GERMAN'],
+  'user-data-form2':['Příjmení','Last name :','GERMAN'],
+  'user-data-form3':['Věk','Age :','GERMAN'],
+  'user-data-form4':['Pohlaví','Sex :','GERMAN'],
+  'desc-select1':['Muž','Man','GERMAN'],
+  'desc-select2':['Žena','Woman','GERMAN']
+}
 function switchLang(l) {
   if(l == lang)
-  return;
+    return;
   lang = l;
   langSwitch();
   if(lang == 'cz'){
