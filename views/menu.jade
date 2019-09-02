@@ -11,7 +11,6 @@ html(lang='cz', dir='ltr')
     //- link(rel='stylesheet', href='css/results.css')
     link(rel='manifest', href='manifest.json')
     link(rel='stylesheet', href='css/main.css')
-    link(rel='stylesheet', href='css/menu.css')
     //- link(rel='stylesheet', href='../css/odometer-theme-default.css')
     //- link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css')
     //- link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
@@ -19,13 +18,48 @@ html(lang='cz', dir='ltr')
     
     title
   body
-    div.content-container
-      
-    
+    .menu-container
+      .menu-big-tile
+        p Elektrifizierung  
+        .menu-sub-container
+          .menu-sub-tile
+            span 1234
+          .menu-sub-tile
+            span 1234
+          .menu-sub-tile
+            span 1234
+          .menu-sub-tile
+            span 1234
+      .menu-tile-container
+        .menu-tile#menu-tile1(onclick='expandTile(1)')
+          span.menu-title Elektrifizierung
+      .menu-tile-container
+        .menu-tile#menu-tile2(onclick='expandTile(2)')
+          span.menu-title Automatisches Fahren
+      .menu-tile-container
+        .menu-tile#menu-tile3(onclick='expandTile(3)')
+          span.menu-title Mobile Online Dienste
+      .menu-tile-container
+        .menu-tile#menu-tile4(onclick='expandTile(4)')
+          span.menu-title HMI
+      .menu-tile-container
+        .menu-tile#menu-tile5(onclick='expandTile(5)')
+          span.menu-title.long Alltagstauglichkeit
+      .menu-tile-container
+        .menu-tile#menu-tile6(onclick='expandTile(6)')
+          span.menu-title CO2 Reduzierung
+      .menu-tile-container
+        .menu-tile#menu-tile7(onclick='expandTile(7)')
+          span.menu-title Design & Technologie
+      .menu-tile-container
+        .menu-tile#menu-tile8(onclick='expandTile(8)')
+          span.menu-title Organisation
+          
       script(src='js/jquery-3.3.1.min.js', type='text/javascript')    
       script(src='js/ajaxSubmit.js', type='text/javascript')    
       script(src='js/home.js', type='text/javascript')
       script(src='js/createanketa.js', type='text/javascript')
       script(src='js/createquiz.js', type='text/javascript')
+      script(src='js/menu.js', type='text/javascript')
       //- script(type='text/javascript', src='../js/odometer.js')
       script(type='text/javascript', src='js/chart.js')

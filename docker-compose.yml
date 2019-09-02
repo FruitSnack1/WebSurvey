@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    container_name: node-app
+    restart: always
+    build: .
+    ports:
+      - '80:3000'
+    links:
+      - mongo
+#     volumes:
+#       -  ~/OneDrive/Documents/code/WebSurvey/public:/public
+#       -  ~/OneDrive/Documents/code/WebSurvey/views:/views
+  mongo:
+    container_name: mongo-app
+    image: mongo:4
+    ports:
+      - '27017:27017'
