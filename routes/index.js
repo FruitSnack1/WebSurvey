@@ -3,7 +3,7 @@ var router = express.Router();
 var mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
-const url = 'mongodb://mongo:27017/quiz';
+const url = 'mongodb://127.0.0.1:27017/quiz';
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -24,14 +24,8 @@ router.get('/', (req, res) => {
 
 
 router.post('/auth', (req, res) => {
-  console.log(req.body);
   let name = 'kokot';
   var hash = crypto.createHash('md5').update(name).digest('hex');
-  console.log(hash);
-  console.log(hash);
-  console.log(hash);
-  console.log(hash);
-  console.log(hash);
 });
 
 router.get('/jwt', (req, res) => {

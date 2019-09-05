@@ -5,7 +5,12 @@ $(function() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   };
-
+  if(!anketa.languages.includes('cz'))
+    $('#lang-icon-cz').hide();
+  if(!anketa.languages.includes('en'))
+    $('#lang-icon-en').hide();
+  if(!anketa.languages.includes('de'))
+    $('#lang-icon-de').hide();
   updateVH();
   window.onresize = updateVH;
 
@@ -22,7 +27,7 @@ $(function() {
   }
   if(!anketa.user_data){
     $('.user-data-form').css('opacity','0');
-    console.log('hide');
+    // console.log('hide');
   }
   if(anketa.desc.length == 0){
     $('.desc-popis-title').hide();
@@ -30,10 +35,13 @@ $(function() {
     $('.desc-popis-title').show();
   }
   if(!anketa.user_data && anketa.desc.length == 0){
-    console.log("hidee");
+    // console.log("hidee");
     $('.desc-data').hide();
   }
 });
+function isMobile() {
+  return !$('.progress-bar-count').is(':visible');
+}
 let n = -1;
 let dropAnim = false;
 let anketa = local_data[0];
@@ -42,6 +50,7 @@ let colors = ['rgb(116,203,70)', 'rgb(235,216,18)', 'rgb(255,255,255)', 'rgb(255
 let date = new Date();
 let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
 let questionTime = [];
+
 if(anketa.random_order)
 shuffle(anketa.questions);
 for (var i = 0; i < anketa.questions.length; i++) {
@@ -112,16 +121,21 @@ function changeQuestion(dir) {
       n += dir;
       progress(dir);
       if(lang == 'cz')
-      $('#q').html(anketa.questions[n].question[0]);
-      else
-      $('#q').html(anketa.questions[n].question[1]);
+        $('#q').html(anketa.questions[n].question[0]);
+      else if(lang == 'en')
+        $('#q').html(anketa.questions[n].question[1]);
+      else if(lang == 'de')
+          $('#q').html(anketa.questions[n].question[2]);
       if(anketa.questions[n].img != 'data/default.png'){
         $('.play-img').show();
         $('#questionImg').attr('src', '../../../' + anketa.questions[n].img);
-        $('.play-buttons-container').css('height','45%');
+        if(isMobile())
+        $('.play-img').hide();
+          // $('.play-buttons-container').css('height','80%');
       }else{
         $('.play-img').hide();
-        $('.play-buttons-container').css('height','80%');
+        // if(isMobile())
+          // $('.play-buttons-container').css('height','80%');
       }
       $('#note').val(result.answers[n].note);
       for (var i = 0; i < 5; i++) {
@@ -366,24 +380,24 @@ function langSwitch() {
   $('.desc-select').find('option').eq(0).html(langTexts['desc-select1'][x]);
   $('.desc-select').find('option').eq(1).html(langTexts['desc-select2'][x]);
   if(n != -1)
-  $('#q').html(anketa.questions[n].question[0]);
+  $('#q').html(anketa.questions[n].question[x]);
 }
 const langTexts = {
-  'desc-btn': ['Začít','Begin','GERMAN'],
-  'answer1':['Určitě ano','Definitely yes','GERMAN'],
-  'answer2':['Spíše ano','Rather yes','GERMAN'],
-  'answer3':['Nemohu rozhodnout',"Can't decide",'GERMAN'],
-  'answer4':['Spíše ne','Rather no','GERMAN'],
-  'answer5':['Určitě ne','Definitely no','GERMAN'],
-  'end-text':['Děkujeme za spolupráci','Thank you for your cooperation','GERMAN'],
-  'end-btn':['Spustit znovu','Start again','GERMAN'],
-  'note':['Komentář ...','Comment ...','GERMAN'],
-  'user-data-form1':['Jméno','First name :','GERMAN'],
-  'user-data-form2':['Příjmení','Last name :','GERMAN'],
-  'user-data-form3':['Věk','Age :','GERMAN'],
-  'user-data-form4':['Pohlaví','Sex :','GERMAN'],
-  'desc-select1':['Muž','Man','GERMAN'],
-  'desc-select2':['Žena','Woman','GERMAN']
+  'desc-btn': ['Začít','Begin','Start'],
+  'answer1':['Určitě ano','Definitely yes','Sicherlich ja'],
+  'answer2':['Spíše ano','Rather yes','Eher ja'],
+  'answer3':['Nemohu rozhodnout',"Can't decide",'Kann nicht entscheiden '],
+  'answer4':['Spíše ne','Rather no','Lieber nicht'],
+  'answer5':['Určitě ne','Definitely no','Eher nicht'],
+  'end-text':['Děkujeme za spolupráci','Thank you for your cooperation','Danke für Ihre Mitarbeit'],
+  'end-btn':['Spustit znovu','Start again','Start nochmal'],
+  'note':['Komentář ...','Comment ...','Kommentar'],
+  'user-data-form1':['Jméno','First name :','Name'],
+  'user-data-form2':['Příjmení','Last name :','Nachname'],
+  'user-data-form3':['Věk','Age :','Alter'],
+  'user-data-form4':['Pohlaví','Sex :','Geschlecht'],
+  'desc-select1':['Muž','Man','Mann'],
+  'desc-select2':['Žena','Woman','Frau']
 }
 function switchLang(l) {
   if(l == lang)
@@ -414,6 +428,7 @@ function toggleMobileComment() {
 function toggleMobileLang() {
   if(!$('.lang-mobile-background').is(':visible')){
     $('.main-container').css('filter','blur(4px)');
+    $('.lang-mobile-background').slideDown(200);
     $('.lang-mobile-background').css('display','flex');
   }else{
     $('.main-container').css('filter','blur(0px)');

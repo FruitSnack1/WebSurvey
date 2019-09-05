@@ -1,0 +1,1 @@
+start cmd /k npm start && start cmd /k mongod --dbpath ../Node/data && start cmd /k sass --watch public/sass/main.sass:public/css/main.css 

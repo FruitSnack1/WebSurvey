@@ -108,21 +108,21 @@ html(lang='cz', dir='ltr')
         div.end(style="display:none;")
           h1.end-text Děkujeme za spolupráci
           div.end-btn-container
-            button.main-menu-btn.btn.btn-confirm
+            button.main-menu-btn.btn.end-bnt.btn-confirm
               i.fas.fa-th-large.end-btn-icon
               span Hlavní nabídka
             button(onclick='reset();').end-bnt.btn.btn-confirm
               i.fas.fa-redo.end-btn-icon
               span.end-btn-span Spustit znovu
-        div.lang-switch-container
+        div.lang-switch-container(style="display:none")
           img(src='../../../img/cz_icon.png', onclick='switchLang("cz")').lang-switch-icon#lang-cz
           img(src='../../../img/en_icon.png', onclick='switchLang("en")').lang-switch-icon#lang-en
         i.fas.fa-language#lang-mobile(onclick='toggleMobileLang()')
       div.lang-mobile-background(style='display:none', onclick='toggleMobileLang()')
         div.lang-mobile-foreground
-          img(src='../../../img/cz_icon.png', onclick='switchLang("cz")').lang-mobile-icon
-          img(src='../../../img/en_icon.png', onclick='switchLang("en")').lang-mobile-icon
-          img(src='../../../img/de_icon.png', onclick='switchLang("de")').lang-mobile-icon
+          img(src='../../../img/cz_icon.png', onclick='switchLang("cz")', id='lang-icon-cz').lang-mobile-icon
+          img(src='../../../img/en_icon.png', onclick='switchLang("en")', id='lang-icon-en').lang-mobile-icon
+          img(src='../../../img/de_icon.png', onclick='switchLang("de")', id='lang-icon-de').lang-mobile-icon
       //- script(type='text/javascript').
       //-   var local_data =!{JSON.stringify(anketa)}
       //-   var cluster = !{JSON.stringify(cluster)}
