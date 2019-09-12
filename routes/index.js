@@ -3,11 +3,12 @@ var router = express.Router();
 var mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
-const url = 'mongodb://mongo:27017/quiz';
+const url = 'mongodb://127.0.0.1:27017/quiz';
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const crypto = require('crypto');
 const rimraf = require('rimraf');
+const Path = require('path');
 // let name = 'karel';
 // let hash = crytpo.createHash('md5').update(name).digest('hex');
 // console.log(hash);
@@ -1130,7 +1131,7 @@ router.post('/addanketa', function(req, res) {
       var filename = file.name;
       filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
       anketa.img = "data/" + anketa.name + "/" + filename;
-      file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
+      file.mv(Path.join(path, "/public/data/", anketa.name, "/" + filename), function(err) {
         if (err) {
           console.log(err);;
         } else {
@@ -1152,7 +1153,7 @@ router.post('/addanketa', function(req, res) {
         var filename = file.name;
         filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
         anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
-        file.mv(path + "\\public/data/" + anketa.name + "\\" + filename, function(err) {
+        file.mv(Path.join(path, "/public/data/", anketa.name, "/" + filename), function(err) {
           if (err) {
             throw err;
           } else {

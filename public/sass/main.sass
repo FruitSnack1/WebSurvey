@@ -68,7 +68,11 @@ body
   display: flex
   width: 100%
   height: 100%
-
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
 .navbar
   width: 10%
   height: 100%
@@ -834,10 +838,11 @@ select
   display: flex
   flex-direction: column
   align-items: center
-  justify-content: space-evenly
+  justify-content: space-between
 
 .question
   height: 15%
+  // padding-top: 10px
   display: flex
   justify-content: center
   align-items: center
@@ -1081,7 +1086,7 @@ select
   padding: 0 .2rem
 
 #q
-  margin: 0 3rem
+  margin: 0 2rem
   text-align: center
 
 .play-buttons-container-mps
@@ -1301,9 +1306,9 @@ select[name='sector_count']
     height: 40%
 #lang-mobile
   position: absolute
-  left: 0
-  top: 0
-  margin: 10px 0 0 10px
+  right: 0
+  bottom: 0
+  // margin: 10px 0 0 10px
   font-size: 2rem
 .end-btn-container
   width: 50%
@@ -1367,24 +1372,26 @@ select[name='sector_count']
     height: 35%
   .play-container-main
     flex-wrap: wrap
-    height: 89.4%
+    height: 79.4%
   .play-arrow
     order: 3
   #questionImg
     width: 55%
     height: 93%
   .question
-    height: 10%
+    height: 20%
     font-size: 2rem
+    // padding-right: 37px
+    // padding-left: 37px
   .play-buttons-container
     flex: 1 0 100%
-    height: 80%
+    height: 75%
   .play-arrow
     flex: 0 0 50%
-    height: 20%
+    height: 25%
   #left, #right
     font-size: 18rem
-    margin-bottom: 10px
+    // margin-bottom: 10px
   #left
     margin-right: 6rem
   #right
@@ -1481,7 +1488,7 @@ select[name='sector_count']
   .lang-mobile-background
     top: 0
     width: 100vw
-    height: 100vh
+    height: calc(var(--vh, 1vh) * 100)
     position: absolute
     display: flex
     justify-content: center
@@ -1503,7 +1510,7 @@ select[name='sector_count']
     justify-content: space-around
     img
       width: auto
-      height: 30%
+      height: 25%
   .comment-mobile-textarea
     width: 76vw
     height: 55vw
@@ -1522,8 +1529,8 @@ select[name='sector_count']
   #lang-mobile
     position: absolute
     font-size: 4rem
-    top: 10px
-    left: 10px
+    bottom: 10px
+    right: 10px
   .lang-mobile-icon
     width: 30%
   .comment-mobile-btn
@@ -1538,3 +1545,5 @@ select[name='sector_count']
   /* #q{
    *  text-indent: 3rem;
    *}
+.main-menu-btn
+  display: none !important

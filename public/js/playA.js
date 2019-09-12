@@ -219,34 +219,34 @@ function progress(dir) {
   }, 200);
 }
 
-if (!('webkitSpeechRecognition' in window)) {
-  alert('use chrome please!');
-} else {
-  var recognition = new webkitSpeechRecognition();
-  recognition.continuous = false;
-  recognition.interimResults = true;
-
-  function record() {
-    $('.note-button').css('color', 'red');
-    recognition.lang = 'cs-CZ';
-    recognition.start();
-  }
-
-  recognition.onresult = function(event) {
-    let text = '';
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      text += event.results[i][0].transcript;
-      text = text.charAt(0).toUpperCase() + text.slice(1);
-      // console.log(text);
-      $('#note').val(text);
-    }
-  };
-
-  recognition.onend = function() {
-    $('.note-button').css('color', 'gray');
-    result.answers[n].note = $('#note').val();
-  }
-}
+// if (!('webkitSpeechRecognition' in window)) {
+//   alert('use chrome please!');
+// } else {
+//   var recognition = new webkitSpeechRecognition();
+//   recognition.continuous = false;
+//   recognition.interimResults = true;
+//
+//   function record() {
+//     $('.note-button').css('color', 'red');
+//     recognition.lang = 'cs-CZ';
+//     recognition.start();
+//   }
+//
+//   recognition.onresult = function(event) {
+//     let text = '';
+//     for (var i = event.resultIndex; i < event.results.length; ++i) {
+//       text += event.results[i][0].transcript;
+//       text = text.charAt(0).toUpperCase() + text.slice(1);
+//       // console.log(text);
+//       $('#note').val(text);
+//     }
+//   };
+//
+//   recognition.onend = function() {
+//     $('.note-button').css('color', 'gray');
+//     result.answers[n].note = $('#note').val();
+//   }
+// }
 
 function reset() {
   n = -1;

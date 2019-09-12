@@ -250,6 +250,11 @@ body {
   display: flex;
   width: 100%;
   height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .navbar {
@@ -1110,7 +1115,7 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .question {
@@ -1390,7 +1395,7 @@ select {
 }
 
 #q {
-  margin: 0 3rem;
+  margin: 0 2rem;
   text-align: center;
 }
 
@@ -1648,9 +1653,8 @@ select[name=sector_count] {
 
 #lang-mobile {
   position: absolute;
-  left: 0;
-  top: 0;
-  margin: 10px 0 0 10px;
+  right: 0;
+  bottom: 0;
   font-size: 2rem;
 }
 
@@ -1736,7 +1740,7 @@ select[name=sector_count] {
 
   .play-container-main {
     flex-wrap: wrap;
-    height: 89.4%;
+    height: 79.4%;
   }
 
   .play-arrow {
@@ -1749,23 +1753,22 @@ select[name=sector_count] {
   }
 
   .question {
-    height: 10%;
+    height: 20%;
     font-size: 2rem;
   }
 
   .play-buttons-container {
     flex: 1 0 100%;
-    height: 80%;
+    height: 75%;
   }
 
   .play-arrow {
     flex: 0 0 50%;
-    height: 20%;
+    height: 25%;
   }
 
   #left, #right {
     font-size: 18rem;
-    margin-bottom: 10px;
   }
 
   #left {
@@ -1908,7 +1911,7 @@ select[name=sector_count] {
   .lang-mobile-background {
     top: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     position: absolute;
     display: flex;
     justify-content: center;
@@ -1931,7 +1934,7 @@ select[name=sector_count] {
   }
   .lang-mobile-foreground img {
     width: auto;
-    height: 30%;
+    height: 25%;
   }
 
   .comment-mobile-textarea {
@@ -1956,8 +1959,8 @@ select[name=sector_count] {
   #lang-mobile {
     position: absolute;
     font-size: 4rem;
-    top: 10px;
-    left: 10px;
+    bottom: 10px;
+    right: 10px;
   }
 
   .lang-mobile-icon {
@@ -1979,6 +1982,9 @@ select[name=sector_count] {
   /* #q{
   * *  text-indent: 3rem;
   * *} */
+}
+.main-menu-btn {
+  display: none !important;
 }
 
 /*# sourceMappingURL=main.css.map */
