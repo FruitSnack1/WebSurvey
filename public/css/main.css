@@ -1004,6 +1004,7 @@ select {
 .desc-title {
   margin: 0;
   font-size: 2.8rem;
+  text-align: center;
 }
 
 .desc-popis-title {
@@ -1123,6 +1124,7 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .progress-bar-container {
@@ -1841,6 +1843,7 @@ select[name=sector_count] {
 
   .desc-title {
     font-size: 6rem;
+    text-align: center;
   }
 
   .desc-select {
