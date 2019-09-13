@@ -384,12 +384,12 @@ function langSwitch() {
 }
 const langTexts = {
   'desc-btn': ['Začít','Begin','Start'],
-  'answer1':['Určitě ano','Definitely yes','Sicherlich ja'],
-  'answer2':['Spíše ano','Rather yes','Eher ja'],
-  'answer3':['Nemohu rozhodnout',"Can't decide",'Kann nicht entscheiden '],
-  'answer4':['Spíše ne','Rather no','Lieber nicht'],
-  'answer5':['Určitě ne','Definitely no','Eher nicht'],
-  'end-text':['Děkujeme za spolupráci','Thank you for your cooperation','Danke für Ihre Mitarbeit'],
+  'answer1':['Určitě ano','Definitely yes','Entschieden Ja'],
+  'answer2':['Spíše ano','Rather yes','Eher Ja'],
+  'answer3':['Nemohu rozhodnout',"Can't decide",'Neutrale Haltung'],
+  'answer4':['Spíše ne','Rather no','Eher Nein'],
+  'answer5':['Určitě ne','Definitely no','Entschieden Nein'],
+  'end-text':['Děkujeme za spolupráci','Thank you for your cooperation','Entschieden Nein'],
   'end-btn':['Spustit znovu','Start again','Start nochmal'],
   'note':['Komentář ...','Comment ...','Kommentar'],
   'user-data-form1':['Jméno','First name :','Name'],
