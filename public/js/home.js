@@ -287,7 +287,7 @@ function playConfirm(id, name, len) {
   playSelect = id;
 }
 function confirmPlay() {
-  window.location.href = `http://${location.host}/playA/${cluster}/${playSelect}`;
+  window.location.href = `https://${location.host}/playA/${cluster}/${playSelect}`;
 }
 function declinePlay() {
   $('#playConfirm').hide();
