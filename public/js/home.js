@@ -277,17 +277,17 @@ function confirmSwitch(){
 function declineSwitch(){
   $('.switch-cluster').hide();
 }
-function playConfirm(name, len) {
+function playConfirm(id, name, len) {
   if(len == 2)
     $('.confirm-lang-container').show();
   else
     $('.confirm-lang-container').hide();
   $('#playConfirm').show();
   $('#playConfirm').find('h3').html('Chcete spustit '+name+' ?');
-  playSelect = name;
+  playSelect = id;
 }
 function confirmPlay() {
-  window.location.href = `http://${location.host}/playA/${cluster}/${playSelect}/${playLang}`;
+  window.location.href = `http://${location.host}/playA/${cluster}/${playSelect}`;
 }
 function declinePlay() {
   $('#playConfirm').hide();

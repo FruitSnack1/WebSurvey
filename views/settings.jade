@@ -40,7 +40,7 @@ html(lang='cz', dir='ltr')
               each anketa, i in ankety
                 li.settings-item
                   div.settings-item-img(style='background-image:url("#{anketa.img}")')
-                  span.settings-item-name #{anketa.name}
+                  span.settings-item-name #{anketa.name[0]}
                   span.settings-item-date #{anketa.date}
                   button.btn.settings-btn(onclick='getSite("editanketa", "#{anketa.name}");') Upravit
                   button.btn.settings-btn(onclick='getSite("results","#{anketa.name}");') Výsledky

@@ -47,8 +47,9 @@ let dropAnim = false;
 let anketa = local_data[0];
 let result = {};
 let colors = ['rgb(116,203,70)', 'rgb(235,216,18)', 'rgb(255,255,255)', 'rgb(255,121,0)', 'rgb(222,29,14)'];
-let date = new Date();
-let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+// let date = new Date();
+// let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+let time = Math.floor(Date.now() / 1000)
 let questionTime = [];
 
 if(anketa.random_order)
@@ -60,12 +61,10 @@ let timer = setInterval(function() {
   if (n > -1)
   questionTime[n]++;
 }, 1000);
-result.date = time;
-result.name = anketa.name;
+result.timestamp = time;
+result.name = anketa.name[0];
 result.answers = [];
-result.random_order = anketa.random_order;
-result.weights = anketa.weights;
-result.sectors = anketa.sectors;
+result.anketaId = anketa._id
 if(result.sectors)
 result.sector_count = anketa.sector_count;
 for (var i = 0; i < anketa.questions.length; i++) {
@@ -73,8 +72,14 @@ for (var i = 0; i < anketa.questions.length; i++) {
   o.question = anketa.questions[i].question[0];
   o.answer = null;
   o.note = null;
-  o.weight = anketa.questions[i].weight;
-  o.sector = anketa.questions[i].sector;
+  if(result.weights)
+    o.weight = anketa.questions[i].weight;
+  else
+    o.weight = null;
+  if(result.sectors)
+    o.sector = anketa.questions[i].sector;
+  else
+    o.sector = null;
   // if(result.weights)
   //   o.weight = anketa.questions[i].weight;
   // if(result.sectors)
@@ -251,8 +256,10 @@ function progress(dir) {
 function reset() {
   n = -1;
   result = {};
-  date = new Date();
-  time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+  // date = new Date();
+  // time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+  time = Math.floor(Date.now() / 1000)
+  console.log("time is", time);
   questionTime = [];
   for (var i = 0; i < anketa.questions.length; i++) {
     questionTime[i] = 0;
@@ -261,13 +268,10 @@ function reset() {
     if (n > -1)
     questionTime[n]++;
   }, 1000);
-  result.date = time;
-  result.name = anketa.name;
+  result.timestamp = time;
+  result.name = anketa.name[0];
   result.answers = [];
-  result.random_order = anketa.random_order;
-  result.weights = anketa.weights;
-  result.sectors = anketa.sectors;
-  result.sector_count = anketa.sector_count;
+  result.anketaId = anketa._id
   for (var i = 0; i < anketa.questions.length; i++) {
     let o = {};
     o.question = anketa.questions[i].question[0];
@@ -364,6 +368,7 @@ function langSwitch() {
       x = 2;
       break;
   }
+  $('.desc-title').html(anketa.name[x]);
   $('.desc-btn').html(langTexts['desc-btn'][x]);
   $('#answer1').html(langTexts['answer1'][x]);
   $('#answer2').html(langTexts['answer2'][x]);

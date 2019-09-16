@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var mongodb = require('mongodb');
+const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
 const url = 'mongodb://mongo:27017/quiz';
@@ -814,7 +814,10 @@ router.get('/createanketa', function(req, res, next) {
 //   });
 // });
 
-router.get('/playA/:cluster/:anketa/:lang', function(req, res) {
+router.get('/playA/:cluster/:id', function(req, res) {
+  let lang = req.headers['accept-language'].substring(0,2);
+  console.log(lang);
+  console.log('bvbbbbbbbbbbbbb');
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
@@ -822,19 +825,14 @@ router.get('/playA/:cluster/:anketa/:lang', function(req, res) {
       var db = client.db("quiz");
       var collection = db.collection(req.params.cluster + '_ankety');
       collection.find({
-        'name': req.params.anketa
+        '_id': new mongodb.ObjectId(req.params.id)
       }).toArray(function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-
-          res.render('playA', {
-            'anketa': result,
-            'cluster': req.params.cluster,
-            'lang': req.params.lang
-          })
-
-        }
+        if (err) return console.log(err);
+        res.render('playA', {
+          'anketa': result,
+          'cluster': req.params.cluster,
+          lang
+        })
       });
     }
   });
@@ -1113,7 +1111,6 @@ router.post('/addquiz', function(req, res) {
 router.post('/addanketa', function(req, res) {
   console.log(req.body);
   let anketa = createAnketaObj(req.body);
-
   var root = require('app-root-path');
   var path = root.path;
   if (!fs.existsSync('./public/data')) {
@@ -1248,6 +1245,7 @@ function createAnketaObj(body) {
   let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
   //create object
   var anketa = {
+    _id: new mongodb.ObjectId(),
     name: body.name,
     img: null,
     count: body.count,
@@ -1296,5 +1294,19 @@ function createAnketaObj(body) {
     anketa.questions[i].sector = body['sector' + i];
   }
   return anketa;
+}
+
+function checkExistingName(target){
+  MongoClient.connect(url, function(err, client) {
+    if (err) return console.log('Unable to connect to the Server', err);
+    var db = client.db("quiz");
+    var collection = db.collection(req.params.cluster + '_anketa_results');
+    collection.find({
+      'name': target
+    }).toArray(function(err, result) {
+      if (err) return console.log(err);
+      res.send(result);
+    });
+  });
 }
 module.exports = router;
