@@ -44,7 +44,7 @@ html(lang='cz', dir='ltr')
                   span.settings-item-date #{anketa.date}
                   button.btn.settings-btn(onclick='getSite("editanketa", "#{anketa.name}");') Upravit
                   button.btn.settings-btn(onclick='getSite("results","#{anketa.name}");') Výsledky
-                  button.btn.settings-btn.btn-decline(onclick='delete_item("#{anketa.name}","anketa");') Odstranit
+                  button.btn.settings-btn.btn-decline(onclick='delete_item("#{anketa.name[0]}","anketa");') Odstranit
 
           div.confirm-delete#confirm-delete(style='display:none;')
             h3.confirm-delete-label Opravdu chcete odstranit

@@ -828,6 +828,11 @@ router.get('/playA/:cluster/:id', function(req, res) {
         '_id': new mongodb.ObjectId(req.params.id)
       }).toArray(function(err, result) {
         if (err) return console.log(err);
+        if(!result[0].languages.includes(lang)){
+          lang = 'en';
+          if(!result[0].languages.includes(lang))
+            lang = 'cz';
+        }
         res.render('playA', {
           'anketa': result,
           'cluster': req.params.cluster,
