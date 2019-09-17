@@ -1121,7 +1121,7 @@ router.post('/addanketa', function(req, res) {
   if (!fs.existsSync('./public/data')) {
     fs.mkdirSync('./public/data');
   }
-  var dir = './public/data/' + anketa.name;
+  var dir = './public/data/' + anketa.name[0];
   fs.mkdirSync(dir);
   // if (!fs.existsSync(dir)){
   //     fs.mkdirSync(dir);
@@ -1131,9 +1131,9 @@ router.post('/addanketa', function(req, res) {
     if (req.files['img']) {
       var file = req.files['img'];
       var filename = file.name;
-      filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name);
-      anketa.img = "data/" + anketa.name + "/" + filename;
-      file.mv(Path.join(path, "/public/data/", anketa.name, "/" + filename), function(err) {
+      filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name[0]);
+      anketa.img = "data/" + anketa.name[0] + "/" + filename;
+      file.mv(Path.join(path, "/public/data/", anketa.name[0], "/" + filename), function(err) {
         if (err) {
           console.log(err);;
         } else {
@@ -1153,9 +1153,9 @@ router.post('/addanketa', function(req, res) {
       if (req.files['img' + i]) {
         var file = req.files['img' + i];
         var filename = file.name;
-        filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name + i);
-        anketa.questions[i].img = "data/" + anketa.name + "/" + filename;
-        file.mv(Path.join(path, "/public/data/", anketa.name, "/" + filename), function(err) {
+        filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name[0] + i);
+        anketa.questions[i].img = "data/" + anketa.name[0] + "/" + filename;
+        file.mv(Path.join(path, "/public/data/", anketa.name[0], "/" + filename), function(err) {
           if (err) {
             throw err;
           } else {
@@ -1181,10 +1181,10 @@ router.post('/addanketa', function(req, res) {
     }
   }
   //size files
-  fs.readdir('public/data/' + anketa.name, function(err, files) {
+  fs.readdir('public/data/' + anketa.name[0], function(err, files) {
     if (err) return console.log(err);
     files.forEach(function(file) {
-      var path = 'public/data/' + anketa.name + '/' + file;
+      var path = 'public/data/' + anketa.name[0] + '/' + file;
       console.log('path = ' + path);
       Jimp.read(path)
         .then(function(file) {
