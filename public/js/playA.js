@@ -358,7 +358,7 @@ function langSwitch() {
   // }
   let x;
   switch (lang) {
-    case 'cz':
+    case 'cs':
       x = 0
       break;
     case 'en':
