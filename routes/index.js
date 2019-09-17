@@ -816,6 +816,7 @@ router.get('/createanketa', function(req, res, next) {
 
 router.get('/playA/:cluster/:id', function(req, res) {
   let lang = req.headers['accept-language'].substring(0,2);
+  if(lang == 'cs') lang = 'cz';
   console.log(lang);
   console.log('bvbbbbbbbbbbbbb');
   MongoClient.connect(url, function(err, client) {
@@ -831,7 +832,7 @@ router.get('/playA/:cluster/:id', function(req, res) {
         if(!result[0].languages.includes(lang)){
           lang = 'en';
           if(!result[0].languages.includes(lang))
-            lang = 'cz';
+            lang = 'cs';
         }
         res.render('playA', {
           'anketa': result,
