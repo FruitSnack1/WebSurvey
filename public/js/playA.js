@@ -97,7 +97,7 @@ function changeQuestion(dir) {
   if (n + dir == anketa.count && result.answers[n].answer) {
     if(anketa.user_data){
       result.first_name = $('input[name=jmeno]').val();
-      result.oddeleni = $('input[name=oddeleni]').val();
+      result.oddeleni = $('select[name=oddeleni]').val();
       result.age = $('select[name=age]').val();
       result.sex = $('select[name=sex]').val();
       result.language = lang;
@@ -120,7 +120,7 @@ function changeQuestion(dir) {
     $('.progressBar').css('display', 'none');
     $('.end').css('display', 'flex');
     setTimeout(function () {
-      // window.location.href = `http://${location.host}/select`;
+      window.location.href = `https://${location.host}`;
     }, 3000);
   } else if (n + dir == -1) {
     n--;
@@ -132,11 +132,13 @@ function changeQuestion(dir) {
       n += dir;
       if(anketa.questions[n].open){
         $('.play-buttons-container').hide();
+        $('#q-sub').hide();
         $('.open-question').show();
         $('#open').val(result.answers[n].answer);
       }else{
         $('.play-buttons-container').show();
         $('.open-question').hide();
+        $('#q-sub').show();
       }
       $('#right').css('opacity','.5');
       progress(dir);

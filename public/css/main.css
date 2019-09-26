@@ -978,8 +978,9 @@ select {
   height: 65%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  margin-left: 1.4rem;
 }
 
 .desc-btn-start {
@@ -1032,8 +1033,8 @@ select {
 
 .desc-input {
   display: block;
-  /* color: #495057;
-  * */* line-height: 1.5rem; */
+  color: #495057;
+  line-height: 1.5rem;
   width: calc(100% - 2.8rem) !important;
   /* margin: 0 1rem; */
   /* *font-family: skodaFontLight;
@@ -1123,6 +1124,7 @@ select {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  padding: 2.5% 0;
 }
 
 .open-question {
@@ -1213,7 +1215,6 @@ select {
 
 #questionImg {
   width: 88%;
-  height: 100%;
   object-fit: cover;
 }
 
@@ -1685,6 +1686,7 @@ select[name=sector_count] {
   right: 2.5%;
   bottom: calc(3vh - 10px);
   font-size: 5vh;
+  display: none;
 }
 
 .end-btn-container {

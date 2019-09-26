@@ -90,15 +90,29 @@ html(lang='cz', dir='ltr')
           div.desc-name
               h1.desc-title #{anketa[0].name[0]} 
           div.desc-data
-            div.desc-popis
-              h2.desc-popis-title(style='display:none') Popis Ankety :
-              p.desc-content #{anketa[0].desc}
+            //- div.desc-popis
+            //-   h2.desc-popis-title(style='display:none') Popis Ankety :
+            //-   p.desc-content #{anketa[0].desc}
             div.user-data
               div.user-data-form
                 label.desc-input-label Jméno : 
                 input(type='text', name='jmeno').desc-input
                 label.desc-input-label Oddělení : 
-                input(type='text', name='oddeleni').desc-input
+                //- input(type='text', name='oddeleni').desc-input
+                select(type='text', name='oddeleni').desc-input.desc-select
+                  option.option-dis(selected, disabled) Vyberte možnost
+                  option(value='EB') EB
+                  option(value='EBA') EBA
+                  option(value='EBK') EBK
+                  option(value='EBS') EBS
+                  option(value='EBW') EBW
+                  option(value='ED') ED
+                  option(value='EE') EE
+                  option(value='EG') EG
+                  option(value='EK') EK
+                  option(value='EP') EP
+                  option(value='ES') ES
+                  option(value='Jiné') Jiné
                 label.desc-input-label Věk : 
                 //- input(type='number', name='age', min='1', max='100').desc-input
                 select(type='text', name='age').desc-input.desc-select
