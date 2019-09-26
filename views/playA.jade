@@ -32,6 +32,7 @@ html(lang='cz', dir='ltr')
         div.play(style="display:none;")
           div.question
               h3.text-white#q #{anketa[0].questions[0].q} 
+              h6#q-sub Je inovace přínosná pro budoucí generaci Kodiaqa? 
           div.play-container-main
             div.play-arrow
               //- img(src='../../img/Left.png', onclick='changeQuestion(-1);')#left
@@ -39,14 +40,16 @@ html(lang='cz', dir='ltr')
             div.play-img
               img#questionImg
             div.play-buttons-container
-              button.btn-answer#answer1.btn(type="button", value=1, onclick='select(1);') Určitě Ano
-              button.btn-answer#answer2.btn(type="button", value=2, onclick='select(2);') Spíše ano
-              button.btn-answer#answer3.btn(type="button", value=3, onclick='select(3);') Nemohu rozhodnout
-              button.btn-answer#answer4.btn(type="button", value=4, onclick='select(4);') Spíše ne
-              button.btn-answer#answer5.btn(type="button", value=5, onclick='select(5);') Určitě ne
+              button.btn-answer#answer1.btn(type="button", value=1, onclick='select(1);') Naprosto souhlasím
+              button.btn-answer#answer2.btn(type="button", value=2, onclick='select(2);') Spíše souhlasím
+              button.btn-answer#answer3.btn(type="button", value=3, onclick='select(3);') Neutrální postoj
+              button.btn-answer#answer4.btn(type="button", value=4, onclick='select(4);') Spíše nesouhlasím
+              button.btn-answer#answer5.btn(type="button", value=5, onclick='select(5);') Naprosto nesouhlasím
               div.note
                 textarea.play-textarea(placeholder="Komentář ...", onchange='noteChanged()')#note
                 i(onclick='record();').fas.fa-microphone.note-button(style="display:none;")
+            div.open-question(style='display:none;')
+              textarea#open(placeholder='Vaše odpověď ...', onchange='openQuestion()')
                 
             div.play-buttons-container-mps(style="display:none;")
               button.btn.btn-mps 0
@@ -94,12 +97,18 @@ html(lang='cz', dir='ltr')
               div.user-data-form
                 label.desc-input-label Jméno : 
                 input(type='text', name='jmeno').desc-input
-                label.desc-input-label Příjmení : 
-                input(type='text', name='prijmeni').desc-input
+                label.desc-input-label Oddělení : 
+                input(type='text', name='oddeleni').desc-input
                 label.desc-input-label Věk : 
-                input(type='number', name='age', min='1', max='100').desc-input
+                //- input(type='number', name='age', min='1', max='100').desc-input
+                select(type='text', name='age').desc-input.desc-select
+                  option.option-dis(selected, disabled) Vyberte možnost
+                  option(value='18-29') 18 - 29
+                  option(value='30-49') 30 - 49
+                  option(value='50 a více') 50 a více
                 label.desc-input-label Pohlaví : 
                 select(type='text', name='sex').desc-input.desc-select
+                  option.option-dis(selected, disabled) Vyberte možnost
                   option(value='Muž') Muž
                   option(value='Žena') Žena
               //- div.btn-container

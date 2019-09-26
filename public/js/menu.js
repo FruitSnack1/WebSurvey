@@ -43,3 +43,6 @@ function expandTile(tile) {
 $('.menu-big-tile').on('click', (e) =>{
   $('.menu-big-tile').fadeOut(200);
 });
+function selectAnketa(id) {
+  window.location.href = `https://${location.host}/playA/hmi/${id}`;
+}

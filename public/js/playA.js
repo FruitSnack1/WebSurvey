@@ -38,6 +38,10 @@ $(function() {
     // console.log("hidee");
     $('.desc-data').hide();
   }
+
+  $('.option-dis').attr('selected');
+  $('.option-dis').attr('disabled');
+
 });
 function isMobile() {
   return !$('.progress-bar-count').is(':visible');
@@ -93,8 +97,8 @@ function changeQuestion(dir) {
   if (n + dir == anketa.count && result.answers[n].answer) {
     if(anketa.user_data){
       result.first_name = $('input[name=jmeno]').val();
-      result.last_name = $('input[name=prijmeni]').val();
-      result.age = $('input[name=age]').val();
+      result.oddeleni = $('input[name=oddeleni]').val();
+      result.age = $('select[name=age]').val();
       result.sex = $('select[name=sex]').val();
       result.language = lang;
     }
@@ -115,6 +119,9 @@ function changeQuestion(dir) {
     $('.play').css('display', 'none');
     $('.progressBar').css('display', 'none');
     $('.end').css('display', 'flex');
+    setTimeout(function () {
+      // window.location.href = `http://${location.host}/select`;
+    }, 3000);
   } else if (n + dir == -1) {
     n--;
     $('.desc').show();
@@ -122,8 +129,16 @@ function changeQuestion(dir) {
     $('.progressBar').css('display', 'none');
   } else {
     if (dir == -1 || n ==-1 || result.answers[n].answer) {
-      $('#right').css('opacity','.5');
       n += dir;
+      if(anketa.questions[n].open){
+        $('.play-buttons-container').hide();
+        $('.open-question').show();
+        $('#open').val(result.answers[n].answer);
+      }else{
+        $('.play-buttons-container').show();
+        $('.open-question').hide();
+      }
+      $('#right').css('opacity','.5');
       progress(dir);
       if(lang == 'cz')
         $('#q').html(anketa.questions[n].question[0]);
@@ -370,39 +385,39 @@ function langSwitch() {
   }
   $('.desc-title').html(anketa.name[x]);
   $('.desc-btn').html(langTexts['desc-btn'][x]);
-  $('#answer1').html(langTexts['answer1'][x]);
-  $('#answer2').html(langTexts['answer2'][x]);
-  $('#answer3').html(langTexts['answer3'][x]);
-  $('#answer4').html(langTexts['answer4'][x]);
-  $('#answer5').html(langTexts['answer5'][x]);
+  // $('#answer1').html(langTexts['answer1'][x]);
+  // $('#answer2').html(langTexts['answer2'][x]);
+  // $('#answer3').html(langTexts['answer3'][x]);
+  // $('#answer4').html(langTexts['answer4'][x]);
+  // $('#answer5').html(langTexts['answer5'][x]);
   $('.end-text').html(langTexts['end-text'][x]);
   $('.end-btn-span').html(langTexts['end-btn'][x]);
   $('#note').attr('placeholder',langTexts['note'][x]);
   $('.user-data-form').find('label').eq(0).html(langTexts['user-data-form1'][x]);
-  $('.user-data-form').find('label').eq(1).html(langTexts['user-data-form2'][x]);
+  // $('.user-data-form').find('label').eq(1).html(langTexts['user-data-form2'][x]);
   $('.user-data-form').find('label').eq(2).html(langTexts['user-data-form3'][x]);
   $('.user-data-form').find('label').eq(3).html(langTexts['user-data-form4'][x]);
-  $('.desc-select').find('option').eq(0).html(langTexts['desc-select1'][x]);
-  $('.desc-select').find('option').eq(1).html(langTexts['desc-select2'][x]);
+  // $('.desc-select').find('option').eq(0).html(langTexts['desc-select1'][x]);
+  // $('.desc-select').find('option').eq(1).html(langTexts['desc-select2'][x]);
   if(n != -1)
   $('#q').html(anketa.questions[n].question[x]);
 }
 const langTexts = {
   'desc-btn': ['Začít','Begin','Start'],
-  'answer1':['Určitě ano','Definitely yes','Entschieden Ja'],
-  'answer2':['Spíše ano','Rather yes','Eher Ja'],
-  'answer3':['Nemohu rozhodnout',"Can't decide",'Neutrale Haltung'],
-  'answer4':['Spíše ne','Rather no','Eher Nein'],
-  'answer5':['Určitě ne','Definitely no','Entschieden Nein'],
+  // 'answer1':['Určitě ano','Definitely yes','Entschieden Ja'],
+  // 'answer2':['Spíše ano','Rather yes','Eher Ja'],
+  // 'answer3':['Nemohu rozhodnout',"Can't decide",'Neutrale Haltung'],
+  // 'answer4':['Spíše ne','Rather no','Eher Nein'],
+  // 'answer5':['Určitě ne','Definitely no','Entschieden Nein'],
   'end-text':['Děkujeme za spolupráci','Thank you for your cooperation','Entschieden Nein'],
   'end-btn':['Spustit znovu','Start again','Start nochmal'],
   'note':['Komentář ...','Comment ...','Kommentar'],
   'user-data-form1':['Jméno','First name :','Name'],
-  'user-data-form2':['Příjmení','Last name :','Nachname'],
+  // 'user-data-form2':['Příjmení','Last name :','Nachname'],
   'user-data-form3':['Věk','Age :','Alter'],
   'user-data-form4':['Pohlaví','Sex :','Geschlecht'],
-  'desc-select1':['Muž','Man','Mann'],
-  'desc-select2':['Žena','Woman','Frau']
+  // 'desc-select1':['Muž','Man','Mann'],
+  // 'desc-select2':['Žena','Woman','Frau']
 }
 function switchLang(l) {
   if(l == lang)
@@ -439,4 +454,9 @@ function toggleMobileLang() {
     $('.main-container').css('filter','blur(0px)');
     $('.lang-mobile-background').hide();
   }
+}
+function openQuestion() {
+  result.answers[n].answer = $('#open').val();
+  $('#right').css('opacity',1);
+  console.log(result.answers[n].answer);
 }

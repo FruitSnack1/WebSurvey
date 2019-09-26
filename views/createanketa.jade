@@ -108,7 +108,14 @@ html(lang='cz', dir='ltr')
                     div.img-container
                       label.input-img-label(for='img'+x) Vybrat obrázek
                       input.input-img(type='file', name='img'+x, id='img'+x, onchange='imgChange(this)')
-                      
+                    
+                    div.checkbox-container
+                      div.check-container
+                        label.checkbox-label(for='open'+x).advanced-settings-checkbox
+                          input(type='checkbox', name='open'+x, id='open'+x).input-checkbox
+                          span.checkmark
+                      span Otevřená otázka
+                    
                     div.sector-container(style='display:none;')
                       label Sektor otázky
                       select(name='sector'+x, class='sector-select')
@@ -144,6 +151,14 @@ html(lang='cz', dir='ltr')
                     div.img-container
                       label.input-img-label(for='img'+x) Vybrat obrázek
                       input.input-img(type='file', name='img'+x, id='img'+x, onchange='imgChange(this)')
+                      
+                    div.checkbox-container
+                      div.check-container
+                        label.checkbox-label(for='open'+x).advanced-settings-checkbox
+                          input(type='checkbox', name='open'+x, id='open'+x).input-checkbox
+                          span.checkmark
+                      span Otevřená otázka
+                      
                     div.sector-container(style='display:none;')
                       label Sektor otázky
                       select(name='sector'+x, class='sector-select')

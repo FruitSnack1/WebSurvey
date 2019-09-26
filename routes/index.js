@@ -19,7 +19,7 @@ const Path = require('path');
 router.get('/menu', (req, res) => {
   res.render('menu');
 });
-router.get('/', (req, res) => {
+router.get('/admin', (req, res) => {
   res.render('index');
 });
 
@@ -120,13 +120,14 @@ router.get('/createanketa', (req, res) => {
 
 router.get('/results', isAuthenticated, (req, res) => {
   console.log(req.query);
-  const target = req.query.param;
+  const targetID = req.query.param;
   MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
     const db = client.db("quiz");
     const collection = db.collection(`${req.query.cluster}_anketa_results`);
-    const result = await collection.find({'name': target}).toArray();
-    res.render('results', {result, target}, (err, html) => {
+    const result = await collection.find({'anketaId': targetID}).toArray();
+    console.log(result);
+    res.render('results', {result, targetID}, (err, html) => {
       if (err) return console.log(err);
       res.send(html);
     });
@@ -647,6 +648,8 @@ router.post('/edit_quiz', function(req, res) {
 //
 //
 //       var quizzes;
+
+
 //       var ankety;
 //       db.collection('hmi_quizzes').find().toArray().
 //       then(function(data) {
@@ -1246,6 +1249,23 @@ router.post('/editanketa', (req, res) => {
   res.sendStatus(200);
 });
 
+router.get('/', (req,res)=>{
+  MongoClient.connect(url, async (err, client) => {
+    if (err) return console.log('Unable to connect to the Server', err);
+    console.log('Connection established to', url);
+    const db = client.db("quiz");
+    const ankety = await db.collection(`hmi_ankety`).find().toArray();
+    const cluster = req.query.cluster;
+    res.render('select', {
+      ankety
+    }, (err, html) => {
+      if (err) return console.log(err);
+      console.log(html);
+      res.send(html);
+    });
+  });
+});
+
 function createAnketaObj(body) {
   let date = new Date();
   let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
@@ -1269,6 +1289,14 @@ function createAnketaObj(body) {
     var o = {};
     o.question = body['question' + i];
     o.img = null;
+    o.open = false
+    console.log(body['open'+i]);
+    if(body['open'+i] != undefined){
+      if(body['open'+i]){
+        o.open = true
+      }
+    }
+
     anketa.questions.push(o);
   }
   if (body.random_order) {
@@ -1299,6 +1327,7 @@ function createAnketaObj(body) {
   for (var i = 0; i < anketa.count; i++) {
     anketa.questions[i].sector = body['sector' + i];
   }
+  console.log(anketa);
   return anketa;
 }
 
