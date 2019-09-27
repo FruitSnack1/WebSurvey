@@ -94,7 +94,7 @@ $('.play').css('display', 'none');
 $('.progressBar').css('display', 'none');
 
 function changeQuestion(dir) {
-  if (n + dir == anketa.count && result.answers[n].answer) {
+  if (n + dir == anketa.count ) {
     if(anketa.user_data){
       result.first_name = $('input[name=jmeno]').val();
       result.oddeleni = $('select[name=oddeleni]').val();
@@ -139,8 +139,8 @@ function changeQuestion(dir) {
         $('.play-buttons-container').show();
         $('.open-question').hide();
         $('#q-sub').show();
+        $('#right').css('opacity','.5');
       }
-      $('#right').css('opacity','.5');
       progress(dir);
       if(lang == 'cz')
         $('#q').html(anketa.questions[n].question[0]);

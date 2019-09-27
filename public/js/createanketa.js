@@ -53,7 +53,8 @@ function finish() {
   var input = $("<input>")
                  .attr("type", "hidden")
                  .attr("name", "cluster").val(cluster);
-  $('form').append(input);
+  if(!$('input[name="cluster"]'))
+    $('form').append(input);
 
   $("input[type=number][name=count]").val(count);
   for (var i = 0; i < count; i++) {
