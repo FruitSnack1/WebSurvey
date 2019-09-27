@@ -226,8 +226,8 @@ function chartResize(chart, size) {
   chart.update();
 }
 function getJsonResults() {
-  window.open('http://' + location.host + '/results/' + cluster + '/anketa/'+ name + '/json')
+  window.open('https://' + location.host + '/results/' + cluster + '/anketa/'+ name + '/json')
 }
 function getCsvResults() {
-  window.open('http://' + location.host + '/results/' + cluster + '/anketa/'+ name + '/csv');
+  window.open('https://' + location.host + '/results/' + cluster + '/anketa/'+ name + '/csv');
 }
