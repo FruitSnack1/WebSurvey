@@ -316,7 +316,7 @@ body {
 .content {
   width: 90%;
   height: 100%;
-  background-color: #2f3136;
+  background-color: #222222;
   overflow: auto;
 }
 
@@ -571,9 +571,223 @@ input[type=text], input[type=number] {
 .settings-item {
   width: 100%;
   height: 2.5rem;
-  border-bottom: 0.05rem solid #585858;
+  border-radius: 0.4rem;
+  margin: 0.3rem 0;
   display: flex;
   align-items: center;
+  background-color: #363636;
+  animation: fade-in 0.25s ease-in;
+  animation-fill-mode: both;
+}
+
+.settings-item:nth-child(1) {
+  animation-delay: 0.04s;
+}
+
+.settings-item:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.settings-item:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+.settings-item:nth-child(4) {
+  animation-delay: 0.16s;
+}
+
+.settings-item:nth-child(5) {
+  animation-delay: 0.2s;
+}
+
+.settings-item:nth-child(6) {
+  animation-delay: 0.24s;
+}
+
+.settings-item:nth-child(7) {
+  animation-delay: 0.28s;
+}
+
+.settings-item:nth-child(8) {
+  animation-delay: 0.32s;
+}
+
+.settings-item:nth-child(9) {
+  animation-delay: 0.36s;
+}
+
+.settings-item:nth-child(10) {
+  animation-delay: 0.4s;
+}
+
+.settings-item:nth-child(11) {
+  animation-delay: 0.44s;
+}
+
+.settings-item:nth-child(12) {
+  animation-delay: 0.48s;
+}
+
+.settings-item:nth-child(13) {
+  animation-delay: 0.52s;
+}
+
+.settings-item:nth-child(14) {
+  animation-delay: 0.56s;
+}
+
+.settings-item:nth-child(15) {
+  animation-delay: 0.6s;
+}
+
+.settings-item:nth-child(16) {
+  animation-delay: 0.64s;
+}
+
+.settings-item:nth-child(17) {
+  animation-delay: 0.68s;
+}
+
+.settings-item:nth-child(18) {
+  animation-delay: 0.72s;
+}
+
+.settings-item:nth-child(19) {
+  animation-delay: 0.76s;
+}
+
+.settings-item:nth-child(20) {
+  animation-delay: 0.8s;
+}
+
+.settings-item:nth-child(21) {
+  animation-delay: 0.84s;
+}
+
+.settings-item:nth-child(22) {
+  animation-delay: 0.88s;
+}
+
+.settings-item:nth-child(23) {
+  animation-delay: 0.92s;
+}
+
+.settings-item:nth-child(24) {
+  animation-delay: 0.96s;
+}
+
+.settings-item:nth-child(25) {
+  animation-delay: 1s;
+}
+
+.settings-item:nth-child(26) {
+  animation-delay: 1.04s;
+}
+
+.settings-item:nth-child(27) {
+  animation-delay: 1.08s;
+}
+
+.settings-item:nth-child(28) {
+  animation-delay: 1.12s;
+}
+
+.settings-item:nth-child(29) {
+  animation-delay: 1.16s;
+}
+
+.settings-item:nth-child(30) {
+  animation-delay: 1.2s;
+}
+
+.settings-item:nth-child(31) {
+  animation-delay: 1.24s;
+}
+
+.settings-item:nth-child(32) {
+  animation-delay: 1.28s;
+}
+
+.settings-item:nth-child(33) {
+  animation-delay: 1.32s;
+}
+
+.settings-item:nth-child(34) {
+  animation-delay: 1.36s;
+}
+
+.settings-item:nth-child(35) {
+  animation-delay: 1.4s;
+}
+
+.settings-item:nth-child(36) {
+  animation-delay: 1.44s;
+}
+
+.settings-item:nth-child(37) {
+  animation-delay: 1.48s;
+}
+
+.settings-item:nth-child(38) {
+  animation-delay: 1.52s;
+}
+
+.settings-item:nth-child(39) {
+  animation-delay: 1.56s;
+}
+
+.settings-item:nth-child(40) {
+  animation-delay: 1.6s;
+}
+
+.settings-item:nth-child(41) {
+  animation-delay: 1.64s;
+}
+
+.settings-item:nth-child(42) {
+  animation-delay: 1.68s;
+}
+
+.settings-item:nth-child(43) {
+  animation-delay: 1.72s;
+}
+
+.settings-item:nth-child(44) {
+  animation-delay: 1.76s;
+}
+
+.settings-item:nth-child(45) {
+  animation-delay: 1.8s;
+}
+
+.settings-item:nth-child(46) {
+  animation-delay: 1.84s;
+}
+
+.settings-item:nth-child(47) {
+  animation-delay: 1.88s;
+}
+
+.settings-item:nth-child(48) {
+  animation-delay: 1.92s;
+}
+
+.settings-item:nth-child(49) {
+  animation-delay: 1.96s;
+}
+
+.settings-item:nth-child(50) {
+  animation-delay: 2s;
+}
+
+.settings-results-count {
+  margin-right: 0.65rem;
+  width: 2rem;
+  text-align: right;
+}
+
+.settings-results-icon {
+  margin-left: 0.45rem;
 }
 
 .settings-item-img {
@@ -582,6 +796,7 @@ input[type=text], input[type=number] {
   display: inline;
   background-size: cover;
   margin-left: 0.45rem;
+  border-radius: 0.3rem;
 }
 
 .settings-item-name {
@@ -1583,6 +1798,18 @@ select {
   width: calc(50% - .4rem);
 }
 
+.settings-item-add {
+  background-color: #4BA82E;
+  animation: none;
+  color: white;
+  font-family: skodaFontRegular;
+  text-align: center;
+  border-radius: 5rem;
+}
+.settings-item-add span {
+  margin: 0 auto;
+}
+
 .sector-select {
   width: 25%;
 }
@@ -1697,6 +1924,14 @@ select[name=sector_count] {
   100% {
     -webkit-transform: translateY(70%);
     transform: translateY(70%);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 /* mobile */

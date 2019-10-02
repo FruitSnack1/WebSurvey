@@ -3,7 +3,7 @@ var router = express.Router();
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
-const url = 'mongodb://mongo:27017/quiz';
+const url = 'mongodb://127.0.0.1:27017/quiz';
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -99,8 +99,9 @@ router.get('/settings', isAuthenticated, (req, res) => {
     console.log('Connection established to', url);
     const db = client.db("quiz");
     const quizzes = await db.collection(`${req.query.cluster}_quizzes`).find().toArray();
-    const ankety = await db.collection(`${req.query.cluster}_ankety`).find().toArray();
+    const ankety = await db.collection(`${req.query.cluster}_ankety`).aggregate([{$lookup:{from: "hmi_anketa_results", localField:"_id",foreignField:"anketaId",as:"results"}},{$project:{"name":1, "img":1,"date":1,"resultsCount":{$cond:{if:{$isArray:"$results"}, then:{$size:"$results"}, else: 0}}}}]).toArray();
     const cluster = req.query.cluster;
+    console.log(ankety);
     res.render('settings', {
       quizzes,
       ankety,
@@ -125,7 +126,8 @@ router.get('/results', isAuthenticated, (req, res) => {
     if (err) return console.log('Unable to connect to the Server', err);
     const db = client.db("quiz");
     const collection = db.collection(`${req.query.cluster}_anketa_results`);
-    const result = await collection.find({'name': target}).toArray();
+    const result = await collection.find({'anketaId': new mongodb.ObjectId(target)}).toArray();
+    console.log(result);
     res.render('results', {result, target}, (err, html) => {
       if (err) return console.log(err);
       res.send(html);
@@ -895,6 +897,7 @@ router.post('/quiz_result', function(req, res) {
 });
 
 router.post('/anketa_result', function(req, res) {
+  req.body.result.anketaId = new mongodb.ObjectId(req.body.result.anketaId);
   console.log(req.body);
   MongoClient.connect(url, function(err, client) {
     if (err) {

@@ -1,19 +1,19 @@
-setInterval(()=>{
-  $.ajax({
-    url: 'http://'+location.host+'/ajax/'+cluster+'/'+name
-  }).done((data)=>{
-    if(data.length != local_data.length){
-      local_data = data;
-      setResultData();
-      if($('.results-chart-container').is(':visible'))
-        updateCharts();
-    }
-  });
-},3000);
+// setInterval(()=>{
+//   $.ajax({
+//     url: 'http://'+location.host+'/ajax/'+cluster+'/'+name
+//   }).done((data)=>{
+//     if(data.length != local_data.length){
+//       local_data = data;
+//       setResultData();
+//       if($('.results-chart-container').is(':visible'))
+//         updateCharts();
+//     }
+//   });
+// },3000);
 
 let charts = [];
 function setResultData() {
-  $('.data-name').html(name);
+  $('.data-name').html(local_data[0].name);
   if (local_data.length > 0) {
     let score = [0, 0, 0, 0, 0];
     let total = local_data.length * local_data[0].answers.length;
@@ -77,7 +77,10 @@ function setResultData() {
   time = time / local_data.length;
   time = Math.floor(time);
   let time_min = Math.floor(time/60);
-  let time_el = time_min + ':' + (time - (time_min*60));
+  let time_sec = time - (time_min*60);
+  if(time_sec < 10)
+    time_sec = '0'+time_sec
+  let time_el = time_min + ':' + time_sec;
   if(male_count == 0 && local_data.length)
     $('#male_count').html('-');
   else

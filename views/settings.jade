@@ -20,7 +20,7 @@ html(lang='cz', dir='ltr')
               
           div.settings-container#settings-quiz(style='display:none')
             ul.settings-list
-              li.settings-item
+              li.settings-item.settings-item-add
                 button.btn.settings-add.btn-confirm(onclick='getSite("createquiz");') Přidat kvíz
               
               each quiz, i in quizzes
@@ -34,8 +34,8 @@ html(lang='cz', dir='ltr')
           
           div.settings-container#settings-anketa
             ul.settings-list
-              li.settings-item
-                button.btn.settings-add.btn-confirm(onclick='getSite("createanketa")') Přidat anketu
+              li.settings-item.settings-item-add(onclick='getSite("createanketa")')
+                span Přidat anketu
               
               each anketa, i in ankety
                 li.settings-item
@@ -43,8 +43,10 @@ html(lang='cz', dir='ltr')
                   span.settings-item-name #{anketa.name[0]}
                   span.settings-item-date #{anketa.date}
                   button.btn.settings-btn(onclick='getSite("editanketa", "#{anketa.name}");') Upravit
-                  button.btn.settings-btn(onclick='getSite("results","#{anketa.name}");') Výsledky
+                  button.btn.settings-btn(onclick='getSite("results","#{anketa._id}");') Výsledky
                   button.btn.settings-btn.btn-decline(onclick='delete_item("#{anketa.name[0]}","anketa");') Odstranit
+                  i.fas.fa-users.settings-results-icon
+                  span.settings-results-count #{anketa.resultsCount}
 
           div.confirm-delete#confirm-delete(style='display:none;')
             h3.confirm-delete-label Opravdu chcete odstranit
