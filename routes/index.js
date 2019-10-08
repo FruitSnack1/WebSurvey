@@ -19,8 +19,25 @@ const Path = require('path');
 router.get('/menu', (req, res) => {
   res.render('menu');
 });
-router.get('/', (req, res) => {
+
+router.get('/admin',(req,res) => {
   res.render('index');
+});
+
+router.get('/', (req, res) => {
+  MongoClient.connect(url, async (err, client) => {
+    if (err) return console.log('Unable to connect to the Server', err);
+    console.log('Connection established to', url);
+    const db = client.db("quiz");
+    const ankety = await db.collection(`hmi_ankety`).find().toArray();
+    res.render('select', {
+      ankety
+    }, (err, html) => {
+      if (err) return console.log(err);
+      console.log(html);
+      res.send(html);
+    });
+  });
 });
 
 
@@ -136,12 +153,13 @@ router.get('/results', isAuthenticated, (req, res) => {
 });
 
 router.get('/editanketa', (req, res) => {
-  const target = req.query.param;
+  const target = new mongodb.ObjectId(req.query.param);
   MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
     const db = client.db("quiz");
     const collection = db.collection(`${req.query.cluster}_ankety`);
-    const anketa = await collection.find({'name': target}).toArray();
+    const anketa = await collection.find({'_id': target}).toArray();
+    console.log(anketa);
     res.render('createanketa', {anketa}, (err, html) => {
       if (err) return console.log(err);
       res.send(html);
@@ -1119,13 +1137,14 @@ router.post('/addquiz', function(req, res) {
 
 router.post('/addanketa', function(req, res) {
   console.log(req.body);
-  let anketa = createAnketaObj(req.body);
+  let id = new mongodb.ObjectId();
+  let anketa = createAnketaObj(req.body, id);
   var root = require('app-root-path');
   var path = root.path;
   if (!fs.existsSync('./public/data')) {
     fs.mkdirSync('./public/data');
   }
-  var dir = './public/data/' + anketa.name[0];
+  var dir = './public/data/' + id;
   fs.mkdirSync(dir);
   // if (!fs.existsSync(dir)){
   //     fs.mkdirSync(dir);
@@ -1135,9 +1154,9 @@ router.post('/addanketa', function(req, res) {
     if (req.files['img']) {
       var file = req.files['img'];
       var filename = file.name;
-      filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name[0]);
-      anketa.img = "data/" + anketa.name[0] + "/" + filename;
-      file.mv(Path.join(path, "/public/data/", anketa.name[0], "/" + filename), function(err) {
+      filename = filename.replace(filename.split('.').slice(0, -1).join('.'), id);
+      anketa.img = "data/" + id + "/" + filename;
+      file.mv(Path.join(path, "/public/data/", id, "/" + filename), function(err) {
         if (err) {
           console.log(err);;
         } else {
@@ -1157,9 +1176,9 @@ router.post('/addanketa', function(req, res) {
       if (req.files['img' + i]) {
         var file = req.files['img' + i];
         var filename = file.name;
-        filename = filename.replace(filename.split('.').slice(0, -1).join('.'), anketa.name[0] + i);
-        anketa.questions[i].img = "data/" + anketa.name[0] + "/" + filename;
-        file.mv(Path.join(path, "/public/data/", anketa.name[0], "/" + filename), function(err) {
+        filename = filename.replace(filename.split('.').slice(0, -1).join('.'), id + i);
+        anketa.questions[i].img = "data/" + id + "/" + filename;
+        file.mv(Path.join(path, "/public/data/", id, "/" + filename), function(err) {
           if (err) {
             throw err;
           } else {
@@ -1185,10 +1204,10 @@ router.post('/addanketa', function(req, res) {
     }
   }
   //size files
-  fs.readdir('public/data/' + anketa.name[0], function(err, files) {
+  fs.readdir('public/data/' + id, function(err, files) {
     if (err) return console.log(err);
     files.forEach(function(file) {
-      var path = 'public/data/' + anketa.name[0] + '/' + file;
+      var path = 'public/data/' + id + '/' + file;
       console.log('path = ' + path);
       Jimp.read(path)
         .then(function(file) {
@@ -1249,12 +1268,12 @@ router.post('/editanketa', (req, res) => {
   res.sendStatus(200);
 });
 
-function createAnketaObj(body) {
+function createAnketaObj(body, id) {
   let date = new Date();
   let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
   //create object
   var anketa = {
-    _id: new mongodb.ObjectId(),
+    _id: id,
     name: body.name,
     img: null,
     count: body.count,

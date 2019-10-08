@@ -166,3 +166,40 @@ function langDeChange() {
 function addMpsQuestion() {
 
 }
+
+function loadFromCsv(){
+  let file = $('#csv-input')[0].files[0];
+  console.log(file);
+  let r = new FileReader();
+  r.onload = function(e) {
+    var contents = e.target.result;
+    console.log(contents);
+    let list = contents.split('\n');
+    let list2 = [];
+    for (var i = 0; i < list.length; i++) {
+      list2.push(list[i].split('\t'));
+    }
+    console.log(list2);
+    if(list2[1].length > 2){
+      langEnChange();
+      $('#lang_en').prop('checked',true);
+    }
+    if(list2[1].length > 3){
+      langDeChange();
+      $('#lang_de').prop('checked',true);
+    }
+    for (var i = 0; i < $('input[name="name"]').length; i++) {
+      $('input[name="name"]').eq(i).val(list2[1][i+1]);
+    }
+    for (var i = 0; i < list2.length-3; i++) {
+      console.log(i);
+      if(i != 0)
+        addQuestion();
+      for (var j = 0; j < list2[1].length-1; j++) {
+        $(`input[name="question${i}"]`).eq(j).val(list2[i+2][j+1]);
+      }
+    }
+ }
+  r.readAsText(file);
+  console.log(r.result);
+}

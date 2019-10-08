@@ -1,6 +1,6 @@
 .menu-container
   width: calc(100% - 4rem)
-  height: calc(100vh - 4rem)
+  height: calc(calc(var(--vh, 1vh) * 100) - 4rem)
   background: linear-gradient(to bottom, #202225, #3e4047)
   display: flex
   flex-wrap: wrap
@@ -109,3 +109,9 @@
     transform: scale(1)
   100%
     transform: scale(15)
+
+@media (min-width: 0px) and (max-width: 480px)
+  .menu-tile-container
+    width: 50%
+  .menu-title
+    font-size: 2.7rem

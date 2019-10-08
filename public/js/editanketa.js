@@ -52,6 +52,14 @@ function setEditData() {
     $('input[name="note"]').prop( "checked", true );
   if(editData.user_data)
     $('input[name="user_data"]').prop( "checked", true );
+  if(editData.languages.includes('en')){
+    $('input[name="lang_en"]').prop( "checked", true );
+    langEnChange();
+  }
+  if(editData.languages.includes('de')){
+    $('input[name="lang_de"]').prop( "checked", true );
+    langDeChange();
+  }
   if(editData.sectors){
     $('input[name="sectors"]').prop( "checked", true );
     sectorChange();
@@ -68,23 +76,31 @@ function setEditData() {
       $('input[name="weight'+i+'"]').val(editData.questions[i].weight);
     }
   }
-  if(editData.languages.length > 1){
-    $('.lang-cz-input').css('padding-bottom','.2rem');
-    $('input[name="lang_en"]').prop( "checked", true );
-    $('.lang-en-input').show();
-    for (var i = 0; i < editData.questions.length; i++) {
-      $('input[name="question'+i+'"]').eq(1).val(editData.questions[i].question[1]);
-    }
-  }
+  // if(editData.languages.length > 1){
+  //   $('.lang-cz-input').css('padding-bottom','.2rem');
+  //   $('input[name="lang_en"]').prop( "checked", true );
+  //   $('.lang-en-input').show();
+  //   for (var i = 0; i < editData.questions.length; i++) {
+  //     $('input[name="question'+i+'"]').eq(1).val(editData.questions[i].question[1]);
+  //   }
+  // }
   for (var i = 0; i < editData.questions.length; i++) {
-    $('#question'+i).show();
+    if(i!=0)
+      addQuestion();
+    // $('#question'+i).show();
     $('input[name="question'+i+'"]').eq(0).val(editData.questions[i].question[0]);
+    if(editData.languages.includes('en'))
+      $('input[name="question'+i+'"]').eq(1).val(editData.questions[i].question[1]);
+    if(editData.languages.includes('de'))
+      $('input[name="question'+i+'"]').eq(2).val(editData.questions[i].question[2]);
     if(editData.questions[i].img != 'data/default.png'){
       $('input[name="img'+i+'"]').parent().css('background-image','url('+editData.questions[i].img+')');
       $('input[name="img'+i+'"]').prev().html('Změnit obrázek');
     }
   }
-  $('input[name="name"]').val(editData.name);
+  $('input[name="name"]').eq(0).val(editData.name[0]);
+  $('input[name="name"]').eq(1).val(editData.name[1]);
+  $('input[name="name"]').eq(2).val(editData.name[2]);
   $('textarea[name="desc"]').val(editData.desc);
   if(editData.img != 'data/default.png'){
     $('input[name="img"]').parent().css('background-image','url('+editData.img+')');

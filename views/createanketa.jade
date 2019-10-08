@@ -14,7 +14,11 @@ html(lang='cz', dir='ltr')
       div.content
         //- div.container
         div.quizForm
+          label(for='csv-input').csv-label Vytvořit z csv
+          div(style="clear:both")
+          input(type='file', onchange='loadFromCsv()')#csv-input
           form(ref='uploadForm',name="addanketa", enctype='multipart/form-data',method="post", action="/addanketa")
+            //- button.btn Vytvořit z csv(onclick='loadFromCsv()')
             label Název ankety
             div.lang-icon-container.lang-cz-input
               img(src='img/cz_icon.png', class='lang-icon')

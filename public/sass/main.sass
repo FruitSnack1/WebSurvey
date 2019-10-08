@@ -387,6 +387,20 @@ input
   margin-left: .45rem
   border-radius: .3rem
 
+.csv-label
+  font-family: skodaFontRegular
+  background-color: rgb(54,54,54)
+  float: right
+  font-size: 1rem
+  border-radius: 3rem
+  padding: .5rem
+.csv-label:after
+  content: ""
+  display: table
+  clear: both
+
+#csv-input
+  display: none
 .settings-item-name
   font-family: skodaFontRegular
   margin-left: .45rem
@@ -1391,6 +1405,9 @@ select[name='sector_count']
     height: calc(var(--vh, 1vh) * 100)
   .progressBar
     height: .6%
+  .menu-tile-container
+    width: 50%
+    height: 25%
   .progressBar-background
     height: 100%
     border-radius: 0

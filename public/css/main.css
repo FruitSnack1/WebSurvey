@@ -2,7 +2,7 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 .menu-container {
   width: calc(100% - 4rem);
-  height: calc(100vh - 4rem);
+  height: calc(calc(var(--vh, 1vh) * 100) - 4rem);
   background: linear-gradient(to bottom, #202225, #3e4047);
   display: flex;
   flex-wrap: wrap;
@@ -178,6 +178,15 @@
   }
   100% {
     transform: scale(15);
+  }
+}
+@media (min-width: 0px) and (max-width: 480px) {
+  .menu-tile-container {
+    width: 50%;
+  }
+
+  .menu-title {
+    font-size: 2.7rem;
   }
 }
 @font-face {
@@ -797,6 +806,25 @@ input[type=text], input[type=number] {
   background-size: cover;
   margin-left: 0.45rem;
   border-radius: 0.3rem;
+}
+
+.csv-label {
+  font-family: skodaFontRegular;
+  background-color: #363636;
+  float: right;
+  font-size: 1rem;
+  border-radius: 3rem;
+  padding: 0.5rem;
+}
+
+.csv-label:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#csv-input {
+  display: none;
 }
 
 .settings-item-name {
@@ -1947,6 +1975,11 @@ select[name=sector_count] {
 
   .progressBar {
     height: 0.6%;
+  }
+
+  .menu-tile-container {
+    width: 50%;
+    height: 25%;
   }
 
   .progressBar-background {

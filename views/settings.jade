@@ -42,7 +42,7 @@ html(lang='cz', dir='ltr')
                   div.settings-item-img(style='background-image:url("#{anketa.img}")')
                   span.settings-item-name #{anketa.name[0]}
                   span.settings-item-date #{anketa.date}
-                  button.btn.settings-btn(onclick='getSite("editanketa", "#{anketa.name}");') Upravit
+                  button.btn.settings-btn(onclick='getSite("editanketa", "#{anketa._id}");') Upravit
                   button.btn.settings-btn(onclick='getSite("results","#{anketa._id}");') Výsledky
                   button.btn.settings-btn.btn-decline(onclick='delete_item("#{anketa.name[0]}","anketa");') Odstranit
                   i.fas.fa-users.settings-results-icon

@@ -1,3 +1,12 @@
+$(()=>{
+  const updateVH = () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+  updateVH();
+  window.onresize = updateVH;
+})
+
 function expandTile(tile) {
   let col;
   switch (tile) {
@@ -43,3 +52,7 @@ function expandTile(tile) {
 $('.menu-big-tile').on('click', (e) =>{
   $('.menu-big-tile').fadeOut(200);
 });
+
+function selectAnketa(id) {
+  window.location.href = `${location.protocol}//${location.host}/playA/hmi/${id}`;
+}
