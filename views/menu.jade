@@ -29,7 +29,7 @@ html(lang='cz', dir='ltr')
     //-         //- if (anketa.okruh == "Electrification")
     //-         .menu-flex-item
     //-           .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-    //-             span.menu-title #{anketa.name[0]}
+    //-             span.menu-title #{anketa.name}
     //-   .menu-big-tile#big-tile2
     //-     p Automated driving
     //-     .menu-sub-container
@@ -37,7 +37,7 @@ html(lang='cz', dir='ltr')
     //-         if (anketa.okruh == "Automated driving")
     //-           .menu-flex-item
     //-             .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-    //-               span.menu-title #{anketa.name[0]}
+    //-               span.menu-title #{anketa.name}
     //- 
     //-   .menu-big-tile#big-tile3
     //-     p Connectivity & ecosystem
@@ -46,7 +46,7 @@ html(lang='cz', dir='ltr')
     //-         if (anketa.okruh == "Connectivity & ecosystem")
     //-           .menu-flex-item
     //-             .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-    //-               span.menu-title #{anketa.name[0]}
+    //-               span.menu-title #{anketa.name}
     //-   .menu-big-tile#big-tile4
     //-     p Vehicle experience	  
     //-     .menu-sub-container
@@ -66,7 +66,7 @@ html(lang='cz', dir='ltr')
     //-         //- if (anketa.okruh == "Vehicle experience")
     //-         .menu-flex-item
     //-           .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-    //-             span.menu-title #{anketa.name[0]}
+    //-             span.menu-title #{anketa.name}
     //-   .menu-big-tile#big-tile5
     //-     p Enviroment & sustainability  
     //-     .menu-sub-container
@@ -74,7 +74,7 @@ html(lang='cz', dir='ltr')
     //-         if (anketa.okruh == "Enviroment & sustainability")
     //-           .menu-flex-item
     //-             .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-    //-               span.menu-title #{anketa.name[0]}
+    //-               span.menu-title #{anketa.name}
     //- 
     //- 
     //-   .menu-tile-container
@@ -130,37 +130,37 @@ html(lang='cz', dir='ltr')
           each anketa, i in ankety
             if (anketa.okruh == "Electrification")
               .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-                span #{anketa.name[0]}
+                span #{anketa.name}
         .select-sub-container#sub-2
           h3 Automated driving
           each anketa, i in ankety
             if (anketa.okruh == "Automated driving")
               .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-                span #{anketa.name[0]}
+                span #{anketa.name}
         .select-sub-container#sub-3
           h3 Connectivity & ecosystem
           each anketa, i in ankety
             if (anketa.okruh == "Connectivity & ecosystem")
               .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-                span #{anketa.name[0]}
+                span #{anketa.name}
         .select-sub-container#sub-4
           h3 Vehicle experience	
           each anketa, i in ankety
             if (anketa.okruh == "Vehicle experience")
               .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-                span #{anketa.name[0]}
+                span #{anketa.name}
         .select-sub-container#sub-5
           h3 Enviroment & sustainability
           each anketa, i in ankety
             if (anketa.okruh == "Enviroment & sustainability")
               .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-                span #{anketa.name[0]}
+                span #{anketa.name}
         .select-sub-container#sub-6
           h3 Virtual Development
           each anketa, i in ankety
             if (anketa.okruh == "Virtual Development")
               .menu-tile(onclick='selectAnketa("#{anketa._id}")')
-                span #{anketa.name[0]}
+                span #{anketa.name}
         
       .info-container(style="display:none")
         //- h2 info
