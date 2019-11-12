@@ -1,0 +1,57 @@
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    meta(charset='utf-8')
+    //- link(rel='stylesheet', href='../../css/main2.css')
+    //- link(rel='stylesheet', href='../../css/playA.css')
+    link(rel='shorcut icon', href='../../img/icon.ico', type='image/x-icon')
+    link(rel='stylesheet', href='../../../css/main.css')
+    //- link(rel='stylesheet', href='../css/bootstrap.css')
+    //- link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.3.1/css/all.css', integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU', crossorigin='anonymous')
+    link(rel='stylesheet', href='../../../css/fa.css')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    //- meta (name="mobile-web-app-capable", content="yes")
+    title
+  body
+    div.content-container
+      div.main-container
+        div.desc
+          div.desc-name
+              h1.desc-title Registrace
+          div.desc-data
+            //- div.desc-popis
+            //-   h2.desc-popis-title(style='display:none') Popis Ankety :
+            //-   p.desc-content #{anketa[0].desc}
+            div.user-data
+              div.user-data-form
+                //- label.desc-input-label Jméno : 
+                //- input(type='text', name='jmeno').desc-input
+                //- label.desc-input-label Příjmení : 
+                //- input(type='text', name='prijmeni').desc-input
+                //- label.desc-input-label Věk : 
+                //- input(type='number', name='age', min='1', max='100').desc-input
+                //- label.desc-input-label Pohlaví : 
+                //- select(type='text', name='sex').desc-input.desc-select
+                //-   option(value='Muž') Muž
+                //-   option(value='Žena') Žena
+                label.desc-input-label Osobní číslo
+                p#required-pin Vyplňte pole
+                input(type='number', max=99999, name='pin', autocomplete='new-password').desc-input
+                label.desc-input-label Věk
+                p#required-age Vyberte věk
+                div.desc-button-container
+                  button(onclick='setUserAge("18-29", this)') 18-29
+                  button(onclick='setUserAge("30-49", this)') 30-49
+                  button(onclick='setUserAge("50 a více", this)') 50 a více
+              //- div.btn-container
+          div.desc-btn-start    
+            button.desc-btn.btn.btn-confirm(onclick='register();') Registrovat
+    
+    div.error(style='display:none')
+      i.fas.fa-times
+      span Error
+      small#error-desc Registrace
+        
+            
+  script(src='../js/jquery-3.3.1.min.js', type='text/javascript')
+  script(src='../js/register.js', type='text/javascript')

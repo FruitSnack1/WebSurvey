@@ -23,18 +23,79 @@ router.get('/menu', (req, res) => {
 router.get('/admin',(req,res) => {
   res.render('index');
 });
+router.get('/cook',(req,res)=>{
+  res.send(req.cookies);
+});
+router.post('/cookie', (req, res) =>{
+  let id = new mongodb.ObjectId();
+  const user = {
+    '_id': id,
+    'pin' : req.body.pin,
+    'age' : req.body.age
+  }
+  MongoClient.connect(url, async (err, client)=>{
+    if (err) return console.log('Unable to connect to the Server', err);
+    const db = client.db('quiz');
+    const collection = db.collection('users');
+    const dups = await collection.find({'pin':`${req.body.pin}`}).toArray();
+    if(dups.length){
+      id = dups[0]._id;
+      res.cookie('userId', id, { maxAge: 9000000000});
+
+      // return res.send(dups[0]._id);
+    }else{
+      collection.insertOne(user, function(err, result) {
+        if (err) return console.log(err);
+        res.cookie('userId', id, { maxAge: 9000000000, httpOnly: true });
+        res.send(id);
+      });
+    }
+    let ankety = await db.collection('hmi_anketa_results').aggregate([
+      {
+        '$match': {
+          'userId': new mongodb.ObjectId(id)
+        }
+      }, {
+        '$project': {
+          'anketaId': 1,
+          '_id': 0
+        }
+      }
+    ]).toArray();
+    console.log(id);
+    console.log(ankety);
+    ankety = ankety.map(anketa => anketa.anketaId);
+    res.cookie('finished', ankety, { maxAge: 9000000000});
+    res.send();
+  });
+});
 
 router.get('/', (req, res) => {
   MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
-    console.log('Connection established to', url);
     const db = client.db("quiz");
-    const ankety = await db.collection(`hmi_ankety`).find().toArray();
-    res.render('select', {
+    let ankety = await db.collection(`hmi_ankety`).find({},{fields:{name:1, okruh:1}}).toArray();
+    if(req.cookies.userId){
+      let finished = await db.collection('hmi_anketa_results').aggregate([
+        {
+          '$match': {
+            'userId': new mongodb.ObjectId(req.cookies.userId)
+          }
+        }, {
+          '$project': {
+            'anketaId': 1,
+            '_id': 0
+          }
+        }
+      ]).toArray();
+      finished = finished.map(obj => String(obj.anketaId));
+      ankety = ankety.filter( anketa => !finished.includes(String(anketa._id)));
+    }
+    res.render('menu', {
       ankety
     }, (err, html) => {
       if (err) return console.log(err);
-      console.log(html);
+      // console.log(html);
       res.send(html);
     });
   });
@@ -834,17 +895,38 @@ router.get('/createanketa', function(req, res, next) {
 //   });
 // });
 
-router.get('/playA/:cluster/:id', function(req, res) {
+router.post('/register',(req,res)=>{
+  const pin = req.body.pin;
+  const age = req.body.age;
+  MongoClient.connect(url,async (err, client)=>{
+    if(err) return console.log(err);
+    const db = client.db('quiz');
+    const collection = db.collection('users');
+    const result = await collection.find({pin}).toArray();
+    if(result.length == 0)
+      return res.send('2');
+    if(!result[0].age){
+      collection.updateOne({pin},{$set:{age}});
+      res.cookie('userId', result[0]._id, { maxAge: 9000000000});
+      return res.send('1');
+    }else
+      return res.send('3');
+  });
+});
+
+router.get('/play/:id', function(req, res) {
+  if(!req.cookies.userId){
+    res.render('register');
+    return
+  }
   let lang = req.headers['accept-language'].substring(0,2);
   if(lang == 'cs') lang = 'cz';
-  console.log(lang);
-  console.log('bvbbbbbbbbbbbbb');
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('Unable to connect to the Server', err);
     } else {
       var db = client.db("quiz");
-      var collection = db.collection(req.params.cluster + '_ankety');
+      var collection = db.collection('hmi_ankety');
       collection.find({
         '_id': new mongodb.ObjectId(req.params.id)
       }).toArray(function(err, result) {
@@ -856,7 +938,7 @@ router.get('/playA/:cluster/:id', function(req, res) {
         }
         res.render('playA', {
           'anketa': result,
-          'cluster': req.params.cluster,
+          'cluster': 'hmi',
           lang
         })
       });
@@ -914,9 +996,83 @@ router.post('/quiz_result', function(req, res) {
 
 });
 
+router.get('/console',  (req,res)=>{
+  MongoClient.connect(url, async (err, client) => {
+    if (err) return console.log('Unable to connect to the Server', err);
+    const db = client.db("quiz");
+    let ankety = await db.collection(`hmi_ankety`).aggregate([
+      {
+        '$lookup': {
+          'from': 'hmi_anketa_results',
+          'localField': '_id',
+          'foreignField': 'anketaId',
+          'as': 'results'
+        }
+      }, {
+        '$project': {
+          'name': 1,
+          'count': 1,
+          'resultsCount': {
+            '$cond': {
+              'if': {
+                '$isArray': '$results'
+              },
+              'then': {
+                '$size': '$results'
+              },
+              'else': 0
+            }
+          }
+        }
+      }
+    ]).sort({resultsCount:-1}).toArray();
+    const time = await db.collection('hmi_ankety').aggregate([
+      {
+        '$lookup': {
+          'from': 'hmi_anketa_results',
+          'localField': '_id',
+          'foreignField': 'anketaId',
+          'as': 'results'
+        }
+      }, {
+        '$project': {
+          'results': 1
+        }
+      }, {
+        '$unwind': {
+          'path': '$results'
+        }
+      }, {
+        '$group': {
+          '_id': '$_id',
+          'field1': {
+            '$avg': '$results.totalTime'
+          }
+        }
+      }
+    ]).toArray();
+    ankety.forEach((anketa)=>{
+      for (var i = 0; i < time.length; i++) {
+        if(String(time[i]._id) == String(anketa._id)){
+          anketa.avgTime = time[i].field1.toFixed(2)+'s';
+          break;
+        }else{
+          anketa.avgTime = '-';
+        }
+      }
+    });
+    res.render('console', {
+      ankety
+    }, (err, html) => {
+      if (err) return console.log(err);
+      res.send(html);
+    });
+  });
+});
+
 router.post('/anketa_result', function(req, res) {
   req.body.result.anketaId = new mongodb.ObjectId(req.body.result.anketaId);
-  console.log(req.body);
+  req.body.result.userId = new mongodb.ObjectId(req.cookies.userId);
   MongoClient.connect(url, function(err, client) {
     if (err) {
       res.send(err);
@@ -1257,15 +1413,18 @@ router.get('/ajax/:cluster/:name', (req, res) => {
 });
 
 router.post('/editanketa', (req, res) => {
+  console.log(req.body);
   let anketa = createAnketaObj(req.body);
   console.log(anketa);
   MongoClient.connect(url, (err, client) => {
     if (err) console.log(err);
     const db = client.db('quiz');
     const collection = db.collection(`${req.body.cluster}_ankety`);
-    console.log(`${req.body.cluster}_ankety`);
+    collection.replaceOne({"_id": new mongodb.ObjectId(req.body.id)},anketa, (err, result)=>{
+      if(err) return console.log(err);
+      res.sendStatus(200);
+    });
   })
-  res.sendStatus(200);
 });
 
 function createAnketaObj(body, id) {
@@ -1273,9 +1432,8 @@ function createAnketaObj(body, id) {
   let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
   //create object
   var anketa = {
-    _id: id,
     name: body.name,
-    img: null,
+    img: 'data/default.png',
     count: body.count,
     desc: body.desc,
     date: time,
@@ -1285,8 +1443,11 @@ function createAnketaObj(body, id) {
     sectors: false,
     comments: false,
     user_data: false,
+    okruh: body.okruh,
     languages: ['cz']
   };
+  if(id)
+    anketa._id = id;
   for (var i = 0; i < anketa.count; i++) {
     var o = {};
     o.question = body['question' + i];

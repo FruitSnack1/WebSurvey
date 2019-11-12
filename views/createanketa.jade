@@ -21,14 +21,26 @@ html(lang='cz', dir='ltr')
             //- button.btn Vytvořit z csv(onclick='loadFromCsv()')
             label Název ankety
             div.lang-icon-container.lang-cz-input
-              img(src='img/cz_icon.png', class='lang-icon')
+              //- img(src='img/cz_icon.png', class='lang-icon')
               input(type="text", name="name", class='input-text').main-input
-            div.lang-icon-container.lang-en-input(style='display:none')
-              img(src='img/en_icon.png', class='lang-icon')
-              input(type="text", name="name", class='input-text').main-input
-            div.lang-icon-container.lang-de-input(style='display:none')
-              img(src='img/de_icon.png', class='lang-icon')
-              input(type="text", name="name", class='input-text').main-input
+            //- div.lang-icon-container.lang-en-input(style='display:none')
+            //-   img(src='img/en_icon.png', class='lang-icon')
+            //-   input(type="text", name="name", class='input-text').main-input
+            //- div.lang-icon-container.lang-de-input(style='display:none')
+            //-   img(src='img/de_icon.png', class='lang-icon')
+            //-   input(type="text", name="name", class='input-text').main-input
+            label Okruh
+            select(name='okruh')
+              option(value='Electrification') Electrification
+              option(value='Automated driving') Automated driving
+              option(value='Connectivity & ecosystem') Connectivity & ecosystem
+              option(value='Enviroment & sustainability') Enviroment & sustainability
+              option(value='Vehicle experience') Vehicle experience
+              option(value='Virtual Development') Virtual Development
+              //- option(value='Virtual Validation') Virtual Validation
+              //- option(value='CO2 Reduzierung') CO2 Reduzierung
+              //- option(value='Design & Technologie') Design & Technologie
+              //- option(value='Organisation') Organisation
             label Obrázek ankety
             div.img-container
               label(for='img').input-img-label Vybrat obrázek
@@ -55,7 +67,7 @@ html(lang='cz', dir='ltr')
               div.checkbox-container
                 div.check-container
                   label.checkbox-label(for='user_data').advanced-settings-checkbox
-                    input(type='checkbox', name='user_data', id='user_data').input-checkbox
+                    input(type='checkbox', name='user_data', id='user_data', checked).input-checkbox
                     span.checkmark
                 span Přidat identifikaci
               div.checkbox-container
