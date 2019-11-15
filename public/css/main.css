@@ -147,6 +147,14 @@
   font-family: skodaFontLight;
   src: url(Assets.font.SKODANext-Light.501acc7232cecb34d1f56c60ea59b2a5.woff2);
 }
+html {
+  background: black;
+}
+
+body {
+  overflow: hidden !important;
+}
+
 :root {
   font-size: 2vw;
 }
