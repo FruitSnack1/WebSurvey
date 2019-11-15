@@ -5,8 +5,7 @@ $(document).ready(function(){
   });
 
 });
-langEnChange();
-langDeChange();
+
 let count = 3;
 for (var i = 1; i < 20; i++) {
   $('#question' + i).css('display', 'none');

@@ -103,6 +103,10 @@ function changeQuestion(dir) {
       result.age = $('input[name=age]').val();
       result.sex = $('select[name=sex]').val();
       result.language = lang;
+      const urlParams = new URLSearchParams(window.location.search);
+      const myParam = urlParams.get('nfc');
+      result.nfc = !! myParam;
+
       // result.userId = document.cookie.substr(document.cookie.search('=')+1,25);
     }
     result.totalTime = 0;

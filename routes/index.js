@@ -3,7 +3,7 @@ var router = express.Router();
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
-const url = 'mongodb://127.0.0.1:27017/quiz';
+const url = 'mongodb://mongo:27017/quiz';
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -911,6 +911,20 @@ router.post('/register',(req,res)=>{
       return res.send('1');
     }else
       return res.send('3');
+  });
+});
+
+router.get('/nfclinks', (req,res)=>{
+  MongoClient.connect(url,async (err, client)=>{
+    if(err) return console.log(err);
+    const db = client.db('quiz');
+    const collection = db.collection('hmi_ankety');
+    const links = await collection.find({},{fields:{_id:1}}).toArray();
+    let str = '';
+    for (var i = 0; i < links.length; i++) {
+      str += `https://skodaquiz.com/play/${links[i]._id}?nfc=1<br>`;
+    }
+    res.send(str);
   });
 });
 
