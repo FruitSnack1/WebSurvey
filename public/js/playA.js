@@ -378,7 +378,7 @@ function langSwitch() {
       x = 2;
       break;
   }
-  $('.desc-title').html(anketa.name[x]);
+  // $('.desc-title').html(anketa.name[x]);
   $('.desc-btn').html(langTexts['desc-btn'][x]);
   $('#answer1').html(langTexts['answer1'][x]);
   $('#answer2').html(langTexts['answer2'][x]);
