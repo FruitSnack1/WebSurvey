@@ -254,6 +254,8 @@
   width: 100%
   overflow: auto
 
+.map-container
+  overflow-y: hidden
 
 .nav-item
   height: 100%
@@ -277,7 +279,7 @@
   justify-content: center
   border-radius: 20px
   animation: tile-animation .3s both
-  box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25) 
+  box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25)
   span
     color: white
     font-size: 22px
@@ -291,6 +293,9 @@
     opacity: .6
     margin: 16px 0
 
+#floor-plan
+  height: 100%
+  // margin: 0 20px
 #tile-1, #sub-1 .menu-tile
   background-color: rgb(0,191,214)
 #tile-2, #sub-2 .menu-tile

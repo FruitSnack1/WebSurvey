@@ -815,6 +815,30 @@ router.post('/deleteAnketa', isAuthenticated, function(req, res) {
     });
 });
 
+router.get('/uploadusers', (req,res) =>{
+  res.render('upload');
+});
+
+router.post('/upload', (req,res) =>{
+  const file = req.files.pins.data.toString();
+  let list = file.split('\n');
+  list = list.map(pin => pin.substring(0, pin.length-1));
+  list.filter(pin => pin > 0);
+  list = list.map(pin => ({pin}));
+
+  MongoClient.connect(url, function(err, client) {
+    if (err) return console.log(err);
+    const db = client.db("quiz");
+    const collection = db.collection('users');
+    collection.insertMany(list, (err, result) =>{
+      if (err) return console.log(err);
+      console.log(result);
+    });
+  });
+  console.log('USERS UPLOADED');
+  res.redirect('/');
+});
+
 router.post('/deleteQuiz', function(req, res) {
   if (req.body.pass == passwords[req.body.cluster]) {
     var target = req.body.item;
