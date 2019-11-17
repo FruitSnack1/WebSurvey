@@ -17,7 +17,7 @@ html(lang='cz', dir='ltr')
       div.main-container
         div.desc
           div.desc-name
-              h1.desc-title Registrace
+              h1.desc-title Registration
           div.desc-data
             //- div.desc-popis
             //-   h2.desc-popis-title(style='display:none') Popis Ankety :
@@ -34,18 +34,18 @@ html(lang='cz', dir='ltr')
                 //- select(type='text', name='sex').desc-input.desc-select
                 //-   option(value='Muž') Muž
                 //-   option(value='Žena') Žena
-                label.desc-input-label Osobní číslo
-                p#required-pin Vyplňte pole
+                label.desc-input-label Personal number
+                p#required-pin Field required
                 input(type='number', max=99999, name='pin', autocomplete='new-password').desc-input
-                label.desc-input-label Věk
-                p#required-age Vyberte věk
+                label.desc-input-label Age
+                p#required-age Choose your age
                 div.desc-button-container
                   button(onclick='setUserAge("18-29", this)') 18-29
                   button(onclick='setUserAge("30-49", this)') 30-49
-                  button(onclick='setUserAge("50 a více", this)') 50 a více
+                  button(onclick='setUserAge("50 a více", this)') 50+
               //- div.btn-container
           div.desc-btn-start    
-            button.desc-btn.btn.btn-confirm(onclick='register();') Registrovat
+            button.desc-btn.btn.btn-confirm(onclick='register();') Register
     
     div.error(style='display:none')
       i.fas.fa-times

@@ -953,13 +953,19 @@ router.get('/nfclinks', (req,res)=>{
 });
 
 router.get('/play/:id', function(req, res) {
-  if(!req.cookies.userId){
-    res.render('register');
-    return
-  }
   let lang = req.headers['accept-language'].substring(0,2);
   if(lang == 'cs') lang = 'cz';
-  MongoClient.connect(url, function(err, client) {
+  MongoClient.connect(url, async function(err, client) {
+    if(!req.cookies.userId){
+      res.render('register');
+      return
+    }
+    let users = await client.db('quiz').collection('users').find({_id: new mongodb.ObjectId(req.cookies.userId)}).toArray();
+    console.log(users);
+    if(users.length == 0){
+      res.render('register');
+      return
+    }
     if (err) {
       console.log('Unable to connect to the Server', err);
     } else {

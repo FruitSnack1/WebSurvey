@@ -46,7 +46,7 @@ html(lang='cz', dir='ltr')
               button.btn-answer#answer5.btn(type="button", value=5, onclick='select(5);') Určitě ne
               div.note
                 textarea.play-textarea(placeholder="Komentář ...", onchange='noteChanged()')#note
-                i(onclick='record();').fas.fa-microphone.note-button(style="display:none;")
+                i(onclick='record();', style="display:none;").fas.fa-microphone.note-button
                 
             div.play-buttons-container-mps(style="display:none;")
               button.btn.btn-mps 0
