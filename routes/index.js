@@ -961,6 +961,11 @@ router.get('/play/:id', function(req, res) {
       return
     }
     let users = await client.db('quiz').collection('users').find({_id: new mongodb.ObjectId(req.cookies.userId)}).toArray();
+    let filled = await client.db('quiz').collection('hmi_anketa_results').find({userId:new mongodb.ObjectId(req.cookies.userId), anketaId: new mongodb.ObjectId(req.params.id)}).toArray();
+    if(filled.length > 0){
+      res.send('<h2>You already completed this survey</h2>');
+      return;
+    }
     console.log(users);
     if(users.length == 0){
       res.render('register');
