@@ -9,7 +9,8 @@ html(lang='cz', dir='ltr')
     //- meta (name="mobile-web-app-capable", content="yes")
     title
   body(style='padding:50px')
-    .table-responsive
+    h1 Ankety
+    .table-responsive.mb-5
       table.table.table-striped
         thead.thead-dark
           tr
@@ -27,8 +28,28 @@ html(lang='cz', dir='ltr')
               td #{anketa.avgTime}
               td #{anketa.resultsCount}
           tr
-            td
-            td #{ankety.length}
+            th Total
+            th #{ankety.length}
+            
+    h1 Users
+    .table-responsive
+      table.table.table-striped
+        thead.thead-dark
+          tr
+            th _id
+            th PIN
+            th Age
+            th Result count
+        tbody
+          each user, i in users
+            tr
+              td #{user._id}
+              th #{user.pin}
+              td #{user.age}
+              td #{user.resultsCount}
+          tr
+            th Total
+            th #{userCount}
         
             
   script(src='../js/jquery-3.3.1.min.js', type='text/javascript')

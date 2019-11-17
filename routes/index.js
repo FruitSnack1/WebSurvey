@@ -1044,6 +1044,44 @@ router.get('/console',  (req,res)=>{
   MongoClient.connect(url, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
     const db = client.db("quiz");
+    const userCount = await db.collection('users').countDocuments({'age':{'$exists':true}});
+    const users = await db.collection('users').aggregate([
+      {
+        '$match':{
+          'age':{'$exists':true}
+        }
+      },
+      {
+        '$lookup': {
+          'from': 'hmi_anketa_results',
+          'localField': '_id',
+          'foreignField': 'userId',
+          'as': 'result'
+        }
+      }, {
+        '$project': {
+          'resultsCount': {
+            '$cond': {
+              'if': {
+                '$isArray': '$result'
+              },
+              'then': {
+                '$size': '$result'
+              },
+              'else': '0'
+            }
+          },
+          'age': 1,
+          'pin': 1
+        }
+      }, {
+        '$sort': {
+          'result': -1
+        }
+      }, {
+        '$limit': 100
+      }
+    ]).toArray();
     let ankety = await db.collection(`hmi_ankety`).aggregate([
       {
         '$lookup': {
@@ -1106,7 +1144,9 @@ router.get('/console',  (req,res)=>{
       }
     });
     res.render('console', {
-      ankety
+      ankety,
+      users,
+      userCount
     }, (err, html) => {
       if (err) return console.log(err);
       res.send(html);
