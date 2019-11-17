@@ -68,7 +68,7 @@ let timer = setInterval(function() {
   questionTime[n]++;
 }, 1000);
 result.timestamp = time;
-result.name = anketa.name[0];
+result.name = anketa.name;
 result.answers = [];
 result.anketaId = anketa._id
 if(result.sectors)
