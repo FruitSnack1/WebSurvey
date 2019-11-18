@@ -1159,14 +1159,19 @@ router.get('/console',  (req,res)=>{
   });
 });
 
-router.post('/anketa_result', function(req, res) {
+router.post('/anketa_result',  function(req, res) {
   req.body.result.anketaId = new mongodb.ObjectId(req.body.result.anketaId);
   req.body.result.userId = new mongodb.ObjectId(req.cookies.userId);
-  MongoClient.connect(url, function(err, client) {
+  MongoClient.connect(url,async function(err, client) {
     if (err) {
       res.send(err);
     } else {
       var db = client.db("quiz");
+      const tmp =await db.collection('hmi_anketa_results').find({anketaId:req.body.result.anketaId,userId: req.body.result.userId}).toArray();
+      if(tmp.length != 0 ){
+        res.redirect("/");
+        return
+      }
       var collection = db.collection(req.body.cluster + '_anketa_results');
       collection.insert(req.body.result, function(err, result) {
         if (err) {
