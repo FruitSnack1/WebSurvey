@@ -3,7 +3,7 @@ var router = express.Router();
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
-const url = 'mongodb://mongo:27017/quiz';
+const url = 'mongodb://127.0.0.1:27017/quiz';
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -1081,7 +1081,7 @@ router.get('/console',  (req,res)=>{
         }
       }, {
         '$sort': {
-          'result': -1
+          'resultsCount': -1
         }
       }, {
         '$limit': 100
