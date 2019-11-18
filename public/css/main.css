@@ -1205,6 +1205,11 @@ select {
   justify-content: space-around;
 }
 
+.reg {
+  position: unset !important;
+  height: unset !important;
+}
+
 .desc-name {
   width: 100%;
   height: 50%;
