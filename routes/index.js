@@ -943,10 +943,10 @@ router.get('/nfclinks', (req,res)=>{
     if(err) return console.log(err);
     const db = client.db('quiz');
     const collection = db.collection('hmi_ankety');
-    const links = await collection.find({},{fields:{_id:1}}).toArray();
+    const links = await collection.find({},{fields:{_id:1, name:1}}).toArray();
     let str = '';
     for (var i = 0; i < links.length; i++) {
-      str += `https://skodaquiz.com/play/${links[i]._id}?nfc=1<br>`;
+      str += `https://skodaquiz.com/play/${links[i]._id}?nfc=1    ${links[i].name}<br>`;
     }
     res.send(str);
   });
