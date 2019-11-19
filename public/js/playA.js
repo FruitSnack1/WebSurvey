@@ -403,7 +403,7 @@ function langSwitch() {
 }
 const langTexts = {
   'desc-btn': ['Začít','Begin','Start'],
-  'answer1':['Naprosto souhlasím','Naprosto souhlasím','Entschieden Ja'],
+  'answer1':['Naprosto souhlasím','Strongly agree','Entschieden Ja'],
   'answer2':['Spíše souhlasím','Rather agree','Eher Ja'],
   'answer3':['Neutrální postoj',"Neutral attitude",'Neutrale Haltung'],
   'answer4':['Spíše nesouhlasím','Rather disagree','Eher Nein'],
