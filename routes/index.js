@@ -775,6 +775,15 @@ router.get('/results/:anketa', function(req, res) {
   });
 });
 
+router.get('/ivet_results', (req, res) =>{
+  MongoClient.connect(url, async (err, client) => {
+    if (err) return console.log('Unable to connect to the Server', err);
+    const db = client.db("quiz");
+    const collection = db.collection('hmi_anketa_results');
+    const result = await collection.find().toArray();
+    res.send(result);
+});
+
 router.get('/results/:cluster/:type/:target/json', (req, res) => {
   const target = req.params.target;
   MongoClient.connect(url, async (err, client) => {
