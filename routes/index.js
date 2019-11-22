@@ -782,6 +782,7 @@ router.get('/ivet_results', (req, res) =>{
     const collection = db.collection('hmi_anketa_results');
     const result = await collection.find().toArray();
     res.send(result);
+  });
 });
 
 router.get('/results/:cluster/:type/:target/json', (req, res) => {
