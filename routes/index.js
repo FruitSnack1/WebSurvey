@@ -785,6 +785,7 @@ router.get('/ivet_results', (req, res) =>{
   });
 });
 
+
 router.get('/results/:cluster/:type/:target/json', (req, res) => {
   const target = req.params.target;
   MongoClient.connect(url, async (err, client) => {
@@ -830,22 +831,35 @@ router.get('/uploadusers', (req,res) =>{
 });
 
 router.post('/upload', (req,res) =>{
-  const file = req.files.pins.data.toString();
+  let file = req.files.pins.data;
+  file = file.toString('utf-8');
   let list = file.split('\n');
-  list = list.map(pin => pin.substring(0, pin.length-1));
-  list.filter(pin => pin > 0);
-  list = list.map(pin => ({pin}));
-
-  MongoClient.connect(url, function(err, client) {
-    if (err) return console.log(err);
-    const db = client.db("quiz");
+  console.log(list);
+  let users = [];
+  MongoClient.connect(url, (err, client)=>{
+    if(err) return console.log(err);
+    const db = client.db('quiz');
     const collection = db.collection('users');
-    collection.insertMany(list, (err, result) =>{
-      if (err) return console.log(err);
-      console.log(result);
-    });
+
+    for (var i = 0; i < list.length; i++) {
+      let tmp = list[i].split(',');
+      console.log(tmp);
+      const pin = tmp[4].substring(0, tmp[4].length-1);
+      if(!pin)
+      continue;
+      if(pin.length < 1)
+      continue;
+      let user = {
+        firstName : tmp[0],
+        lastName : tmp[1],
+        department : tmp[2],
+        email : tmp[3]
+      };
+      collection.updateOne({pin},{'$set':user});
+      users = [...users,user];
+    }
   });
-  console.log('USERS UPLOADED');
+  console.log(users);
   res.redirect('/');
 });
 
