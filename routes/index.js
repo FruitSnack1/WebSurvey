@@ -863,6 +863,35 @@ router.post('/upload', (req,res) =>{
   res.redirect('/');
 });
 
+router.get('/final_results', (req,res)=>{
+  MongoClient.connect(url,async (err, client)=>{
+    if(err) return console.log(err);
+    const db = client.db('quiz');
+    const collection = db.collection('hmi_anketa_results');
+
+    const results = await collection.aggregate([
+      {
+        '$lookup': {
+          'from': 'users',
+          'localField': 'userId',
+          'foreignField': '_id',
+          'as': 'userId'
+        }
+      }, {
+        '$addFields': {
+          'user': {
+            '$arrayElemAt': [
+              '$userId', 0
+            ]
+          }
+        }
+      }
+    ]).toArray();
+
+    res.send(results);
+  });
+});
+
 router.post('/deleteQuiz', function(req, res) {
   if (req.body.pass == passwords[req.body.cluster]) {
     var target = req.body.item;
