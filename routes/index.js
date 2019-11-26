@@ -855,7 +855,7 @@ router.post('/upload', (req,res) =>{
         department : tmp[2],
         email : tmp[3]
       };
-      collection.updateOne({pin},{'$set':user});
+      collection.updateMany({pin},{'$set':user});
       users = [...users,user];
     }
   });
