@@ -863,6 +863,16 @@ router.post('/upload', (req,res) =>{
   res.redirect('/');
 });
 
+router.get('/getankety', (req,res)=>{
+  MongoClient.connect(url,async (err, client)=>{
+    if(err) return console.log(err);
+    const db = client.db('quiz');
+    const collection = db.collection('hmi_ankety');
+    const results = await collection.find({}).toArray();
+    res.send(results);
+  });
+});
+
 router.get('/final_results', (req,res)=>{
   MongoClient.connect(url,async (err, client)=>{
     if(err) return console.log(err);
