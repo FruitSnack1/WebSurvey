@@ -46,7 +46,7 @@ html(lang='cz', dir='ltr')
               button.btn-answer#answer5.btn(type="button", value=5, onclick='select(5);') Určitě ne
               div.note
                 textarea.play-textarea(placeholder="Komentář ...", onchange='noteChanged()')#note
-                i(onclick='record();').fas.fa-microphone.note-button(style="display:none;")
+                i(onclick='record();', style="display:none;").fas.fa-microphone.note-button
                 
             div.play-buttons-container-mps(style="display:none;")
               button.btn.btn-mps 0
@@ -85,36 +85,45 @@ html(lang='cz', dir='ltr')
           
         div.desc
           div.desc-name
-              h1.desc-title #{anketa[0].name[0]} 
+              h1.desc-title #{anketa[0].name} 
           div.desc-data
-            div.desc-popis
-              h2.desc-popis-title(style='display:none') Popis Ankety :
-              p.desc-content #{anketa[0].desc}
+            //- div.desc-popis
+            //-   h2.desc-popis-title(style='display:none') Popis Ankety :
+            //-   p.desc-content #{anketa[0].desc}
             div.user-data
-              div.user-data-form
-                label.desc-input-label Jméno : 
-                input(type='text', name='jmeno').desc-input
-                label.desc-input-label Příjmení : 
-                input(type='text', name='prijmeni').desc-input
-                label.desc-input-label Věk : 
-                input(type='number', name='age', min='1', max='100').desc-input
-                label.desc-input-label Pohlaví : 
-                select(type='text', name='sex').desc-input.desc-select
-                  option(value='Muž') Muž
-                  option(value='Žena') Žena
+              div.user-data-form(style='display:none')
+                //- label.desc-input-label Jméno : 
+                //- input(type='text', name='jmeno').desc-input
+                //- label.desc-input-label Příjmení : 
+                //- input(type='text', name='prijmeni').desc-input
+                //- label.desc-input-label Věk : 
+                //- input(type='number', name='age', min='1', max='100').desc-input
+                //- label.desc-input-label Pohlaví : 
+                //- select(type='text', name='sex').desc-input.desc-select
+                //-   option(value='Muž') Muž
+                //-   option(value='Žena') Žena
+                label.desc-input-label Osobní číslo
+                p#required-pin Vyplňte pole
+                input(type='number', max=99999, name='pin', autocomplete='new-password').desc-input
+                label.desc-input-label Věk
+                p#required-age Vyberte věk
+                div.desc-button-container
+                  button(onclick='setUserAge("18-29", this)') 18-29
+                  button(onclick='setUserAge("30-49", this)') 30-49
+                  button(onclick='setUserAge("50 a více", this)') 50 a více
               //- div.btn-container
           div.desc-btn-start    
             button.desc-btn.btn.btn-confirm(onclick='start();') Začít
               
         div.end(style="display:none;")
           h1.end-text Děkujeme za spolupráci
-          div.end-btn-container
-            button.main-menu-btn.btn.end-bnt.btn-confirm
-              i.fas.fa-th-large.end-btn-icon
-              span Hlavní nabídka
-            button(onclick='reset();').end-bnt.btn.btn-confirm
-              i.fas.fa-redo.end-btn-icon
-              span.end-btn-span Spustit znovu
+          //- div.end-btn-container
+          //-   button.main-menu-btn.btn.end-bnt.btn-confirm
+          //-     i.fas.fa-th-large.end-btn-icon
+          //-     span Hlavní nabídka
+          //-   button(onclick='reset();').end-bnt.btn.btn-confirm
+          //-     i.fas.fa-redo.end-btn-icon
+          //-     span.end-btn-span Spustit znovu
         div.lang-switch-container(style="display:none")
           img(src='../../../img/cz_icon.png', onclick='switchLang("cz")').lang-switch-icon#lang-cz
           img(src='../../../img/en_icon.png', onclick='switchLang("en")').lang-switch-icon#lang-en

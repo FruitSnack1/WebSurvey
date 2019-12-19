@@ -3,8 +3,10 @@ $(document).ready(function(){
   $('#myForm').ajaxForm(function() {
     alert("Thank you for your comment!");
   });
+
 });
-let count = 1;
+
+let count = 3;
 for (var i = 1; i < 20; i++) {
   $('#question' + i).css('display', 'none');
 }

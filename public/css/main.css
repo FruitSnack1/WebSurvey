@@ -1,194 +1,177 @@
 @import "normalize.css";
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 .menu-container {
-  width: calc(100% - 4rem);
-  height: calc(calc(var(--vh, 1vh) * 100) - 4rem);
   background: linear-gradient(to bottom, #202225, #3e4047);
-  display: flex;
-  flex-wrap: wrap;
-  padding: 2rem 2rem;
-  overflow: hidden;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  position: fixed;
 }
 
-.menu-tile-container {
-  width: 25%;
-  color: white;
+.nav-container {
+  width: 100%;
+  height: 65px;
+  background: #222;
   display: flex;
-  height: 50%;
   align-items: center;
+  justify-content: space-between;
+}
+
+.select-container, .info-container, .map-container {
+  height: calc(100% - 65px);
+  width: 100%;
+  overflow: auto;
+}
+
+.map-container {
+  overflow-y: hidden;
+}
+
+.info-container {
+  width: calc(100% - 32px);
+  height: calc(100% - 97px);
+  padding: 16px;
+}
+.info-container h3 {
+  font-size: 4rem;
+  font-family: skodaFontRegular;
+  margin: 16px 0;
+}
+.info-container p {
+  opacity: 0.8;
+  font-size: 3rem;
+  margin: 16px 0;
+}
+.info-container p.bold {
+  opacity: 1;
+  font-family: skodaFontRegular;
+}
+
+.nav-item {
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
   justify-content: center;
-  animation: tile-animation 0.25s ease-in;
-  animation-fill-mode: both;
+  align-items: center;
+}
+.nav-item i {
+  color: white;
+  font-size: 35px;
+}
+
+.select-main-container {
+  width: 100%;
+  height: 100%;
+}
+.select-main-container h2 {
+  margin: 16px;
+  font-size: 4rem;
+  font-family: skodaFontRegular;
 }
 
 .menu-tile {
-  z-index: -1000;
-  width: 70%;
-  background: blue;
-  position: relative;
-  padding-top: 70%;
-  border-radius: 1rem;
-}
-.menu-tile.big {
-  animation: mega-tile-animation 0.3s ease-in both;
-}
-
-.menu-title {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  font-family: skodaFontRegular;
-  text-align: center;
-  font-size: 1rem;
-  transform: translateY(-50%);
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.menu-title.long {
-  font-size: 0.8rem;
-}
-
-.menu-big-tile {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  right: 0;
-  z-index: 1010;
-  display: none;
-}
-.menu-big-tile p {
-  font-size: 5rem;
-  font-family: skodaFontRegular;
-  opacity: 0.7;
-  width: 100%;
-  margin: 2rem 0;
-}
-
-.menu-sub-container {
-  display: flex;
-  justify-content: space-around;
-}
-
-.menu-sub-tile {
-  width: 20vw;
-  animation: tile-animation 1.5s ease-in both;
-  height: 20vw;
-  background: gray;
+  width: calc(100% - 32px);
+  height: 80px;
+  margin: 16px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 1.5rem;
+  border-radius: 20px;
+  animation: tile-animation 0.3s both;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
 }
-.menu-sub-tile span {
-  text-align: center;
+.menu-tile span {
   color: white;
-  font-size: 2rem;
+  font-size: 22px;
   font-family: skodaFontRegular;
+  text-align: center;
 }
 
-.menu-tile-container:nth-child(1) {
-  animation-delay: 0.04s;
+.select-sub-container {
+  display: none;
+}
+.select-sub-container h3 {
+  padding-left: 16px;
+  font-size: 28px;
+  opacity: 0.6;
+  margin: 16px 0;
 }
 
-.menu-tile-container:nth-child(2) {
-  animation-delay: 0.08s;
+#floor-plan {
+  height: 100%;
 }
 
-.menu-tile-container:nth-child(3) {
-  animation-delay: 0.12s;
-}
-
-.menu-tile-container:nth-child(4) {
-  animation-delay: 0.16s;
-}
-
-.menu-tile-container:nth-child(5) {
-  animation-delay: 0.2s;
-}
-
-.menu-tile-container:nth-child(6) {
-  animation-delay: 0.24s;
-}
-
-.menu-tile-container:nth-child(7) {
-  animation-delay: 0.28s;
-}
-
-.menu-tile-container:nth-child(8) {
-  animation-delay: 0.32s;
-}
-
-.menu-tile-container:nth-child(9) {
-  animation-delay: 0.36s;
-}
-
-#menu-tile1 {
-  background-color: #a5d400;
-}
-
-#menu-tile2 {
+#tile-1, #sub-1 .menu-tile {
   background-color: #00bfd6;
 }
 
-#menu-tile3 {
+#tile-2, #sub-2 .menu-tile {
   background-color: #ffb81b;
 }
 
-#menu-tile4 {
+#tile-3, #sub-3 .menu-tile {
   background-color: #3737a0;
 }
 
-#menu-tile5 {
-  background-color: #db0032;
+#tile-4, #sub-4 .menu-tile {
+  background-color: #a5d400;
 }
 
-#menu-tile6 {
+#tile-5, #sub-5 .menu-tile {
   background-color: #9fa1a2;
 }
 
-#menu-tile7 {
+#tile-6, #sub-6 .menu-tile {
   background-color: #db1367;
 }
 
-#menu-tile8 {
-  background-color: #1a1b1c;
-}
-
 @keyframes tile-animation {
-  0% {
+  from {
     opacity: 0;
   }
-  100% {
+  to {
     opacity: 1;
   }
 }
-@keyframes big-tile-animation {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
+.menu-tile:nth-child(1) {
+  animation-delay: 0.035s;
 }
-@keyframes mega-tile-animation {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(15);
-  }
-}
-@media (min-width: 0px) and (max-width: 480px) {
-  .menu-tile-container {
-    width: 50%;
-  }
 
-  .menu-title {
-    font-size: 2.7rem;
-  }
+.menu-tile:nth-child(2) {
+  animation-delay: 0.07s;
 }
+
+.menu-tile:nth-child(3) {
+  animation-delay: 0.105s;
+}
+
+.menu-tile:nth-child(4) {
+  animation-delay: 0.14s;
+}
+
+.menu-tile:nth-child(5) {
+  animation-delay: 0.175s;
+}
+
+.menu-tile:nth-child(6) {
+  animation-delay: 0.21s;
+}
+
+.menu-tile:nth-child(7) {
+  animation-delay: 0.245s;
+}
+
+.menu-tile:nth-child(8) {
+  animation-delay: 0.28s;
+}
+
+.menu-tile:nth-child(9) {
+  animation-delay: 0.315s;
+}
+
+.menu-tile:nth-child(10) {
+  animation-delay: 0.35s;
+}
+
 @font-face {
   font-family: skodaFontRegular;
   src: url(Assets.font.SKODANext-Regular.a5cacc2c254e278ece9e83e3649f477c.woff2);
@@ -197,6 +180,14 @@
   font-family: skodaFontLight;
   src: url(Assets.font.SKODANext-Light.501acc7232cecb34d1f56c60ea59b2a5.woff2);
 }
+html {
+  background: black;
+}
+
+body {
+  overflow: hidden !important;
+}
+
 :root {
   font-size: 2vw;
 }
@@ -228,6 +219,19 @@ body {
   font-family: skodaFontLight;
   font-size: 2vw;
   color: white;
+}
+
+input:focus, button:focus, textarea:focus {
+  outline: none;
+}
+
+#required-pin, #required-age {
+  display: block;
+  display: none;
+  color: #ff4c61;
+  font-family: skodaFontRegular;
+  font-size: 1.8rem;
+  margin-top: 2rem;
 }
 
 .content-container {
@@ -1201,12 +1205,22 @@ select {
   justify-content: space-around;
 }
 
+.reg {
+  position: unset !important;
+  height: unset !important;
+}
+
 .desc-name {
   width: 100%;
-  height: 20%;
+  height: 50%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  position: absolute;
+  top: 0;
+}
+.desc-name h1 {
+  margin-top: 32px;
 }
 
 .desc-data {
@@ -1214,7 +1228,7 @@ select {
   height: 65%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -1268,9 +1282,9 @@ select {
 
 .desc-input {
   display: block;
-  /* color: #495057;
-  * */* line-height: 1.5rem; */
-  width: calc(100% - 2.8rem) !important;
+  line-height: 1.5rem;
+  width: calc(100% - .8rem) !important;
+  margin: 2rem 0 !important;
   /* margin: 0 1rem; */
   /* *font-family: skodaFontLight;
   * *border-radius: 0.25rem;
@@ -1282,6 +1296,24 @@ select {
 .desc-select {
   height: 1.8rem;
   width: calc(100% - 1.8rem) !important;
+}
+
+.desc-button-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2rem 0;
+}
+.desc-button-container button {
+  background: none;
+  border: 0.3rem solid white;
+  color: white;
+  border-radius: 5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 2.7rem;
+  width: 30%;
 }
 
 .btn-answer {
@@ -1453,12 +1485,11 @@ select {
 
 .end {
   display: none;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   height: 100%;
   width: 100%;
-  padding-top: 80px;
 }
 
 .end-bnt {
@@ -1977,11 +2008,6 @@ select[name=sector_count] {
     height: 0.6%;
   }
 
-  .menu-tile-container {
-    width: 50%;
-    height: 25%;
-  }
-
   .progressBar-background {
     height: 100%;
     border-radius: 0;
@@ -2070,19 +2096,16 @@ select[name=sector_count] {
   }
 
   .desc-input {
-    width: 90% !important;
     height: 5rem !important;
     margin: 5px 0;
     border-radius: 1rem;
     font-size: 2.5rem;
+    text-align: center;
+    font-weight: bold;
   }
 
   .desc-input-label {
-    font-size: 2.5rem;
-  }
-
-  .desc-name {
-    height: 20%;
+    font-size: 4rem;
   }
 
   .desc-btn-start {
@@ -2168,6 +2191,10 @@ select[name=sector_count] {
     justify-content: center;
     align-items: center;
     display: none;
+  }
+
+  .user-data-form {
+    padding: 0 3rem;
   }
 
   .comment-mobile-foreground {
@@ -2258,6 +2285,35 @@ select[name=sector_count] {
 }
 .main-menu-btn {
   display: none !important;
+}
+
+.error {
+  display: none;
+  position: absolute;
+  width: calc(100% - 32px);
+  margin: 16px;
+  background: #3d3f46;
+  height: 104px;
+  border-radius: 16px;
+  border-bottom: #ff4c61 3px solid;
+  color: #ff4c61;
+  display: flex;
+}
+.error i {
+  font-size: 64px;
+  padding: 20px;
+}
+.error span {
+  font-family: skodaFontRegular;
+  font-size: 32px;
+  margin-top: 16px;
+}
+.error small {
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  left: 84px;
+  bottom: 24px;
 }
 
 /*# sourceMappingURL=main.css.map */

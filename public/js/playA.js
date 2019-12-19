@@ -1,4 +1,5 @@
-
+let signed = true;
+let userAge = null;
 $(function() {
 
   const updateVH = () => {
@@ -38,6 +39,11 @@ $(function() {
     // console.log("hidee");
     $('.desc-data').hide();
   }
+
+  if(!document.cookie.match('userId')){
+    $('.user-data-form').show();
+    signed = false;
+  }
 });
 function isMobile() {
   return !$('.progress-bar-count').is(':visible');
@@ -62,7 +68,7 @@ let timer = setInterval(function() {
   questionTime[n]++;
 }, 1000);
 result.timestamp = time;
-result.name = anketa.name[0];
+result.name = anketa.name;
 result.answers = [];
 result.anketaId = anketa._id
 if(result.sectors)
@@ -97,6 +103,11 @@ function changeQuestion(dir) {
       result.age = $('input[name=age]').val();
       result.sex = $('select[name=sex]').val();
       result.language = lang;
+      const urlParams = new URLSearchParams(window.location.search);
+      const myParam = urlParams.get('nfc');
+      result.nfc = !! myParam;
+
+      // result.userId = document.cookie.substr(document.cookie.search('=')+1,25);
     }
     result.totalTime = 0;
     for (var i = 0; i < anketa.questions.length; i++) {
@@ -115,6 +126,10 @@ function changeQuestion(dir) {
     $('.play').css('display', 'none');
     $('.progressBar').css('display', 'none');
     $('.end').css('display', 'flex');
+
+    setTimeout(()=>{
+      window.location.href = `${location.protocol}//${location.host}/`
+    },1500);
   } else if (n + dir == -1) {
     n--;
     $('.desc').show();
@@ -181,11 +196,10 @@ function changeQuestion(dir) {
 }
 
 function start() {
-  // document.body.requestFullscreen();
-  $('.desc').css('display', 'none');
-  $('.play').css('display', 'flex');
-  $('.progressBar').css('display', 'block');
-  changeQuestion(1);
+    $('.desc').css('display', 'none');
+    $('.play').css('display', 'flex');
+    $('.progressBar').css('display', 'block');
+    changeQuestion(1);
 }
 
 function select(button) {
@@ -368,7 +382,7 @@ function langSwitch() {
       x = 2;
       break;
   }
-  $('.desc-title').html(anketa.name[x]);
+  // $('.desc-title').html(anketa.name[x]);
   $('.desc-btn').html(langTexts['desc-btn'][x]);
   $('#answer1').html(langTexts['answer1'][x]);
   $('#answer2').html(langTexts['answer2'][x]);
@@ -380,8 +394,8 @@ function langSwitch() {
   $('#note').attr('placeholder',langTexts['note'][x]);
   $('.user-data-form').find('label').eq(0).html(langTexts['user-data-form1'][x]);
   $('.user-data-form').find('label').eq(1).html(langTexts['user-data-form2'][x]);
-  $('.user-data-form').find('label').eq(2).html(langTexts['user-data-form3'][x]);
-  $('.user-data-form').find('label').eq(3).html(langTexts['user-data-form4'][x]);
+  // $('.user-data-form').find('label').eq(2).html(langTexts['user-data-form3'][x]);
+  // $('.user-data-form').find('label').eq(3).html(langTexts['user-data-form4'][x]);
   $('.desc-select').find('option').eq(0).html(langTexts['desc-select1'][x]);
   $('.desc-select').find('option').eq(1).html(langTexts['desc-select2'][x]);
   if(n != -1)
@@ -389,17 +403,17 @@ function langSwitch() {
 }
 const langTexts = {
   'desc-btn': ['Začít','Begin','Start'],
-  'answer1':['Určitě ano','Definitely yes','Entschieden Ja'],
-  'answer2':['Spíše ano','Rather yes','Eher Ja'],
-  'answer3':['Nemohu rozhodnout',"Can't decide",'Neutrale Haltung'],
-  'answer4':['Spíše ne','Rather no','Eher Nein'],
-  'answer5':['Určitě ne','Definitely no','Entschieden Nein'],
+  'answer1':['Naprosto souhlasím','Strongly agree','Entschieden Ja'],
+  'answer2':['Spíše souhlasím','Rather agree','Eher Ja'],
+  'answer3':['Neutrální postoj',"Neutral attitude",'Neutrale Haltung'],
+  'answer4':['Spíše nesouhlasím','Rather disagree','Eher Nein'],
+  'answer5':['Naprosto nesouhlasím','Strongly disagree','Entschieden Nein'],
   'end-text':['Děkujeme za spolupráci','Thank you for your cooperation','Entschieden Nein'],
   'end-btn':['Spustit znovu','Start again','Start nochmal'],
   'note':['Komentář ...','Comment ...','Kommentar'],
-  'user-data-form1':['Jméno','First name :','Name'],
-  'user-data-form2':['Příjmení','Last name :','Nachname'],
-  'user-data-form3':['Věk','Age :','Alter'],
+  'user-data-form1':['Osobní číslo','Personal number ','Persönliche nummer '],
+  'user-data-form3':['Příjmení','Last name :','Nachname'],
+  'user-data-form2':['Věk','Age :','Alter'],
   'user-data-form4':['Pohlaví','Sex :','Geschlecht'],
   'desc-select1':['Muž','Man','Mann'],
   'desc-select2':['Žena','Woman','Frau']

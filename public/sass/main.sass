@@ -11,7 +11,11 @@
   font-family: skodaFontLight
   src: url(Assets.font.SKODANext-Light.501acc7232cecb34d1f56c60ea59b2a5.woff2)
 
+html
+  background: black
 
+body
+  overflow: hidden !important
 \:root
   font-size: 2vw
 
@@ -39,6 +43,17 @@ body
   font-family: skodaFontLight
   font-size: 2vw
   color: white
+
+input:focus, button:focus, textarea:focus
+  outline: none
+
+#required-pin, #required-age
+  display: block
+  display: none
+  color: #ff4c61
+  font-family: skodaFontRegular
+  font-size: 1.8rem
+  margin-top: 2rem
 
 .content-container
   width: 100vw
@@ -732,20 +747,26 @@ select
   height: 100%
   width: 100%
   justify-content: space-around
-
+.reg
+  position: unset !important
+  height: unset !important
 .desc-name
   width: 100%
-  height: 20%
+  height: 50%
   display: flex
   justify-content: center
-  align-items: center
+  align-items: start
+  position: absolute
+  top: 0
+  h1
+    margin-top: 32px
 
 .desc-data
   width: 100%
   height: 65%
   display: flex
   flex-direction: row
-  justify-content: space-between
+  justify-content: center
   align-items: center
 
 .desc-btn-start
@@ -790,9 +811,9 @@ select
 
 .desc-input
   display: block
-  /* color: #495057;
-   */* line-height: 1.5rem;
-  width: calc(100% - 2.8rem) !important
+  line-height: 1.5rem
+  width: calc(100% - .8rem) !important
+  margin: 2rem 0 !important
   /* margin: 0 1rem;
   /*
    *font-family: skodaFontLight;
@@ -804,7 +825,21 @@ select
 .desc-select
   height: 1.8rem
   width: calc(100% - 1.8rem) !important
-
+.desc-button-container
+  display: flex
+  width: 100%
+  align-items: center
+  flex-direction: row
+  justify-content: space-between
+  margin: 2rem 0
+  button
+    background: none
+    border: .3rem solid white
+    color: white
+    border-radius: 5rem
+    padding: .4rem .8rem
+    font-size: 2.7rem
+    width: 30%
 .btn-answer
   background-color: rgb(65, 69, 73)
   /* border: none;
@@ -955,12 +990,12 @@ select
 
 .end
   display: none
-  justify-content: flex-start
+  justify-content: center
   flex-direction: column
   align-items: center
   height: 100%
   width: 100%
-  padding-top: 80px
+  // padding-top: 80px
 
 .end-bnt
   /* background-color: rgb(116, 203, 70);
@@ -1405,9 +1440,7 @@ select[name='sector_count']
     height: calc(var(--vh, 1vh) * 100)
   .progressBar
     height: .6%
-  .menu-tile-container
-    width: 50%
-    height: 25%
+
   .progressBar-background
     height: 100%
     border-radius: 0
@@ -1463,15 +1496,18 @@ select[name='sector_count']
     min-height: 50%
     padding: 0 4%
   .desc-input
-    width: 90% !important
+    // width: 90% !important
     height: 5rem !important
     margin: 5px 0
     border-radius: 1rem
     font-size: 2.5rem
+    text-align: center
+    font-weight: bold
   .desc-input-label
-    font-size: 2.5rem
+    font-size: 4rem
+    // margin-bottom: 2rem
   .desc-name
-    height: 20%
+    // height: 20%
   .desc-btn-start
     height: 20%
     align-items: center
@@ -1531,6 +1567,8 @@ select[name='sector_count']
     display: none
     // bottom: -80%
     // animation: slide-top 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both
+  .user-data-form
+    padding: 0 3rem
   .comment-mobile-foreground
     background-color: gray
     width: 85vw
@@ -1602,3 +1640,27 @@ select[name='sector_count']
    *}
 .main-menu-btn
   display: none !important
+.error
+  display: none
+  position: absolute
+  width: calc(100% - 32px)
+  margin: 16px
+  background: #3d3f46
+  height: 104px
+  border-radius: 16px
+  border-bottom: #ff4c61 3px solid
+  color: #ff4c61
+  display: flex
+  i
+    font-size: 64px
+    padding: 20px
+  span
+    font-family: skodaFontRegular
+    font-size: 32px
+    margin-top: 16px
+  small
+    color: white
+    font-size: 18px
+    position: absolute
+    left: 84px
+    bottom: 24px

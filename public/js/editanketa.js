@@ -76,6 +76,9 @@ function setEditData() {
       $('input[name="weight'+i+'"]').val(editData.questions[i].weight);
     }
   }
+  if(editData.okruh){
+    $('select[name="okruh"]').val(editData.okruh);
+  }
   // if(editData.languages.length > 1){
   //   $('.lang-cz-input').css('padding-bottom','.2rem');
   //   $('input[name="lang_en"]').prop( "checked", true );
@@ -129,5 +132,6 @@ function submitEdit() {
   $('form').ajaxSubmit(function(){
     $('.content-loading').hide();
     $('.main-container').css('filter','none');
+    getSite('settings');
   });
 }

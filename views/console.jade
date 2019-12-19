@@ -1,0 +1,56 @@
+doctype html
+html(lang='cz', dir='ltr')
+  head
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel='shorcut icon', href='../../img/icon.ico', type='image/x-icon')
+    link(rel="stylesheet",href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
+
+    //- meta (name="mobile-web-app-capable", content="yes")
+    title
+  body(style='padding:50px')
+    h1 Ankety
+    .table-responsive.mb-5
+      table.table.table-striped
+        thead.thead-dark
+          tr
+            th _id
+            th Name
+            th Question count
+            th Average time
+            th Result count
+        tbody
+          each anketa, i in ankety
+            tr
+              td #{anketa._id}
+              th #{anketa.name}
+              td #{anketa.count}
+              td #{anketa.avgTime}
+              td #{anketa.resultsCount}
+          tr
+            th Total
+            th #{ankety.length}
+            
+    h1 Users
+    .table-responsive
+      table.table.table-striped
+        thead.thead-dark
+          tr
+            th _id
+            th PIN
+            th Age
+            th Result count
+        tbody
+          each user, i in users
+            tr
+              td #{user._id}
+              th #{user.pin}
+              td #{user.age}
+              td #{user.resultsCount}
+          tr
+            th Total
+            th #{userCount}
+        
+            
+  script(src='../js/jquery-3.3.1.min.js', type='text/javascript')
+  script(src='../js/register.js', type='text/javascript')

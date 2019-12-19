@@ -1,117 +1,337 @@
+// body
+//   display: flex !important
+//   flex-direction: column
+// .menu-container
+//   width: 100%
+//   height: calc(var(--vh, 1vh) * 100 - 65px)
+//   background: #222222
+//   display: flex
+//   align-items: center
+//   flex-direction: row
+//   flex-wrap: wrap
+//   // padding: 2rem 2rem
+//   overflow-y: auto
+//   overflow-x: hidden
+// .menu-tile-container
+//   position: relative
+//   width: 25%
+//   color: white
+//   display: flex
+//   height: 50%
+//   align-items: center
+//   justify-content: center
+//   // opacity: 0
+//   animation: tile-animation .25s ease-in
+//   animation-fill-mode: both
+//   // &:nth-child(9)
+//   //   margin-top: 8px
+//   // &:last-child
+//   //   margin-bottom: 8px
+// .menu-section-container
+//   position: relative
+//   width: 25%
+//   color: white
+//   display: flex
+//   height: 50%
+//   align-items: center
+//   justify-content: center
+//   // opacity: 0
+//   animation: tile-animation .25s ease-in
+//   animation-fill-mode: both
+// .menu-section
+//   width: calc(85% - 32px)
+//   // height: calc(100% - 16px)
+//   display: flex
+//   align-items: center
+//   justify-content: center
+//   border-radius: 1.5rem
+//   position: absolute
+//   padding-top: calc(25% - 32px)
+//   background-color: rgb(165,212,0)
+// .menu-tile
+//   z-index: -1000
+//   width: 80%
+//   background: blue
+//   position: relative
+//   padding-top: 80%
+//   // box-shadow: 0 .5rem 1rem .7rem   rgba(0,0,0,.3)
+//   border-radius: 1rem
+//   span
+//     position: absolute
+//     transform: translateY(-50%)
+//   &.big
+//     animation: mega-tile-animation .3s ease-in both
+// .menu-title
+//   position: absolute
+//   top: 50%
+//   left: 0
+//   right: 0
+//   font-family: skodaFontRegular
+//   text-align: center
+//   font-size: 1rem
+//   transform: translateY(-50%)
+//   padding-left: 10px
+//   padding-right: 10px
+//   &.long
+//     font-size: 0.8rem
+// .menu-big-tile
+//   position: absolute
+//   width: 100%
+//   // height: 100vh
+//   overflow-y: auto
+//   overflow-x: hidden
+//   top: 0
+//   right: 0
+//   z-index: 1010
+//   display: none
+//   height: calc(var(--vh,1vh) * 100 - 65px)
+//   p
+//     font-size: 4.5rem
+//     font-family: skodaFontRegular
+//     opacity: .7
+//     width: 100%
+//     margin: 2.75vh 0 2.5vh 0
+//     padding-left: 2.5vw
+// .menu-sub-container
+//   // height: calc(var(--vh, 1vh) * 100)
+//   display: flex
+//   justify-content: flex-start
+//   flex-wrap: wrap
+//   overflow: hidden
+//   // max-height: calc(var(--vh, 1vh) * 100)
+// .menu-sub-tile
+//   margin: auto
+//   width: 20vw
+//   animation: tile-animation .3s ease-in both
+//   height: 20vw
+//   background: gray
+//   display: flex
+//   align-items: center
+//   justify-content: center
+//   border-radius: 1.5rem
+//   span
+//     text-align: center
+//     color: white
+//     font-size: 2rem
+//     font-family: skodaFontRegular
+// .menu-flex-item
+//   width: 25%
+//   // color: white
+//   display: flex
+//   height: 50%
+//   align-items: center
+//   justify-content: center
+//   // opacity: 0
+//   animation: tile-animation .25s ease-in
+//   animation-fill-mode: both
+//   margin-bottom: 5%
+// .menu-tile-main
+//   width: calc(85% - 32px)
+//   // height: calc(100% - 16px)
+//   display: flex
+//   align-items: center
+//   justify-content: center
+//   border-radius: 1.5rem
+//   position: absolute
+//   padding-top: calc(85% - 32px)
+//
+// .menu-nav
+//   width: 100%
+//   height: 65px
+//   background-color: #646464
+//   display: flex
+//   i
+//     font-size: 35px
+// .menu-nav-item
+//   display: inline
+//   width: 33.333333%
+//   height: 100%
+//   display: flex
+//   align-items: center
+//   justify-content: space-around
+// .menu-info
+//   display: none
+//   width: 100%
+//   height: 100%
+// .menu-map
+//   display: none
+//   width: 100%
+//   height: 100%
+//
+//
+//
+// @for $i from 9 through 18
+//   .menu-tile-container:nth-child(#{$i})
+//     animation-delay: ($i - 9) * 0.035s
+//   .menu-flex-item:nth-child(#{$i - 9} )
+//     animation-delay: ($i - 10) * 0.035s
+// #menu
+// #menu-tile1, #big-tile1 .menu-tile
+//   background-color: rgb(0,191,214)
+// #menu-tile2, #big-tile2 .menu-tile
+//   background-color: rgb(255,184,27)
+// #menu-tile3, #big-tile3 .menu-tile
+//   background-color: rgb(55,55,160)
+// #menu-tile4, #big-tile4 .menu-tile
+//   background-color: rgb(165,212,0)
+// #menu-tile5, #big-tile5 .menu-tile
+//   background-color: rgb(159,161,162)
+// #menu-tile6, #big-tile6 .menu-tile
+//   background-color: rgb(219,19,103)
+// #menu-tile7, #big-tile7 .menu-tile
+//   background-color: rgb(219,0,50)
+// #menu-tile8, #big-tile8 .menu-tile
+//   background-color: rgb(26,27,28)
+// @keyframes tile-animation
+//   0%
+//     opacity: 0
+//   100%
+//     opacity: 1
+// @keyframes big-tile-animation
+//   0%
+//
+//     transform: scale(0)
+//   100%
+//     transform: scale(1)
+//
+// @keyframes mega-tile-animation
+//   0%
+//
+//     transform: scale(1)
+//   100%
+//     transform: scale(15)
+//
+// @media (min-width: 0px) and (max-width: 480px)
+//   .menu-tile-container
+//     width: 100%
+//     height: 20%
+//     position: unset
+//   .menu-section-container
+//     width: 100%
+//     height: 17vh
+//     position: unset
+//   .menu-title
+//     font-size: 3rem
+//     position: unset
+//     transform: none
+//   .menu-sub-tile
+//     width: 40vw
+//     height: 40vw
+//   .menu-flex-item
+//     width: 50%
+//     height: 25vh
+//   .menu-big-tile p
+//     padding-left: 5vw
+//   .menu-container
+//     display: block
+//     flex-direction: column
+//     flex-wrap: nowrap
+//     padding: 8px 0
+//     height: calc(var(--vh, 1vh) * 100 - 81px)
+//   .menu-tile-container
+//     position: inherit
+//   .menu-tile-main, .menu-section
+//     position: unset
+//     padding: 0
+//     height: calc(100% - 16px)
+//     width: calc(100% - 32px)
 .menu-container
-  width: calc(100% - 4rem)
-  height: calc(calc(var(--vh, 1vh) * 100) - 4rem)
   background: linear-gradient(to bottom, #202225, #3e4047)
+  width: 100%
+  height: calc(var(--vh, 1vh) * 100)
+  position: fixed
+
+.nav-container
+  width: 100%
+  height: 65px
+  background: #222
   display: flex
-  flex-wrap: wrap
-  padding: 2rem 2rem
-  overflow: hidden
-.menu-tile-container
-  width: 25%
-  color: white
-  display: flex
-  height: 50%
   align-items: center
+  justify-content: space-between
+
+.select-container, .info-container, .map-container
+  height: calc(100% - 65px)
+  width: 100%
+  overflow: auto
+
+.map-container
+  overflow-y: hidden
+.info-container
+  width: calc(100% - 32px)
+  height: calc(100% - 97px)
+  padding: 16px
+  h3
+    font-size: 4rem
+    font-family: skodaFontRegular
+    margin: 16px 0
+  p
+    opacity: .8
+    font-size: 3rem
+    margin: 16px 0
+    &.bold
+      opacity: 1
+      font-family: skodaFontRegular
+.nav-item
+  height: 100%
+  flex-grow: 1
+  display: flex
   justify-content: center
-  // opacity: 0
-  animation: tile-animation .25s ease-in
-  animation-fill-mode: both
-.menu-tile
-  z-index: -1000
-  width: 70%
-  background: blue
-  position: relative
-  padding-top: 70%
-  // box-shadow: 0 .5rem 1rem .7rem   rgba(0,0,0,.3)
-  border-radius: 1rem
-  &.big
-    animation: mega-tile-animation .3s ease-in both
-.menu-title
-  position: absolute
-  top: 50%
-  left: 0
-  right: 0
-  font-family: skodaFontRegular
-  text-align: center
-  font-size: 1rem
-  transform: translateY(-50%)
-  padding-left: 10px
-  padding-right: 10px
-  &.long
-    font-size: 0.8rem
-.menu-big-tile
-  position: absolute
+  align-items: center
+  i
+    color: white
+    font-size: 35px
+.select-main-container
   width: 100%
   height: 100%
-  top: 0
-  right: 0
-  z-index: 1010
-  display: none
-  p
-    font-size: 5rem
+  h2
+    margin: 16px
+    font-size: 4rem
     font-family: skodaFontRegular
-    opacity: .7
-    width: 100%
-    margin: 2rem 0
-.menu-sub-container
-  display: flex
-  justify-content: space-around
-.menu-sub-tile
-  width: 20vw
-  animation: tile-animation 1.5s ease-in both
-  height: 20vw
-  background: gray
+
+.menu-tile
+  width: calc(100% - 32px)
+  height: 80px
+  margin: 16px 16px
   display: flex
   align-items: center
   justify-content: center
-  border-radius: 1.5rem
+  border-radius: 20px
+  animation: tile-animation .3s both
+  box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25)
   span
-    text-align: center
     color: white
-    font-size: 2rem
+    font-size: 22px
     font-family: skodaFontRegular
+    text-align: center
+.select-sub-container
+  display: none
+  h3
+    padding-left: 16px
+    font-size: 28px
+    opacity: .6
+    margin: 16px 0
 
-@for $i from 1 through 9
-  .menu-tile-container:nth-child(#{$i})
-    animation-delay: $i * 0.04s
-#menu
-#menu-tile1
-  background-color: rgb(165,212,0)
-#menu-tile2
+#floor-plan
+  height: 100%
+  // margin: 0 20px
+#tile-1, #sub-1 .menu-tile
   background-color: rgb(0,191,214)
-#menu-tile3
+#tile-2, #sub-2 .menu-tile
   background-color: rgb(255,184,27)
-#menu-tile4
+#tile-3, #sub-3 .menu-tile
   background-color: rgb(55,55,160)
-#menu-tile5
-  background-color: rgb(219,0,50)
-#menu-tile6
+#tile-4, #sub-4 .menu-tile
+  background-color: rgb(165,212,0)
+#tile-5, #sub-5 .menu-tile
   background-color: rgb(159,161,162)
-#menu-tile7
+#tile-6, #sub-6 .menu-tile
   background-color: rgb(219,19,103)
-#menu-tile8
-  background-color: rgb(26,27,28)
+
 @keyframes tile-animation
-  0%
+  from
     opacity: 0
-  100%
+  to
     opacity: 1
-@keyframes big-tile-animation
-  0%
-
-    transform: scale(0)
-  100%
-    transform: scale(1)
-
-@keyframes mega-tile-animation
-  0%
-
-    transform: scale(1)
-  100%
-    transform: scale(15)
-
-@media (min-width: 0px) and (max-width: 480px)
-  .menu-tile-container
-    width: 50%
-  .menu-title
-    font-size: 2.7rem
+@for $i from 1 through 10
+  .menu-tile:nth-child(#{$i})
+    animation-delay: ($i) * 0.035s

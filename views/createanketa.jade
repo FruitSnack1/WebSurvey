@@ -21,14 +21,26 @@ html(lang='cz', dir='ltr')
             //- button.btn Vytvořit z csv(onclick='loadFromCsv()')
             label Název ankety
             div.lang-icon-container.lang-cz-input
-              img(src='img/cz_icon.png', class='lang-icon')
+              //- img(src='img/cz_icon.png', class='lang-icon')
               input(type="text", name="name", class='input-text').main-input
-            div.lang-icon-container.lang-en-input(style='display:none')
-              img(src='img/en_icon.png', class='lang-icon')
-              input(type="text", name="name", class='input-text').main-input
-            div.lang-icon-container.lang-de-input(style='display:none')
-              img(src='img/de_icon.png', class='lang-icon')
-              input(type="text", name="name", class='input-text').main-input
+            //- div.lang-icon-container.lang-en-input(style='display:none')
+            //-   img(src='img/en_icon.png', class='lang-icon')
+            //-   input(type="text", name="name", class='input-text').main-input
+            //- div.lang-icon-container.lang-de-input(style='display:none')
+            //-   img(src='img/de_icon.png', class='lang-icon')
+            //-   input(type="text", name="name", class='input-text').main-input
+            label Okruh
+            select(name='okruh')
+              option(value='Electrification') Electrification
+              option(value='Automated driving') Automated driving
+              option(value='Connectivity & ecosystem') Connectivity & ecosystem
+              option(value='Enviroment & sustainability') Enviroment & sustainability
+              option(value='Vehicle experience') Vehicle experience
+              option(value='Virtual Development') Virtual Development
+              //- option(value='Virtual Validation') Virtual Validation
+              //- option(value='CO2 Reduzierung') CO2 Reduzierung
+              //- option(value='Design & Technologie') Design & Technologie
+              //- option(value='Organisation') Organisation
             label Obrázek ankety
             div.img-container
               label(for='img').input-img-label Vybrat obrázek
@@ -55,7 +67,7 @@ html(lang='cz', dir='ltr')
               div.checkbox-container
                 div.check-container
                   label.checkbox-label(for='user_data').advanced-settings-checkbox
-                    input(type='checkbox', name='user_data', id='user_data').input-checkbox
+                    input(type='checkbox', name='user_data', id='user_data', checked).input-checkbox
                     span.checkmark
                 span Přidat identifikaci
               div.checkbox-container
@@ -81,19 +93,19 @@ html(lang='cz', dir='ltr')
               div.checkbox-container
                 div.check-container
                   label.checkbox-label(for='lang_en').advanced-settings-checkbox
-                    input(type='checkbox', name='lang_en', id='lang_en', onchange='langEnChange();').input-checkbox
+                    input(type='checkbox', name='lang_en', id='lang_en', onchange='langEnChange();', checked).input-checkbox
                     span.checkmark
                 span Přidat otázky v angličtině
               div.checkbox-container
                 div.check-container
                   label.checkbox-label(for='lang_de').advanced-settings-checkbox
-                    input(type='checkbox', name='lang_de', id='lang_de', onchange='langDeChange();').input-checkbox
+                    input(type='checkbox', name='lang_de', id='lang_de', onchange='langDeChange();', checked).input-checkbox
                     span.checkmark
                 span Přidat otázky v němčině
             hr
             div.questionInput
               - for(var x =0; x< 50; x++)
-                if x == 0
+                if x < 5
                   div(id='question' + x)
                     label Otázka
                     span.delete-icon-container
@@ -173,8 +185,16 @@ html(lang='cz', dir='ltr')
             br
             button.submitBtn.btn.btn-block.btn-confirm(type="button", onclick='finish();') Vytvořit 
             script.
-              count = 1;
+              count = 5;
               editData =!{JSON.stringify(anketa[0])}
+              langEnChange();
+              langDeChange();
+              $('input[name="question0"]').eq(0).val('Prezentované řešení mi přijde inovativní')
+              $('input[name="question0"]').eq(1).val('I find presented solution to be innovative')
+              $('input[name="question1"]').eq(0).val('Pravděpodobně bych prezentované řešení uvítal ve svém voze')
+              $('input[name="question1"]').eq(1).val('I would probably appreciate this innovation in my car')
+              $('input[name="question2"]').eq(0).val('Prezentace řešení mi přišla atraktivní')
+              $('input[name="question2"]').eq(1).val('I found the presentation of the solution to be attractive')
               
       nav.navbar
         a.navbar-item(href='/')
