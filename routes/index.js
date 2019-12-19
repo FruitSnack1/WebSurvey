@@ -3,7 +3,7 @@ var router = express.Router();
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const jsonexport = require('jsonexport');
-const url = 'mongodb://127.0.0.1:27017/quiz';
+const url = 'mongodb://mongo:27017';
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -25,7 +25,7 @@ router.get('/admin',(req,res) => {
 });
 
 router.get('/', (req, res) => {
-  MongoClient.connect(url, async (err, client) => {
+  MongoClient.connect(url, { useNewUrlParser: true }, async (err, client) => {
     if (err) return console.log('Unable to connect to the Server', err);
     console.log('Connection established to', url);
     const db = client.db("quiz");
@@ -39,7 +39,6 @@ router.get('/', (req, res) => {
     });
   });
 });
-
 
 router.post('/auth', (req, res) => {
   let name = 'kokot';

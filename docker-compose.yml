@@ -17,8 +17,6 @@ services:
 #       -  ~/OneDrive/Documents/code/WebSurvey/views:/views
   mongo:
     container_name: mongo-app
-    image: mongo:4
-    ports:
-      - '27017:27017'
+    image: arm64v8/mongo
     volumes:
       - './db:/data/db'

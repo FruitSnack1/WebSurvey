@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('node:server');
 var http = require('http');
-var https = require('https');
 var fs = require('fs');
 
 /**
@@ -15,24 +14,13 @@ var fs = require('fs');
  */
 
 app.http.set('port', normalizePort('3000'));
-app.https.set('port', normalizePort('3001'));
-
-/**
- * Create HTTP server.
- */
-
-var server = https.createServer({
-	key: fs.readFileSync('/etc/letsencrypt/live/skodaquiz.com/privkey.pem'),
-	cert: fs.readFileSync('/etc/letsencrypt/live/skodaquiz.com/cert.pem')
-}, app.https);
-
-http.createServer(app.http).listen(app.http.get('port'));
+const server = http.createServer(app.http);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(app.https.get('port'));
+server.listen(app.http.get('port'));
 server.on('error', onError);
 server.on('listening', onListening);
 
