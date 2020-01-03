@@ -1,0 +1,59 @@
+.header-wrap{
+  justify-content: flex-end;
+}
+
+.navbar-sidebar .navbar__list li.active > a{
+  color: #4ba82e;
+}
+
+.navbar-sidebar .navbar__list li a:hover{
+  color: #4ba82e;
+}
+
+.au-btn--blue{
+  background: #4ba82e;
+}
+.au-btn--skoda{
+  background: #4ba82e;
+}
+
+.au-btn--skoda:hover{
+  background: #398022;
+}
+
+.au-btn--secondary{
+  background: #6c757d;
+}
+
+.au-btn--secondary:hover{
+  background: #5a6268;
+}
+
+.au-btn--danger{
+  background: #dc3545;
+}
+
+.au-btn--danger:hover{
+  background: #c82333;
+}
+
+.au-btn{
+  border-radius: 50px;
+}
+
+.bg-overlay--skoda{
+  background: #4ba82e;
+}
+
+.ankta-date{
+  position: relative;
+  color: white;
+  font-weight: 500;
+}
+
+.badge-success{
+  background: #4ba82e;
+}
+.page-wrapper{
+  padding-bottom: 0 !important;
+}

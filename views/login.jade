@@ -1,0 +1,55 @@
+doctype html
+html(lang='en')
+  head
+    // Required meta tags
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='au theme template')
+    meta(name='author', content='Hau Nguyen')
+    meta(name='keywords', content='au theme template')
+    // Title Page
+    title Přihlášení
+    // Fontfaces CSS
+    link(href='../../css/font-face.css', rel='stylesheet', media='all')
+    link(href='../../vendor/mdi-font/css/material-design-iconic-font.min.css', rel='stylesheet', media='all')
+    // Bootstrap CSS
+    link(href='../../vendor/bootstrap-4.1/bootstrap.min.css', rel='stylesheet', media='all')
+    // Vendor CSS
+    link(href='../../vendor/animsition/animsition.min.css', rel='stylesheet', media='all')
+    // Main CSS
+    link(href='../../css/theme.css', rel='stylesheet', media='all')
+    link(href='../../css/main2.css', rel='stylesheet', media='all')
+  body.animsition
+    .page-wrapper
+      .page-content--bge5
+        .container
+          .login-wrap
+            .login-content
+              .login-logo
+                a(href='#')
+                  img(src='../../img/logo.png', alt='CoolAdmin')
+              .login-form
+                form(action='/users/login', method='post')
+                  .form-group
+                    label Uživatel
+                    select.form-control(name='id')
+                      option(selected, disabled) Vyberte uživatele
+                      each user, i in users
+                        option(value=user._id) #{user.username}
+                        
+                  .form-group
+                    label Heslo
+                    input.form-control(type='password', name='password', placeholder='Heslo')
+                  button.au-btn.au-btn--block.au-btn--skoda.m-b-20(type='submit') Přihlásit se
+                .register-link
+                  p
+                    | Nemáte účet?
+                    a(href='/users/register') Zaregistrovat se
+    // Jquery JS
+    script(src='../../vendor/jquery-3.2.1.min.js')
+    // Bootstrap JS
+    // Vendor JS
+    script(src='../../vendor/animsition/animsition.min.js')
+    // Main JS
+    script(src='../../js/main2.js')
+    // end document
