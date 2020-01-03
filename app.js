@@ -3,15 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var https = require('https');
 // const bodyParser =  require('body-parser');
 var indexRouter = require('./routes/index');
+const users  = require('./routes/users');
+const ankety = require('./routes/ankety');
 
 var fileUpload = require("express-fileupload");
 var mongo = require('mongodb');
 
 var app = express();
-var appHttp = express();
 
 app.use(fileUpload());
 // view engine setup
@@ -25,6 +25,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(bodyParser.urlencoded())
 app.use('/', indexRouter);
+app.use('/users', users);
+app.use('/ankety', ankety);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,11 +44,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-appHttp.get("*", function (req, res, next) {
-    res.redirect("https://" + req.headers.host);
-});
-
-module.exports = {
-  http: appHttp,
-  https: app
-};
+module.exports = app;

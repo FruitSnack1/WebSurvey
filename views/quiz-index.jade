@@ -1,0 +1,620 @@
+doctype html
+html(lang='en')
+  head
+    // Required meta tags
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='au theme template')
+    meta(name='author', content='Hau Nguyen')
+    meta(name='keywords', content='au theme template')
+    // Title Page
+    title Dashboard
+    // Fontfaces CSS
+    link(href='../../css/font-face.css', rel='stylesheet', media='all')
+    link(href='../../vendor/font-awesome-4.7/css/font-awesome.min.css', rel='stylesheet', media='all')
+    link(href='../../vendor/font-awesome-5/css/fontawesome-all.min.css', rel='stylesheet', media='all')
+    link(href='../../vendor/mdi-font/css/material-design-iconic-font.min.css', rel='stylesheet', media='all')
+    // Bootstrap CSS
+    link(href='../../vendor/bootstrap-4.1/bootstrap.min.css', rel='stylesheet', media='all')
+    // Vendor CSS
+    link(href='../../vendor/animsition/animsition.min.css', rel='stylesheet', media='all')
+    link(href='../../vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css', rel='stylesheet', media='all')
+    link(href='../../vendor/wow/animate.css', rel='stylesheet', media='all')
+    link(href='../../vendor/css-hamburgers/hamburgers.min.css', rel='stylesheet', media='all')
+    link(href='../../vendor/slick/slick.css', rel='stylesheet', media='all')
+    link(href='../../vendor/select2/select2.min.css', rel='stylesheet', media='all')
+    link(href='../../vendor/perfect-scrollbar/perfect-scrollbar.css', rel='stylesheet', media='all')
+    // Main CSS
+    link(href='../../css/theme.css', rel='stylesheet', media='all')
+    link(href='../../css/main2.css', rel='stylesheet', media='all')
+  body
+    .page-wrapper
+      // HEADER MOBILE
+      header.header-mobile.d-block.d-lg-none
+        .header-mobile__bar
+          .container-fluid
+            .header-mobile-inner
+              a.logo(href='index.html')
+                img(src='../../img/logo.png', alt='CoolAdmin')
+              button.hamburger.hamburger--slider(type='button')
+                span.hamburger-box
+                  span.hamburger-inner
+        nav.navbar-mobile
+          .container-fluid
+            ul.navbar-mobile__list.list-unstyled
+              li.has-sub
+                a.js-arrow(href='#')
+                  i.fas.fa-tachometer-alt
+                  | Dashboard
+                ul.navbar-mobile-sub__list.list-unstyled.js-sub-list
+                  li
+                    a(href='index.html') Dashboard 1
+                  li
+                    a(href='index2.html') Dashboard 2
+                  li
+                    a(href='index3.html') Dashboard 3
+                  li
+                    a(href='index4.html') Dashboard 4
+              li
+                a(href='chart.html')
+                  i.fas.fa-chart-bar
+                  | Charts
+              li
+                a(href='table.html')
+                  i.fas.fa-table
+                  | Tables
+              li
+                a(href='form.html')
+                  i.far.fa-check-square
+                  | Forms
+              li
+                a(href='calendar.html')
+                  i.fas.fa-calendar-alt
+                  | Calendar
+              li
+                a(href='map.html')
+                  i.fas.fa-map-marker-alt
+                  | Maps
+              li.has-sub
+                a.js-arrow(href='#')
+                  i.fas.fa-copy
+                  | Pages
+                ul.navbar-mobile-sub__list.list-unstyled.js-sub-list
+                  li
+                    a(href='login.html') Login
+                  li
+                    a(href='register.html') Register
+                  li
+                    a(href='forget-pass.html') Forget Password
+              li.has-sub
+                a.js-arrow(href='#')
+                  i.fas.fa-desktop
+                  | UI Elements
+                ul.navbar-mobile-sub__list.list-unstyled.js-sub-list
+                  li
+                    a(href='button.html') Button
+                  li
+                    a(href='badge.html') Badges
+                  li
+                    a(href='tab.html') Tabs
+                  li
+                    a(href='card.html') Cards
+                  li
+                    a(href='alert.html') Alerts
+                  li
+                    a(href='progress-bar.html') Progress Bars
+                  li
+                    a(href='modal.html') Modals
+                  li
+                    a(href='switch.html') Switchs
+                  li
+                    a(href='grid.html') Grids
+                  li
+                    a(href='fontawesome.html') Fontawesome Icon
+                  li
+                    a(href='typo.html') Typography
+      // END HEADER MOBILE
+      // MENU SIDEBAR
+      aside.menu-sidebar.d-none.d-lg-block
+        .logo
+          a(href='#')
+            img(src='img/logo.png', alt='Cool Admin')
+        .menu-sidebar__content.js-scrollbar1
+          nav.navbar-sidebar
+            ul.list-unstyled.navbar__list
+              li.active
+                a(onclick='getSite("/dashboard");tabActive(this)')
+                  i.fas.fa-tachometer-alt
+                  | Dashboard
+              li
+                a(onclick='getSite("/ankety/mojeankety");tabActive(this)')
+                  i.fas.fa-chart-bar
+                  | Moje ankety
+              li
+                a(href='table.html')
+                  i.fas.fa-cog
+                  | Nastavení
+      // END MENU SIDEBAR
+      // PAGE CONTAINER
+      .page-container
+        // HEADER DESKTOP
+        header.header-desktop
+          .section__content.section__content--p30
+            .container-fluid
+              .header-wrap
+                .header-button
+                  .account-wrap
+                    .account-item.clearfix.js-item-menu
+                      .image
+                        img(src='../../img/avatar.jpg', alt='John Doe')
+                      .content
+                        a.js-acc-btn(href='#') #{user.username}
+                      .account-dropdown.js-dropdown
+                        .info.clearfix
+                          .image
+                            a(href='#')
+                              img(src='../../img/avatar.jpg', alt='John Doe')
+                          .content
+                            h5.name
+                              a(href='#') #{user.username}
+                            span.email johndoe@example.com
+                        .account-dropdown__footer
+                          a(href='#')
+                            i.zmdi.zmdi-power
+                            | Logout
+        // HEADER DESKTOP
+        // MAIN CONTENT
+        .main-content
+          .section__content.section__content--p30
+            .container-fluid
+              .row
+                .col-md-12
+                  .overview-wrap
+                    h2.title-1
+                    button.au-btn.au-btn-icon.au-btn--skoda
+                      i.zmdi.zmdi-plus
+                      | Přidat novou anketu
+              .row
+                .col-lg-9
+                  h2.title-1.m-b-25 Přehled
+                  .table-responsive.table--no-card.m-b-40
+                    table.table.table-borderless.table-striped.table-earning
+                      thead
+                        tr
+                          th Datum
+                          th Název
+                          th Počet otázek
+                          th.text-right Počet vyplnění
+                      tbody
+                        tr
+                          td 2019-10-21
+                          td Scala
+                          td 8
+                          td.text-right 25
+                        tr
+                          td 2019-8-5
+                          td ARNC
+                          td 6
+                          td.text-right 7
+                        tr
+                          td 2019-9-11
+                          td Rotary knobs
+                          td 10
+                          td.text-right 12
+                .col-lg-3.m-t-60
+                  .overview-item.bg-skoda
+                    .overview__inner
+                      .overview-box.clearfix
+                        .icon
+                          i.zmdi.zmdi-account-o
+                        .text
+                          h2 168
+                          span Vyplněné ankety
+                      .overview-chart
+                        canvas#widgetChart1
+              .row.m-t-25
+                .col-lg-6
+                  .au-card.chart-percent-card
+                    .au-card-inner
+                      h3.title-2.tm-b-5 ARNC
+                      .row.no-gutters
+                        .col-xl-6
+                          .chart-note-wrap
+                            .chart-note.mr-0.d-block
+                              span.dot.dot--blue
+                              span Naprosto souhlasím
+                            .chart-note.mr-0.d-block
+                              span.dot.dot--red
+                              span Spíše souhlasím
+                            .chart-note.mr-0.d-block
+                              span.dot.dot--red
+                              span Neutrální postoj
+                            .chart-note.mr-0.d-block
+                              span.dot.dot--red
+                              span Spíše nesouhlasím
+                            .chart-note.mr-0.d-block
+                              span.dot.dot--red
+                              span Naprosto nesouhlasím
+                        .col-xl-6
+                          .percent-chart
+                            canvas#percent-chart
+                .col-lg-6
+                  .au-card.m-b-30
+                    .au-card-inner
+                      h3.title-2.m-b-40 Single Bar Chart
+                      canvas#singelBarChart
+              .row.m-t-25
+                .col-sm-6.col-lg-3
+                  .overview-item.overview-item--c1
+                    .overview__inner
+                      .overview-box.clearfix
+                        .icon
+                          i.zmdi.zmdi-account-o
+                        .text
+                          h2 10368
+                          span members online
+                      .overview-chart
+                        canvas#widgetChart1
+                .col-sm-6.col-lg-3
+                  .overview-item.overview-item--c2
+                    .overview__inner
+                      .overview-box.clearfix
+                        .icon
+                          i.zmdi.zmdi-shopping-cart
+                        .text
+                          h2 388,688
+                          span items solid
+                      .overview-chart
+                        canvas#widgetChart2
+                .col-sm-6.col-lg-3
+                  .overview-item.overview-item--c3
+                    .overview__inner
+                      .overview-box.clearfix
+                        .icon
+                          i.zmdi.zmdi-calendar-note
+                        .text
+                          h2 1,086
+                          span this week
+                      .overview-chart
+                        canvas#widgetChart3
+                .col-sm-6.col-lg-3
+                  .overview-item.overview-item--c4
+                    .overview__inner
+                      .overview-box.clearfix
+                        .icon
+                          i.zmdi.zmdi-money
+                        .text
+                          h2 $1,060,386
+                          span total earnings
+                      .overview-chart
+                        canvas#widgetChart4
+              .row
+                .col-lg-6
+                  .au-card.recent-report
+                    .au-card-inner
+                      h3.title-2 recent reports
+                      .chart-info
+                        .chart-info__left
+                          .chart-note
+                            span.dot.dot--blue
+                            span products
+                          .chart-note.mr-0
+                            span.dot.dot--green
+                            span services
+                        .chart-info__right
+                          .chart-statis
+                            span.index.incre
+                              i.zmdi.zmdi-long-arrow-up
+                              | 25%
+                            span.label products
+                          .chart-statis.mr-0
+                            span.index.decre
+                              i.zmdi.zmdi-long-arrow-down
+                              | 10%
+                            span.label services
+                      .recent-report__chart
+                        canvas#recent-rep-chart
+                .col-lg-6
+                  .au-card.chart-percent-card
+                    .au-card-inner
+                      h3.title-2.tm-b-5 char by %
+                      .row.no-gutters
+                        .col-xl-6
+                          .chart-note-wrap
+                            .chart-note.mr-0.d-block
+                              span.dot.dot--blue
+                              span products
+                            .chart-note.mr-0.d-block
+                              span.dot.dot--red
+                              span services
+                        .col-xl-6
+                          .percent-chart
+                            canvas#percent-chart
+              .row
+                .col-lg-9
+                  h2.title-1.m-b-25 Earnings By Items
+                  .table-responsive.table--no-card.m-b-40
+                    table.table.table-borderless.table-striped.table-earning
+                      thead
+                        tr
+                          th date
+                          th order ID
+                          th name
+                          th.text-right price
+                          th.text-right quantity
+                          th.text-right total
+                      tbody
+                        tr
+                          td 2018-09-29 05:57
+                          td 100398
+                          td iPhone X 64Gb Grey
+                          td.text-right $999.00
+                          td.text-right 1
+                          td.text-right $999.00
+                        tr
+                          td 2018-09-28 01:22
+                          td 100397
+                          td Samsung S8 Black
+                          td.text-right $756.00
+                          td.text-right 1
+                          td.text-right $756.00
+                        tr
+                          td 2018-09-27 02:12
+                          td 100396
+                          td Game Console Controller
+                          td.text-right $22.00
+                          td.text-right 2
+                          td.text-right $44.00
+                        tr
+                          td 2018-09-26 23:06
+                          td 100395
+                          td iPhone X 256Gb Black
+                          td.text-right $1199.00
+                          td.text-right 1
+                          td.text-right $1199.00
+                        tr
+                          td 2018-09-25 19:03
+                          td 100393
+                          td USB 3.0 Cable
+                          td.text-right $10.00
+                          td.text-right 3
+                          td.text-right $30.00
+                        tr
+                          td 2018-09-29 05:57
+                          td 100392
+                          td Smartwatch 4.0 LTE Wifi
+                          td.text-right $199.00
+                          td.text-right 6
+                          td.text-right $1494.00
+                        tr
+                          td 2018-09-24 19:10
+                          td 100391
+                          td Camera C430W 4k
+                          td.text-right $699.00
+                          td.text-right 1
+                          td.text-right $699.00
+                        tr
+                          td 2018-09-22 00:43
+                          td 100393
+                          td USB 3.0 Cable
+                          td.text-right $10.00
+                          td.text-right 3
+                          td.text-right $30.00
+                .col-lg-3
+                  h2.title-1.m-b-25 Top countries
+                  .au-card.au-card--bg-blue.au-card-top-countries.m-b-40
+                    .au-card-inner
+                      .table-responsive
+                        table.table.table-top-countries
+                          tbody
+                            tr
+                              td United States
+                              td.text-right $119,366.96
+                            tr
+                              td Australia
+                              td.text-right $70,261.65
+                            tr
+                              td United Kingdom
+                              td.text-right $46,399.22
+                            tr
+                              td Turkey
+                              td.text-right $35,364.90
+                            tr
+                              td Germany
+                              td.text-right $20,366.96
+                            tr
+                              td France
+                              td.text-right $10,366.96
+                            tr
+                              td Australia
+                              td.text-right $5,366.96
+                            tr
+                              td Italy
+                              td.text-right $1639.32
+              .row
+                .col-lg-6
+                  .au-card.au-card--no-shadow.au-card--no-pad.m-b-40
+                    .au-card-title(style="background-image:url('images/bg-title-01.jpg');")
+                      .bg-overlay.bg-overlay--blue
+                      h3
+                        i.zmdi.zmdi-account-calendar
+                        | 26 April, 2018
+                      button.au-btn-plus
+                        i.zmdi.zmdi-plus
+                    .au-task.js-list-load
+                      .au-task__title
+                        p Tasks for John Doe
+                      .au-task-list.js-scrollbar3
+                        .au-task__item.au-task__item--danger
+                          .au-task__item-inner
+                            h5.task
+                              a(href='#') Meeting about plan for Admin Template 2018
+                            span.time 10:00 AM
+                        .au-task__item.au-task__item--warning
+                          .au-task__item-inner
+                            h5.task
+                              a(href='#') Create new task for Dashboard
+                            span.time 11:00 AM
+                        .au-task__item.au-task__item--primary
+                          .au-task__item-inner
+                            h5.task
+                              a(href='#') Meeting about plan for Admin Template 2018
+                            span.time 02:00 PM
+                        .au-task__item.au-task__item--success
+                          .au-task__item-inner
+                            h5.task
+                              a(href='#') Create new task for Dashboard
+                            span.time 03:30 PM
+                        .au-task__item.au-task__item--danger.js-load-item
+                          .au-task__item-inner
+                            h5.task
+                              a(href='#') Meeting about plan for Admin Template 2018
+                            span.time 10:00 AM
+                        .au-task__item.au-task__item--warning.js-load-item
+                          .au-task__item-inner
+                            h5.task
+                              a(href='#') Create new task for Dashboard
+                            span.time 11:00 AM
+                      .au-task__footer
+                        button.au-btn.au-btn-load.js-load-btn load more
+                .col-lg-6
+                  .au-card.au-card--no-shadow.au-card--no-pad.m-b-40
+                    .au-card-title(style="background-image:url('images/bg-title-02.jpg');")
+                      .bg-overlay.bg-overlay--blue
+                      h3
+                        i.zmdi.zmdi-comment-text
+                        | New Messages
+                      button.au-btn-plus
+                        i.zmdi.zmdi-plus
+                    .au-inbox-wrap.js-inbox-wrap
+                      .au-message.js-list-load
+                        .au-message__noti
+                          p
+                            | You Have
+                            span 2
+                            |                                                     new messages
+                        .au-message-list
+                          .au-message__item.unread
+                            .au-message__item-inner
+                              .au-message__item-text
+                                .avatar-wrap
+                                  .avatar
+                                    img(src='images/icon/avatar-02.jpg', alt='John Smith')
+                                .text
+                                  h5.name John Smith
+                                  p Have sent a photo
+                              .au-message__item-time
+                                span 12 Min ago
+                          .au-message__item.unread
+                            .au-message__item-inner
+                              .au-message__item-text
+                                .avatar-wrap.online
+                                  .avatar
+                                    img(src='images/icon/avatar-03.jpg', alt='Nicholas Martinez')
+                                .text
+                                  h5.name Nicholas Martinez
+                                  p You are now connected on message
+                              .au-message__item-time
+                                span 11:00 PM
+                          .au-message__item
+                            .au-message__item-inner
+                              .au-message__item-text
+                                .avatar-wrap.online
+                                  .avatar
+                                    img(src='images/icon/avatar-04.jpg', alt='Michelle Sims')
+                                .text
+                                  h5.name Michelle Sims
+                                  p Lorem ipsum dolor sit amet
+                              .au-message__item-time
+                                span Yesterday
+                          .au-message__item
+                            .au-message__item-inner
+                              .au-message__item-text
+                                .avatar-wrap
+                                  .avatar
+                                    img(src='images/icon/avatar-05.jpg', alt='Michelle Sims')
+                                .text
+                                  h5.name Michelle Sims
+                                  p Purus feugiat finibus
+                              .au-message__item-time
+                                span Sunday
+                          .au-message__item.js-load-item
+                            .au-message__item-inner
+                              .au-message__item-text
+                                .avatar-wrap.online
+                                  .avatar
+                                    img(src='images/icon/avatar-04.jpg', alt='Michelle Sims')
+                                .text
+                                  h5.name Michelle Sims
+                                  p Lorem ipsum dolor sit amet
+                              .au-message__item-time
+                                span Yesterday
+                          .au-message__item.js-load-item
+                            .au-message__item-inner
+                              .au-message__item-text
+                                .avatar-wrap
+                                  .avatar
+                                    img(src='images/icon/avatar-05.jpg', alt='Michelle Sims')
+                                .text
+                                  h5.name Michelle Sims
+                                  p Purus feugiat finibus
+                              .au-message__item-time
+                                span Sunday
+                        .au-message__footer
+                          button.au-btn.au-btn-load.js-load-btn load more
+                      .au-chat
+                        .au-chat__title
+                          .au-chat-info
+                            .avatar-wrap.online
+                              .avatar.avatar--small
+                                img(src='images/icon/avatar-02.jpg', alt='John Smith')
+                            span.nick
+                              a(href='#') John Smith
+                        .au-chat__content
+                          .recei-mess-wrap
+                            span.mess-time 12 Min ago
+                            .recei-mess__inner
+                              .avatar.avatar--tiny
+                                img(src='images/icon/avatar-02.jpg', alt='John Smith')
+                              .recei-mess-list
+                                .recei-mess Lorem ipsum dolor sit amet, consectetur adipiscing elit non iaculis
+                                .recei-mess Donec tempor, sapien ac viverra
+                          .send-mess-wrap
+                            span.mess-time 30 Sec ago
+                            .send-mess__inner
+                              .send-mess-list
+                                .send-mess Lorem ipsum dolor sit amet, consectetur adipiscing elit non iaculis
+                        .au-chat-textfield
+                          form.au-form-icon
+                            input.au-input.au-input--full.au-input--h65(type='text', placeholder='Type a message')
+                            button.au-input-icon
+                              i.zmdi.zmdi-camera
+              .row
+                .col-md-12
+                  .copyright
+                    p
+                      | Copyright © 2018 Colorlib. All rights reserved. Template by 
+                      a(href='https://colorlib.com') Colorlib
+                      | .
+        // END MAIN CONTENT
+        // END PAGE CONTAINER
+        // Jquery JS
+        script(src='../../vendor/jquery-3.2.1.min.js')
+        // Bootstrap JS
+        script(src='../../vendor/bootstrap-4.1/popper.min.js')
+        script(src='../../vendor/bootstrap-4.1/bootstrap.min.js')
+        // Vendor JS
+        script(src='../../vendor/slick/slick.min.js')
+        script(src='../../vendor/wow/wow.min.js')
+        script(src='../../vendor/animsition/animsition.min.js')
+        script(src='../../vendor/bootstrap-progressbar/bootstrap-progressbar.min.js')
+        script(src='../../vendor/counter-up/jquery.waypoints.min.js')
+        script(src='../../vendor/counter-up/jquery.counterup.min.js')
+        script(src='../../vendor/circle-progress/circle-progress.min.js')
+        script(src='../../vendor/perfect-scrollbar/perfect-scrollbar.js')
+        script(src='../../vendor/chartjs/Chart.bundle.min.js')
+        script(src='../../vendor/select2/select2.min.js')
+        // Main JS
+        script(src='../../js/main2.js')
+        script(src='../../js/template.js')
+        // end document

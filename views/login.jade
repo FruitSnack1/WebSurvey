@@ -32,7 +32,7 @@ html(lang='en')
                 form(action='/users/login', method='post')
                   .form-group
                     label Uživatel
-                    select.form-control(name='id')
+                    select.form-control(name='id' required)
                       option(selected, disabled) Vyberte uživatele
                       each user, i in users
                         option(value=user._id) #{user.username}

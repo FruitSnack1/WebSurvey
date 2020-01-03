@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 var express = require('express');
 var router = express.Router();
 
@@ -7,6 +9,10 @@ const url = 'mongodb://127.0.0.1:27017/quiz';
 const jsonexport = require('jsonexport');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+
+router.get('/protected', authenticateToken, (req,res)=>{
+  res.send('you re good');
+});
 
 router.get('/users', (req, res) => {
   res.send({
@@ -40,10 +46,18 @@ router.post('/login', (req,res) =>{
     const db = client.db("quiz");
     await db.collection('users').find({'_id': id}).toArray((err, result) =>{
       if(err) console.log(err);
-      const user = result[0];
-      console.log(user);
-      if(hash === user.password){
-        res.send('logged in');
+      const dbUser = result[0];
+      if(hash === dbUser.password){
+
+        const user = { 'id' : dbUser._id, 'username': dbUser.username };
+        const accessToken = generateAccessToken(user);
+        const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+
+        //save refreshToken
+
+        res.cookie('accessToken', accessToken);
+        res.cookie('refreshToken', refreshToken);
+        res.redirect('/admin')
       }else{
         res.send('wrong password');
       }
@@ -85,6 +99,24 @@ function getUser(id) {
     });
     return user;
   });
+}
+
+function generateAccessToken(data) {
+  return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET)
+}
+
+function authenticateToken(req, res, next) {
+  console.log(req.cookies);
+
+  const token = req.cookies['accessToken'];
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    console.log(err)
+    if (err) return res.sendStatus(403)
+    req.user = user
+    next()
+  })
 }
 
 module.exports = router;
