@@ -57,3 +57,19 @@
 .page-wrapper{
   padding-bottom: 0 !important;
 }
+.switch-skoda > .switch-input:checked ~ .switch-label{
+  background: #4ba82e !important;
+  border-color: #4ba82e;
+}
+
+.bg-overlay--secondary{
+  background: #6c757d;
+}
+
+textarea{
+  resize: none;
+}
+
+.table-data2.table tbody tr td:first-child{
+  vertical-align: middle;
+}

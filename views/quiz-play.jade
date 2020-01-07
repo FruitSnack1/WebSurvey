@@ -1,0 +1,47 @@
+doctype html
+html(lang='en')
+  head
+    // Required meta tags
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='au theme template')
+    meta(name='author', content='Hau Nguyen')
+    meta(name='keywords', content='au theme template')
+    // Title Page
+    title #{anketa.name}
+    // Fontfaces CSS
+    script(src='../../vendor/jquery-3.2.1.min.js')
+    script(src='../../js/play.js')
+    
+    link(href='../../css/font-face.css', rel='stylesheet', media='all')
+    //- link(href='../../vendor/font-awesome-4.7/css/font-awesome.min.css', rel='stylesheet', media='all')
+    //- link(href='../../vendor/font-awesome-5/css/fontawesome-all.min.css', rel='stylesheet', media='all')
+    link(href='../../vendor/mdi-font/css/material-design-iconic-font.min.css', rel='stylesheet', media='all')
+    // Bootstrap CSS
+    link(href='../../vendor/bootstrap-4.1/bootstrap.min.css', rel='stylesheet', media='all')
+    // Vendor CSS
+    // Main CSS
+    link(href='../../css/theme.css', rel='stylesheet', media='all')
+    link(href='../../css/main2.css', rel='stylesheet', media='all')
+    link(href='../../css/play.css', rel='stylesheet', media='all')
+  body
+    //uvod
+    .p-4.min-vh-100.d-flex.flex-column.justify-content-between(style='min-height: calc(var(--vh, 1vh) * 100);display:none !important;')
+      h1.text-center.mt-5 #{anketa.name}
+      button.au-btn.au-btn--skoda.btn-block.mb-5 Začít
+      
+    //hodnoceni  
+    .p-4.min-vh-100.d-flex.flex-column.justify-content-around(style='min-height: calc(var(--vh, 1vh) * 100);')
+      h3.text-center #{anketa.questions[0].question}
+      img(src='../../img/avatar.jpg', style='height: 200px; width : 200px').rounded.mx-auto 
+      button.au-btn.au-btn--skoda.btn-block Určitě ano
+      button.au-btn.au-btn--skoda.btn-block Spíše ano
+      button.au-btn.au-btn--skoda.btn-block Neutrální postoj
+      button.au-btn.au-btn--skoda.btn-block Spíše ne
+      button.au-btn.au-btn--skoda.btn-block Určitě ne
+      
+      .progress-bar
+    
+  script(src='../../js/template.js')
+
+        // end document

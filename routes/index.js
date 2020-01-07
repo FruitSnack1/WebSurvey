@@ -59,7 +59,6 @@ router.get('/jwt', (req, res) => {
 });
 
 function authenticateToken(req, res, next) {
-  console.log(req.cookies);
 
   const token = req.cookies['accessToken'];
   if (token == null) return res.sendStatus(401)
@@ -1037,61 +1036,61 @@ router.post('/editanketa', (req, res) => {
   res.sendStatus(200);
 });
 
-function createAnketaObj(body, id) {
-  let date = new Date();
-  let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
-  //create object
-  var anketa = {
-    _id: id,
-    name: body.name,
-    img: null,
-    count: body.count,
-    desc: body.desc,
-    date: time,
-    questions: [],
-    random_order: false,
-    weights: false,
-    sectors: false,
-    comments: false,
-    user_data: false,
-    languages: ['cz']
-  };
-  for (var i = 0; i < anketa.count; i++) {
-    var o = {};
-    o.question = body['question' + i];
-    o.img = null;
-    anketa.questions.push(o);
-  }
-  if (body.random_order) {
-    anketa.random_order = true;
-  }
-  if (body.note) {
-    anketa.comments = true;
-  }
-  if (body.user_data) {
-    anketa.user_data = true;
-  }
-  if (body.lang_en) {
-    anketa.languages.push('en');
-  }
-  if (body.lang_de) {
-    anketa.languages.push('de');
-  }
-  if (body.weights) {
-    anketa.weights = true;
-  }
-  for (var i = 0; i < anketa.count; i++) {
-    anketa.questions[i].weight = body['weight' + i];
-  }
-  if (body.sectors) {
-    anketa.sectors = true;
-  }
-  anketa.sector_count = body['sector_count'];
-  for (var i = 0; i < anketa.count; i++) {
-    anketa.questions[i].sector = body['sector' + i];
-  }
-  return anketa;
-}
+// function createAnketaObj(body, id) {
+//   let date = new Date();
+//   let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+//   //create object
+//   var anketa = {
+//     _id: id,
+//     name: body.name,
+//     img: null,
+//     count: body.count,
+//     desc: body.desc,
+//     date: time,
+//     questions: [],
+//     random_order: false,
+//     weights: false,
+//     sectors: false,
+//     comments: false,
+//     user_data: false,
+//     languages: ['cz']
+//   };
+//   for (var i = 0; i < anketa.count; i++) {
+//     var o = {};
+//     o.question = body['question' + i];
+//     o.img = null;
+//     anketa.questions.push(o);
+//   }
+//   if (body.random_order) {
+//     anketa.random_order = true;
+//   }
+//   if (body.note) {
+//     anketa.comments = true;
+//   }
+//   if (body.user_data) {
+//     anketa.user_data = true;
+//   }
+//   if (body.lang_en) {
+//     anketa.languages.push('en');
+//   }
+//   if (body.lang_de) {
+//     anketa.languages.push('de');
+//   }
+//   if (body.weights) {
+//     anketa.weights = true;
+//   }
+//   for (var i = 0; i < anketa.count; i++) {
+//     anketa.questions[i].weight = body['weight' + i];
+//   }
+//   if (body.sectors) {
+//     anketa.sectors = true;
+//   }
+//   anketa.sector_count = body['sector_count'];
+//   for (var i = 0; i < anketa.count; i++) {
+//     anketa.questions[i].sector = body['sector' + i];
+//   }
+//   return anketa;
+// }
 
 function checkExistingName(target){
   MongoClient.connect(url, function(err, client) {

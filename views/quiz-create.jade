@@ -1,0 +1,72 @@
+div
+  .main-content
+    .section__content.section__content--p30
+      .container-fluid
+        .row.m-b-40
+          .col-12
+            h1 Vytvořit novou anketu
+        form(action='/ankety/create', method='POST')
+          .row
+            .col-lg-6.m-b-40
+              .au-card.au-card--no-pad
+                .au-card-title
+                  h3 Nová anketa
+                  .bg-overlay.bg-overlay--skoda
+                .card-body
+                  .form-group
+                    label.form-control-label(for='name') Název ankety
+                    input.form-control(type='text', name='name', value='', placeholder='')
+                  .form-group
+                    label.form-control-label(for='name') Popis ankety
+                    textarea.form-control(name='description', rows='3', cols='80')
+            .col-lg-6.m-b-40
+              .au-card.au-card--no-pad
+                .au-card-title
+                  h3 Možnosti
+                  .bg-overlay.bg-overlay--skoda
+                .card-body
+                  label.switch.switch-3d.switch-skoda.mr-3
+                    input.switch-input(type='checkbox', name='random_order')
+                    span.switch-label
+                    span.switch-handle
+                  span Náhodné pořadí otázek
+                  br
+                  
+                  label.switch.switch-3d.switch-skoda.mr-3
+                    input.switch-input(type='checkbox', name='user_data')
+                    span.switch-label
+                    span.switch-handle
+                  span Přidat identifikaci
+                  br
+          .row
+            - for(var i =0; i< 50; i++)
+              if i == 0
+                .col-lg-12.m-b-40(id='question'+i)
+                  .au-card.au-card--no-pad
+                    .au-card-title
+                      h3 ##{i+1} Otázka
+                      .bg-overlay.bg-overlay--skoda
+                    .card-body
+                      .form-group
+                        label.form-control-label(for='name') Otázka
+                        input.form-control(type='text', name='question'+i, value='', placeholder='')
+                      .form-group
+                        label.form-control-label(for='name') Obrázek otázky
+                        input.form-control-file(type='file', name='img'+i, value='', placeholder='')
+              else
+                .col-lg-12.m-b-40(style='display:none',id='question'+i)
+                  .au-card.au-card--no-pad
+                    .au-card-title
+                      h3 ##{i+1} Otázka
+                      .bg-overlay.bg-overlay--skoda
+                    .card-body
+                      .form-group
+                        label.form-control-label(for='name') Otázka
+                        input.form-control(type='text', name='question'+i, value='', placeholder='')
+                      .form-group
+                        label.form-control-label(for='name') Obrázek otázky
+                        input.form-control-file(type='file', name='img'+i, value='', placeholder='')
+          button.au-btn.au-btn-icon.btn-block.au-btn--secondary.m-b-10(type='button', onclick='addQuestion()')
+            i.zmdi.zmdi-plus
+            | Přidat otázku
+          button.au-btn.au-btn--skoda.btn-block.m-b-40(type='button',onclick='createAnketa()') Vytvořit anketu
