@@ -1128,7 +1128,7 @@ select {
 }
 
 .open-question {
-  flex: 1 0 40%;
+  flex: 1 0 100%;
   display: flex;
   align-items: center;
   justify-content: center;
