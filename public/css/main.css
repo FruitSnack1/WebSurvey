@@ -2,7 +2,7 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 .menu-container {
   width: calc(100% - 4rem);
-  height: calc(100vh - 4rem);
+  height: calc(var(--vh)*100 - 4rem);
   background: linear-gradient(to bottom, #202225, #3e4047);
   display: flex;
   flex-wrap: wrap;

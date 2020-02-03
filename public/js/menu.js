@@ -1,3 +1,11 @@
+$(function () {
+  const updateVH = () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+  updateVH();
+  window.onresize = updateVH;
+})
 function expandTile(tile) {
   let col;
   switch (tile) {
@@ -26,21 +34,21 @@ function expandTile(tile) {
       col = 'rgb(26,27,28)';
       break;
   }
-  const el = $('.menu-tile').eq(tile-1);
+  const el = $('.menu-tile').eq(tile - 1);
   el.addClass('big');
   el.find('span').fadeOut(100);
-  el.css('z-index',1000);
+  el.css('z-index', 1000);
   for (var i = 0; i < $('.menu-tile').length; i++) {
-    if(i == tile-1) continue;
+    if (i == tile - 1) continue;
     $('.menu-tile').eq(i).fadeOut(200);
   }
   $('.menu-big-tile').fadeIn(200);
-  $('.menu-big-tile p').html($('.menu-tile').eq(tile-1).find('span').html());
+  $('.menu-big-tile p').html($('.menu-tile').eq(tile - 1).find('span').html());
   // $('.menu-big-tile').css('background',col);
   // $('.menu-big-tile').show();
 }
 
-$('.menu-big-tile').on('click', (e) =>{
+$('.menu-big-tile').on('click', (e) => {
   $('.menu-big-tile').fadeOut(200);
 });
 function selectAnketa(id) {
