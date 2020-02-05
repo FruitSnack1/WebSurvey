@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 const users  = require('./routes/users');
 const ankety = require('./routes/ankety');
 const play = require('./routes/play');
+const results = require('./routes/results');
 
 var fileUpload = require("express-fileupload");
 var mongo = require('mongodb');
@@ -29,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/users', users);
 app.use('/ankety', ankety);
 app.use('/play', play);
+app.use('/results', results);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

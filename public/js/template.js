@@ -1,5 +1,5 @@
 let questionsDisplayed = 1
-
+let data;
 function getSite(siteurl) {
   $.ajax({
     method: 'GET',

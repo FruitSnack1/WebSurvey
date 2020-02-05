@@ -30,11 +30,11 @@ div
                     th
                 tbody
                   each anketa, i in ankety
-                    tr.tr-shadow
+                    tr.tr-shadow(onclick='getSite("/results/anketa/#{anketa._id}")')
                       td.font-weight-bold #{anketa.name}
                       td #{anketa.date}
                       td.text-right #{anketa.questions.length}
-                      td.text-right 0
+                      td.text-right #{anketa.resultsCount}
                       td
                         .table-data-feature
                           button.item(type='button', name='button', onclick='window.open("/play/#{anketa._id}")')

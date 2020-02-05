@@ -26,21 +26,27 @@ html(lang='en')
     link(href='../../css/play.css', rel='stylesheet', media='all')
   body
     //uvod
-    .p-4.min-vh-100.d-flex.flex-column.justify-content-between(style='min-height: calc(var(--vh, 1vh) * 100);display:none !important;')
+    script(type='text/javascript').
+      let anketa =!{JSON.stringify(anketa)}
+    .p-4.min-vh-100.d-flex.flex-column.justify-content-between#begin
       h1.text-center.mt-5 #{anketa.name}
-      button.au-btn.au-btn--skoda.btn-block.mb-5 Začít
+      p.text-center #{anketa.description}
+      button.au-btn.au-btn--skoda.btn-block.mb-5(onclick='start()') Začít
       
     //hodnoceni  
-    .p-4.min-vh-100.d-flex.flex-column.justify-content-around(style='min-height: calc(var(--vh, 1vh) * 100);')
-      h3.text-center #{anketa.questions[0].question}
+    .p-4.min-vh-100.d-flex.flex-column.justify-content-around#play.hide
+      h3.text-center#question #{anketa.questions[0].question}
       img(src='../../img/avatar.jpg', style='height: 200px; width : 200px').rounded.mx-auto 
-      button.au-btn.au-btn--skoda.btn-block Určitě ano
-      button.au-btn.au-btn--skoda.btn-block Spíše ano
-      button.au-btn.au-btn--skoda.btn-block Neutrální postoj
-      button.au-btn.au-btn--skoda.btn-block Spíše ne
-      button.au-btn.au-btn--skoda.btn-block Určitě ne
+      button.au-btn.au-btn--skoda.btn-block(value='1', onclick='select(this)') #{anketa.answers[0]}
+      button.au-btn.au-btn--skoda.btn-block(value='2', onclick='select(this)') #{anketa.answers[1]}
+      button.au-btn.au-btn--skoda.btn-block(value='3', onclick='select(this)') #{anketa.answers[2]}
+      button.au-btn.au-btn--skoda.btn-block(value='4', onclick='select(this)') #{anketa.answers[3]}
+      button.au-btn.au-btn--skoda.btn-block(value='5', onclick='select(this)') #{anketa.answers[4]}
+      .progress-bar#progress-bar
       
-      .progress-bar
+    .p-4.min-vh-100.d-flex.flex-column.justify-content-center#finish.hide
+      h1.text-center Děkujeme za Váš čas
+      
     
   script(src='../../js/template.js')
 

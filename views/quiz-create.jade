@@ -38,6 +38,13 @@ div
                     span.switch-handle
                   span Přidat identifikaci
                   br
+                  .form-group
+                    label.form-control-label(for='name') Odpovědi
+                    input.form-control.mb-3(type='text', name='answer1', value='Určitě ano', placeholder='')
+                    input.form-control.mb-3(type='text', name='answer2', value='Spíše ano', placeholder='')
+                    input.form-control.mb-3(type='text', name='answer3', value='Nutrální postoj', placeholder='')
+                    input.form-control.mb-3(type='text', name='answer4', value='Spíše ne', placeholder='')
+                    input.form-control(type='text', name='answer5', value='Určitě ne', placeholder='')
           .row
             - for(var i =0; i< 50; i++)
               if i == 0

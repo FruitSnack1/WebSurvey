@@ -220,8 +220,8 @@ function progress(dir) {
     }
   }
   $('.progressBar-foreground').animate({
-    width:p+'%'
-  }, 200);
+    width:p+'%',
+  });
 }
 
 // if (!('webkitSpeechRecognition' in window)) {

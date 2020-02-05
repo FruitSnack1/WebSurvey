@@ -1,0 +1,31 @@
+div
+  .main-content
+    script(type='text/javascript').
+      data =!{JSON.stringify(anketa)}
+      setResults(data);
+    .section__content.section__content--p30
+      .container-fluid
+      
+        .row
+          each question , i in anketa.questions
+            .col-lg-12.m-b-40
+              .au-card.au-card--no-pad
+                .au-card-title
+                  .bg-overlay.bg-overlay--skoda
+                  h3 #{anketa.questions[i].question}
+                .au-card-inner.p-5
+                  .row
+                    .col-6
+                      canvas(id='donut-#{i}')
+                    .col-6
+                      canvas(id='rader-#{i}')
+              
+              
+              
+        .row
+          .col-md-12
+            .copyright
+              p
+                | Copyright © 2018 Colorlib. All rights reserved. Template by 
+                a(href='https://colorlib.com') Colorlib
+                | .

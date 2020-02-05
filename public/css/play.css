@@ -1,6 +1,6 @@
 .progress-bar{
-  height: 7px;
-  width: 75%;
+  height: 5px;
+  width: 0%;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -8,4 +8,20 @@
 }
 button{
   margin: 0
+}
+
+#begin, #play, #finish {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+#play{
+  position: relative;
+}
+
+.hide{
+  display: none !important;
+}
+
+.show{
+  display: flex !important;
 }

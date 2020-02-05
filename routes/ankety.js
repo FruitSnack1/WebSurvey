@@ -17,8 +17,40 @@ router.get('/mojeankety', authenticateToken, (req,res) =>{
     if (err) return console.log(err);
     const db = client.db("quiz");
     const collection = db.collection('ankety');
-    const ankety = await collection.find({'userId': new mongodb.ObjectId(req.user.id)}).toArray();
-    console.log(ankety);
+    // let ankety = await collection.find({'userId': new mongodb.ObjectId(req.user.id)}).toArray()
+    let ankety = await collection.aggregate([
+      {
+        '$match': {
+          'userId': new mongodb.ObjectId(req.user.id)
+        }
+      }, {
+        '$lookup': {
+          'from': 'results',
+          'localField': '_id',
+          'foreignField': 'anketaId',
+          'as': 'results'
+        }
+      }, {
+        '$addFields': {
+          'resultsCount': {
+            '$size': '$results'
+          }
+        }
+      }, {
+        '$project': {
+          'results': 0
+        }
+      }
+    ]).toArray();
+    ankety = ankety.map( anketa =>{
+      const date = new Date(anketa.date);
+      let text = '';
+      text+= date.getDate() + '.';
+      text+= date.getMonth()+1 + '.';
+      text+= date.getFullYear();
+      anketa.date = text;
+      return anketa;
+    });
     res.render('quiz-ankety',{ankety});
   });
 });
@@ -133,8 +165,39 @@ router.post('/create', authenticateToken, (req,res)=>{
         if (err) return console.log(err);
         const db = client.db("quiz");
         const collection = db.collection('ankety');
-        const ankety = await collection.find({'userId': new mongodb.ObjectId(req.user.id)}).toArray();
-        console.log(ankety);
+        let ankety = await collection.aggregate([
+          {
+            '$match': {
+              'userId': new mongodb.ObjectId(req.user.id)
+            }
+          }, {
+            '$lookup': {
+              'from': 'results',
+              'localField': '_id',
+              'foreignField': 'anketaId',
+              'as': 'results'
+            }
+          }, {
+            '$addFields': {
+              'resultsCount': {
+                '$size': '$results'
+              }
+            }
+          }, {
+            '$project': {
+              'results': 0
+            }
+          }
+        ]).toArray();
+        ankety = ankety.map( anketa =>{
+          const date = new Date(anketa.date);
+          let text = '';
+          text+= date.getDate() + '.';
+          text+= date.getMonth()+1 + '.';
+          text+= date.getFullYear();
+          anketa.date = text;
+          return anketa;
+        });
         res.render('quiz-ankety',{ankety});
       });
     });
@@ -153,16 +216,15 @@ function authenticateToken(req, res, next) {
 }
 
 function createAnketaObj(body, id) {
-  let date = new Date();
-  let time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
   //create object
   var anketa = {
     _id: id,
     name: body.name,
     img: null,
     description: body.description,
-    date: time,
+    date: Date.now(),
     questions: [],
+    answers: [],
     random_order: false,
     weights: false,
     sectors: false,
@@ -170,6 +232,9 @@ function createAnketaObj(body, id) {
     user_data: false,
     languages: ['cz']
   };
+  for (var i = 1; i < 6; i++) {
+    anketa.answers.push(body[`answer${i}`]);
+  }
   for (var i = 0; i < 50; i++) {
     if(body['question'+i] == '')
       break

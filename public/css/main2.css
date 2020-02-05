@@ -73,3 +73,7 @@ textarea{
 .table-data2.table tbody tr td:first-child{
   vertical-align: middle;
 }
+
+.tr-shadow:hover{
+  cursor: pointer;
+}
